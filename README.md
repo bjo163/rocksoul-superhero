@@ -93,6 +93,57 @@ SUPERHERO v0.1 will remain intentionally small:
 - semantic graph validation from day one;
 - one complete transmission chain as proof.
 
-The first integration target will use the **Guatavita / El Dorado** research already present in MFTL and LEGEND. The exact historical recorder/chronicler will be selected only after source-specific research.
+The first integration target uses the **Guatavita / El Dorado** research already present in MFTL and LEGEND.
+
+## First canonical transmission chain
+
+### `PER-COL-JUAN-RODRIGUEZ-FREYLE`
+
+**Juan Rodríguez Freyle — later compiler / recorder**
+
+```text
+LEGEND
+EVT-COL-GUATAVITA-OFFERINGS
+        ↓
+later colonial interpretation
+        ↓
+JUAN RODRÍGUEZ FREYLE
+        ↓ authored
+EL CARNERO
+        ↓ recorded / transmitted
+MFTL
+CAND-COL-MUISCA-EL-DORADO-GUATAVITA-000001
+```
+
+The chain preserves a crucial distinction:
+
+```text
+RECORDED VERSION       ✅
+NAMED INFORMANT CLAIM  ✅
+DIRECT WITNESS         ❌
+ORIGINATOR             NOT ESTABLISHED
+```
+
+Freyle states that **don Juan, cacique of Guatavita**, told him the relevant traditions. SUPERHERO preserves that as a documented informant claim without prematurely creating a second canonical person.
+
+Current graph:
+
+```text
+1 canonical person
+4 local sources
+5 atomic claims
+5 evidence edges
+3 actor relationships
+16 relation types
+```
+
+Semantic validation enforces local graph integrity and qualified cross-repository references such as:
+
+```text
+legend:EVT-COL-GUATAVITA-OFFERINGS
+mftl:CAND-COL-MUISCA-EL-DORADO-GUATAVITA-000001
+```
+
+**SUPERHERO v0.1 is mature enough to stop expanding the foundation.**
 
 No UI, database, backend, scoring, hero ranking, psychology profiling, or automation is required for the foundation.
