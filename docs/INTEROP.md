@@ -6,6 +6,7 @@
 MFTL       STORY     What was told?
 LEGEND     EVENT     What happened?
 SUPERHERO  PERSON    Who was involved?
+RGBL       TEXT      What does the source text say?
 ```
 
 ## Qualified references
@@ -23,6 +24,9 @@ legend:SRC-IDN-NOAA-KRAKATAU-1883
 
 superhero:PER-...
 superhero:SRC-SH-...
+
+rgbl:mw:work:...
+rgbl:mw:passage:...
 ```
 
 This does **not** require MFTL or LEGEND to rename any existing IDs.
@@ -71,6 +75,16 @@ This is intentional. A temporary failure or change in another repository must no
 mftl:*       → narrative / story ownership
 legend:*     → event / historical-core ownership
 superhero:*  → person / human-agency ownership
+rgbl:mw:*     → scripture/text corpus ownership
 ```
 
 MFTL may contain event reports or named-person mentions as narrative context, but it should not duplicate canonical LEGEND events or canonical SUPERHERO person/transmission records.
+
+
+## RGBL boundary
+
+SUPERHERO may later link a person to an exact RGBL work/passage when research needs to establish authorship, transmission, quotation, translation, interpretation, or scriptural-role evidence.
+
+For v0.1, RGBL references are documented but not yet accepted by the SUPERHERO machine schemas because no canonical person record currently requires one. Add machine support only when a real research case needs it.
+
+This preserves the stop rule: interoperability first, schema expansion only from real data.

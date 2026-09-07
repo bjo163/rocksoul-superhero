@@ -6,6 +6,7 @@
 MFTL       → STORY
 LEGEND     → EVENT
 SUPERHERO  → PERSON / HUMAN AGENCY
+RGBL       → TEXT / PASSAGE / SCRIPTURE-REFERENCE
 ```
 
 SUPERHERO is not a biography database. Its core object is a person plus evidence-backed relationships to events, sources, narratives, claims, and other people.
