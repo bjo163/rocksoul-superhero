@@ -1,0 +1,14 @@
+{
+  "id": "CLM-PER-JERUSALEM-JOSEPHUS-004",
+  "subject_id": "PER-JERUSALEM-FLAVIUS-JOSEPHUS",
+  "statement": "Josephus's Jewish War records the burning and destruction of the Jerusalem Temple during the Roman siege.",
+  "claim_type": "transmission",
+  "epistemic_status": "strongly_supported",
+  "source_refs": [
+    "superhero:SRC-SH-JERUSALEM-JOSEPHUS-WAR",
+    "legend:SRC-JERUSALEM-MET-WORLD-BETWEEN-EMPIRES"
+  ],
+  "notes": [
+    "The historical event is owned and assessed in LEGEND; SUPERHERO owns Josephus's recorder relationship."
+  ]
+}

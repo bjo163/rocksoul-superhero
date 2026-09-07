@@ -1,0 +1,12 @@
+{
+  "id": "EVD-PER-JERUSALEM-JOSEPHUS-002",
+  "claim_id": "CLM-PER-JERUSALEM-JOSEPHUS-002",
+  "relation": "supports",
+  "evidence_type": "textual",
+  "summary": "The preface to The Jewish War explicitly identifies Josephus as the author and describes his relationship to the events.",
+  "source_refs": [
+    "superhero:SRC-SH-JERUSALEM-JOSEPHUS-WAR"
+  ],
+  "confidence": 0.99,
+  "limitations": []
+}

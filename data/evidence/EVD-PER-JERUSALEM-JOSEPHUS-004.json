@@ -1,0 +1,15 @@
+{
+  "id": "EVD-PER-JERUSALEM-JOSEPHUS-004",
+  "claim_id": "CLM-PER-JERUSALEM-JOSEPHUS-004",
+  "relation": "supports",
+  "evidence_type": "textual",
+  "summary": "The Jewish War Book VI contains Josephus's detailed account of the Temple fire and destruction; modern museum scholarship independently identifies his work as a critical source for the period.",
+  "source_refs": [
+    "superhero:SRC-SH-JERUSALEM-JOSEPHUS-WAR",
+    "legend:SRC-JERUSALEM-MET-WORLD-BETWEEN-EMPIRES"
+  ],
+  "confidence": 0.98,
+  "limitations": [
+    "Specific causal or moral interpretations inside Josephus should remain distinct from the event facts they accompany."
+  ]
+}

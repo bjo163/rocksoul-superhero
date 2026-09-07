@@ -1,0 +1,13 @@
+{
+  "id": "CLM-PER-JERUSALEM-JOSEPHUS-003",
+  "subject_id": "PER-JERUSALEM-FLAVIUS-JOSEPHUS",
+  "statement": "Josephus states in his Life that he was sent together with Titus to the siege of Jerusalem.",
+  "claim_type": "witnessing",
+  "epistemic_status": "supported_as_documentary_attestation",
+  "source_refs": [
+    "superhero:SRC-SH-JERUSALEM-JOSEPHUS-LIFE-75"
+  ],
+  "notes": [
+    "This is strong first-person evidence of presence, while remaining autobiographical testimony."
+  ]
+}

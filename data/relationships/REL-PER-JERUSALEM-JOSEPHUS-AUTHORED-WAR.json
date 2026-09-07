@@ -1,0 +1,14 @@
+{
+  "id": "REL-PER-JERUSALEM-JOSEPHUS-AUTHORED-WAR",
+  "subject_id": "PER-JERUSALEM-FLAVIUS-JOSEPHUS",
+  "relation": "authored",
+  "object_ref": "superhero:SRC-SH-JERUSALEM-JOSEPHUS-WAR",
+  "proximity": "direct_witness",
+  "status": "supported",
+  "confidence": 0.99,
+  "source_refs": [
+    "superhero:SRC-SH-JERUSALEM-JOSEPHUS-WAR"
+  ],
+  "uncertainty": [],
+  "note": "Proximity is relative to the war events narrated in the source."
+}

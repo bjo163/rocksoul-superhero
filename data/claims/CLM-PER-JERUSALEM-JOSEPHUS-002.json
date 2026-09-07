@@ -1,0 +1,11 @@
+{
+  "id": "CLM-PER-JERUSALEM-JOSEPHUS-002",
+  "subject_id": "PER-JERUSALEM-FLAVIUS-JOSEPHUS",
+  "statement": "Josephus authored The Jewish War and explicitly presents himself as someone who first fought against the Romans and was later present for subsequent events.",
+  "claim_type": "authorship",
+  "epistemic_status": "supported_as_documentary_attestation",
+  "source_refs": [
+    "superhero:SRC-SH-JERUSALEM-JOSEPHUS-WAR"
+  ],
+  "notes": []
+}

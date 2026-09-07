@@ -1,0 +1,15 @@
+{
+  "id": "EVD-PER-JERUSALEM-JOSEPHUS-001",
+  "claim_id": "CLM-PER-JERUSALEM-JOSEPHUS-001",
+  "relation": "supports",
+  "evidence_type": "biographical",
+  "summary": "Josephus self-identifies as Joseph son of Matthias, a priest who initially fought the Romans; Metropolitan Museum scholarship treats him as a critical ancient source for the war.",
+  "source_refs": [
+    "superhero:SRC-SH-JERUSALEM-JOSEPHUS-WAR",
+    "superhero:SRC-SH-JERUSALEM-MET-JOSEPHUS"
+  ],
+  "confidence": 0.98,
+  "limitations": [
+    "The evidence establishes identity and role, not impartiality."
+  ]
+}

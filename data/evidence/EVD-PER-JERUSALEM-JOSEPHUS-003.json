@@ -1,0 +1,14 @@
+{
+  "id": "EVD-PER-JERUSALEM-JOSEPHUS-003",
+  "claim_id": "CLM-PER-JERUSALEM-JOSEPHUS-003",
+  "relation": "supports",
+  "evidence_type": "documentary",
+  "summary": "Josephus's autobiographical Life §75 states that he was sent with Titus to the siege of Jerusalem.",
+  "source_refs": [
+    "superhero:SRC-SH-JERUSALEM-JOSEPHUS-LIFE-75"
+  ],
+  "confidence": 0.97,
+  "limitations": [
+    "First-person autobiographical testimony still requires normal source criticism."
+  ]
+}

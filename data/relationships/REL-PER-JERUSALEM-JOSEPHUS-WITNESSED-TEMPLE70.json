@@ -1,0 +1,17 @@
+{
+  "id": "REL-PER-JERUSALEM-JOSEPHUS-WITNESSED-TEMPLE70",
+  "subject_id": "PER-JERUSALEM-FLAVIUS-JOSEPHUS",
+  "relation": "witnessed",
+  "object_ref": "legend:EVT-JERUSALEM-SECOND-TEMPLE-DESTRUCTION-70",
+  "proximity": "direct_witness",
+  "status": "supported",
+  "confidence": 0.96,
+  "source_refs": [
+    "superhero:SRC-SH-JERUSALEM-JOSEPHUS-LIFE-75",
+    "superhero:SRC-SH-JERUSALEM-MET-JOSEPHUS"
+  ],
+  "uncertainty": [
+    "Presence is strongly supported; it does not mean Josephus personally observed every instant or location described in the siege narrative."
+  ],
+  "note": "Witness ≠ perfect witness."
+}

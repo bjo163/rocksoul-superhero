@@ -1,0 +1,17 @@
+{
+  "id": "REL-PER-JERUSALEM-JOSEPHUS-RECORDED-TEMPLE70",
+  "subject_id": "PER-JERUSALEM-FLAVIUS-JOSEPHUS",
+  "relation": "recorded",
+  "object_ref": "legend:EVT-JERUSALEM-SECOND-TEMPLE-DESTRUCTION-70",
+  "proximity": "direct_witness",
+  "status": "supported",
+  "confidence": 0.98,
+  "source_refs": [
+    "superhero:SRC-SH-JERUSALEM-JOSEPHUS-WAR",
+    "superhero:SRC-SH-JERUSALEM-MET-JOSEPHUS"
+  ],
+  "uncertainty": [
+    "Recorder relationship establishes documentary chain of custody, not neutrality or theological authority."
+  ],
+  "note": "SUPERHERO records human agency; LEGEND remains owner of the event historicity."
+}

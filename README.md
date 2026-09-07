@@ -10,7 +10,7 @@
 
 A provenance-first repository for reconstructing **human agency, authorship, witnessing, transmission, interpretation, and narrative chain of custody** across Rocksoul Research.
 
-**ROCKSOUL RESEARCH · STORY × EVENT × PERSON**
+**ROCKSOUL RESEARCH · STORY × EVENT × PERSON × TEXT**
 
 </div>
 
@@ -62,6 +62,7 @@ Ownership rule:
 STORY   → MFTL
 EVENT   → LEGEND
 PERSON  → SUPERHERO
+TEXT    → RGBL
 ```
 
 ## Golden rules
@@ -81,6 +82,23 @@ PERSON  → SUPERHERO
 **PORTRAYED AS HERO ≠ OBJECTIVELY HERO.**
 
 **UNCERTAINTY IS DATA.**
+
+## Four-way proof case
+
+### **CASE 001 — JERUSALEM 70 CE**
+
+`PER-JERUSALEM-FLAVIUS-JOSEPHUS`
+
+```text
+RGBL      Mark 13:2 text
+MFTL      prediction narrative
+LEGEND    70 CE destruction event
+SUPERHERO Josephus — direct witness / recorder
+```
+
+SUPERHERO contributes **human proximity and chain of custody**. Josephus's presence strengthens documentary provenance; it does not turn his interpretations into automatic fact and does not prove a theological reading of Mark 13:2.
+
+[Read the shared case →](docs/cases/JERUSALEM-70-TEMPLE.md)
 
 ## Foundation target
 
@@ -130,11 +148,11 @@ Freyle states that **don Juan, cacique of Guatavita**, told him the relevant tra
 Current graph:
 
 ```text
-1 canonical person
-4 local sources
-5 atomic claims
-5 evidence edges
-3 actor relationships
+2 canonical people
+7 local sources
+9 atomic claims
+9 evidence edges
+6 actor relationships
 16 relation types
 ```
 

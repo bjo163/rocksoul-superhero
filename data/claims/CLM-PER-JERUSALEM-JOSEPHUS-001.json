@@ -1,0 +1,14 @@
+{
+  "id": "CLM-PER-JERUSALEM-JOSEPHUS-001",
+  "subject_id": "PER-JERUSALEM-FLAVIUS-JOSEPHUS",
+  "statement": "Flavius Josephus was a first-century Jewish priest and war participant who became a major historical writer on the Jewish–Roman War.",
+  "claim_type": "identity",
+  "epistemic_status": "strongly_supported",
+  "source_refs": [
+    "superhero:SRC-SH-JERUSALEM-JOSEPHUS-WAR",
+    "superhero:SRC-SH-JERUSALEM-MET-JOSEPHUS"
+  ],
+  "notes": [
+    "This claim establishes historical identity/role, not source neutrality."
+  ]
+}

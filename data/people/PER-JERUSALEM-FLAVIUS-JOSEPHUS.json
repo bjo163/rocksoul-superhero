@@ -1,0 +1,63 @@
+{
+  "id": "PER-JERUSALEM-FLAVIUS-JOSEPHUS",
+  "canonical_name": "Flavius Josephus",
+  "names": [
+    {
+      "value": "Flavius Josephus",
+      "language": "English / Latinized",
+      "script": "Latin"
+    },
+    {
+      "value": "Joseph, son of Matthias",
+      "language": "English rendering of Josephus's self-identification",
+      "script": "Latin"
+    }
+  ],
+  "aliases": [
+    "Josephus",
+    "Joseph ben Matthias"
+  ],
+  "identity_status": "attested",
+  "lifespan": {
+    "start": null,
+    "end": null,
+    "precision": "unknown",
+    "note": "Full biographical dating is outside this integration case; the record only requires identity and war-era activity supported by the cited sources."
+  },
+  "active_period": {
+    "start": "66 CE",
+    "end": "ca. 75 CE",
+    "precision": "year_range",
+    "note": "Relevant period covers his participation in the Jewish–Roman War through the approximate composition horizon of The Jewish War."
+  },
+  "place_refs": [
+    "legend:PLC-JERUSALEM-SECOND-TEMPLE"
+  ],
+  "source_refs": [
+    "superhero:SRC-SH-JERUSALEM-JOSEPHUS-WAR",
+    "superhero:SRC-SH-JERUSALEM-JOSEPHUS-LIFE-75",
+    "superhero:SRC-SH-JERUSALEM-MET-JOSEPHUS",
+    "legend:SRC-JERUSALEM-MET-WORLD-BETWEEN-EMPIRES"
+  ],
+  "claim_refs": [
+    "CLM-PER-JERUSALEM-JOSEPHUS-001",
+    "CLM-PER-JERUSALEM-JOSEPHUS-002",
+    "CLM-PER-JERUSALEM-JOSEPHUS-003",
+    "CLM-PER-JERUSALEM-JOSEPHUS-004"
+  ],
+  "relationship_refs": [
+    "REL-PER-JERUSALEM-JOSEPHUS-AUTHORED-WAR",
+    "REL-PER-JERUSALEM-JOSEPHUS-WITNESSED-TEMPLE70",
+    "REL-PER-JERUSALEM-JOSEPHUS-RECORDED-TEMPLE70"
+  ],
+  "uncertainty": [
+    "Josephus's presence and authorship are strongly attested, but witness proximity does not make every detail or interpretation in his account neutral or infallible.",
+    "The SUPERHERO record does not infer anything about Mark 13:2's authorship, date, or theological fulfillment.",
+    "The person record is scoped to the actor/recorder role required by the four-way case rather than attempting a complete biography."
+  ],
+  "review": {
+    "status": "canonical",
+    "reviewed_by": "Rocksoul four-way integration review",
+    "note": "Canonical scope: historical identity, presence at the Jerusalem siege, authorship/recording role, and relationship to the 70 CE event."
+  }
+}

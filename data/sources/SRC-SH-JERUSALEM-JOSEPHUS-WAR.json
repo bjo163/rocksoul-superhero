@@ -1,0 +1,15 @@
+{
+  "id": "SRC-SH-JERUSALEM-JOSEPHUS-WAR",
+  "title": "The Jewish War — Flavius Josephus",
+  "source_type": "primary_document",
+  "creator": "Flavius Josephus",
+  "date": "ca. 75 CE work; Perseus English translation 1895",
+  "language": "English translation / Ancient Greek work",
+  "locator": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.01.0148",
+  "provenance": "Perseus Digital Library edition. Josephus's preface self-identifies the author and states that he first fought against the Romans and was later compelled to be present at subsequent events.",
+  "quality": "primary",
+  "notes": [
+    "Primary source for Josephus's authorship/self-positioning and for his detailed account of the war.",
+    "Proximity does not remove authorial perspective or source-critical limitations."
+  ]
+}
