@@ -18,6 +18,14 @@ A provenance-first repository for reconstructing **human agency, authorship, wit
 
 > **SUPERHERO is a brand, not a verdict. A person is not automatically classified as a hero, villain, saint, martyr, or savior. Those are source-relative narrative attributions.**
 
+A witness is not automatically a perfect witness.  
+An author is not automatically the originator.  
+A recorder is not automatically neutral.  
+A translator is not automatically an author.  
+A famous role is not the same thing as historical identity.
+
+That separation is the foundation of SUPERHERO.
+
 ## Core question
 
 ```text
