@@ -1,0 +1,12 @@
+{
+  "schema_version": "0.1",
+  "counts": {
+    "canonical_people": 0,
+    "candidates": 0,
+    "sources": 0,
+    "claims": 0,
+    "evidence_edges": 0,
+    "relationships": 0,
+    "relation_types": 16
+  }
+}

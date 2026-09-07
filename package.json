@@ -1,0 +1,18 @@
+{
+  "name": "rocksoul-superhero",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Actor & Transmission Intelligence for the Rocksoul Research ecosystem.",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "validate": "node scripts/validate.mjs",
+    "index": "node scripts/build-index.mjs",
+    "build": "npm run validate && npm run index"
+  },
+  "dependencies": {
+    "ajv": "^8.17.1"
+  }
+}

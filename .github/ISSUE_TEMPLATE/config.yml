@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: SUPERHERO Research Policy
+    url: https://github.com/bjo163/rocksoul-superhero/blob/main/docs/RESEARCH_POLICY.md
+    about: Read the human-agency and anti-profiling guardrails first.

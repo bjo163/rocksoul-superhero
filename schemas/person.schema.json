@@ -1,0 +1,192 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://rocksoul.dev/superhero/schemas/person.schema.json",
+  "title": "SUPERHERO Person Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "canonical_name",
+    "identity_status",
+    "lifespan",
+    "active_period",
+    "place_refs",
+    "source_refs",
+    "claim_refs",
+    "relationship_refs",
+    "uncertainty",
+    "review"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^PER-[A-Z0-9][A-Z0-9-]*$"
+    },
+    "canonical_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "names": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "value",
+          "language"
+        ],
+        "properties": {
+          "value": {
+            "type": "string",
+            "minLength": 1
+          },
+          "language": {
+            "type": "string",
+            "minLength": 1
+          },
+          "script": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "aliases": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "identity_status": {
+      "enum": [
+        "attested",
+        "strongly_supported",
+        "probable",
+        "plausible",
+        "disputed",
+        "conflated",
+        "legendary",
+        "anonymous",
+        "indeterminate"
+      ]
+    },
+    "lifespan": {
+      "$ref": "#/definitions/timeRange"
+    },
+    "active_period": {
+      "$ref": "#/definitions/timeRange"
+    },
+    "place_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^legend:PLC-[A-Z0-9][A-Z0-9-]*$"
+      }
+    },
+    "source_refs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/qualifiedRef"
+      }
+    },
+    "claim_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^CLM-PER-[A-Z0-9][A-Z0-9-]*$"
+      }
+    },
+    "relationship_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^REL-PER-[A-Z0-9][A-Z0-9-]*$"
+      }
+    },
+    "uncertainty": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "candidate",
+            "reviewed",
+            "canonical",
+            "rejected"
+          ]
+        },
+        "reviewed_by": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    }
+  },
+  "definitions": {
+    "qualifiedRef": {
+      "type": "string",
+      "pattern": "^(mftl|legend|superhero):[A-Z0-9][A-Z0-9-]*$"
+    },
+    "timeRange": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "start",
+        "end",
+        "precision"
+      ],
+      "properties": {
+        "start": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "end": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "precision": {
+          "enum": [
+            "exact",
+            "date",
+            "year",
+            "year_range",
+            "century",
+            "century_range",
+            "period",
+            "relative",
+            "unknown"
+          ]
+        },
+        "note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    }
+  }
+}

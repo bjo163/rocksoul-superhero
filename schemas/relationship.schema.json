@@ -1,0 +1,98 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://rocksoul.dev/superhero/schemas/relationship.schema.json",
+  "title": "SUPERHERO Actor Relationship",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "subject_id",
+    "relation",
+    "object_ref",
+    "proximity",
+    "status",
+    "confidence",
+    "source_refs",
+    "uncertainty"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^REL-PER-[A-Z0-9][A-Z0-9-]*$"
+    },
+    "subject_id": {
+      "type": "string",
+      "pattern": "^PER-[A-Z0-9][A-Z0-9-]*$"
+    },
+    "relation": {
+      "enum": [
+        "witnessed",
+        "participated_in",
+        "caused",
+        "reported",
+        "recorded",
+        "authored",
+        "copied",
+        "translated",
+        "edited",
+        "transmitted",
+        "interpreted",
+        "popularized",
+        "investigated",
+        "disputed",
+        "cited",
+        "commissioned"
+      ]
+    },
+    "object_ref": {
+      "type": "string",
+      "pattern": "^(mftl|legend|superhero):[A-Z0-9][A-Z0-9-]*$"
+    },
+    "proximity": {
+      "enum": [
+        "direct_participant",
+        "direct_witness",
+        "contemporary_non_witness",
+        "near_contemporary",
+        "later_compiler",
+        "later_interpreter",
+        "modern_researcher",
+        "unknown"
+      ]
+    },
+    "status": {
+      "enum": [
+        "supported",
+        "probable",
+        "plausible",
+        "disputed",
+        "rejected"
+      ]
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "source_refs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "^(mftl|legend|superhero):[A-Z0-9][A-Z0-9-]*$"
+      }
+    },
+    "uncertainty": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "note": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}
