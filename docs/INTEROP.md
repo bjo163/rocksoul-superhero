@@ -88,3 +88,30 @@ SUPERHERO may later link a person to an exact RGBL work/passage when research ne
 For v0.1, RGBL references are documented but not yet accepted by the SUPERHERO machine schemas because no canonical person record currently requires one. Add machine support only when a real research case needs it.
 
 This preserves the stop rule: interoperability first, schema expansion only from real data.
+
+
+## RGBL person/figure coexistence
+
+RGBL already contains corpus-level religious/scriptural person and figure entities under its own `mw:*` identity system. That does not replace SUPERHERO.
+
+Use the distinction:
+
+```text
+RGBL mw:person:*
+→ corpus referent
+→ names / external IDs
+→ scoped scriptural or religious-role assertions
+→ exact passage evidence
+
+SUPERHERO PER-*
+→ historical actor research
+→ witness / participant proximity
+→ authorship / reporting / translation / transmission
+→ chain of custody
+```
+
+The same real-world person may therefore have records in both repositories.
+
+Do not infer identity from matching names. An explicit crosswalk between `PER-*` and `mw:person:*` requires reconciliation evidence and should preserve disputed/conflated identity states where relevant.
+
+This also means SUPERHERO does not need to copy RGBL's world-religion registry or scoped role assertions merely to know that a source calls someone a prophet, teacher, king, apostle, or other role.
