@@ -1,0 +1,15 @@
+{
+  "id": "EVD-PER-COL-FREYLE-005",
+  "claim_id": "CLM-PER-COL-FREYLE-005",
+  "relation": "supports",
+  "evidence_type": "scholarly_interpretation",
+  "summary": "Modern scholarship treats Freyle's version as especially influential in associating the Guatavita lake ceremony with investiture/legitimation of the heir, while earlier chroniclers did not necessarily make the same association.",
+  "source_refs": [
+    "superhero:SRC-SH-COL-MUISCA-RAFT-2021",
+    "legend:SRC-COL-CAMBRIDGE-GUATAVITA-2024"
+  ],
+  "confidence": 0.86,
+  "limitations": [
+    "Transmission history is reconstructed from surviving texts; lost or unpreserved intermediaries may have existed."
+  ]
+}

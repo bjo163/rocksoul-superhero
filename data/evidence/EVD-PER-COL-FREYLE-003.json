@@ -1,0 +1,15 @@
+{
+  "id": "EVD-PER-COL-FREYLE-003",
+  "claim_id": "CLM-PER-COL-FREYLE-003",
+  "relation": "supports",
+  "evidence_type": "textual",
+  "summary": "Freyle's reproduced passage explicitly says don Juan, cacique and lord of Guatavita, told him these antiquities; modern scholarship independently discusses the same claimed informant chain.",
+  "source_refs": [
+    "superhero:SRC-SH-COL-FREYLE-EL-CARNERO-1636",
+    "superhero:SRC-SH-COL-MUISCA-RAFT-2021"
+  ],
+  "confidence": 0.95,
+  "limitations": [
+    "Evidence establishes what Freyle says about his informant, not independent verification of the informant's entire testimony."
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "EVD-PER-COL-FREYLE-001",
+  "claim_id": "CLM-PER-COL-FREYLE-001",
+  "relation": "supports",
+  "evidence_type": "biographical",
+  "summary": "Banco de la República's biographical entry identifies Juan Rodríguez Freyle as a colonial writer/chronicler and author of El Carnero.",
+  "source_refs": [
+    "superhero:SRC-SH-COL-BANREP-FREYLE-BIO"
+  ],
+  "confidence": 0.99,
+  "limitations": [
+    "Institutional biographical summaries still contain uncertainty in some life dates."
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "id": "CLM-PER-COL-FREYLE-002",
+  "subject_id": "PER-COL-JUAN-RODRIGUEZ-FREYLE",
+  "statement": "Freyle authored El Carnero, whose own title/content frame includes the origin of the celebrated name El Dorado and whose writing horizon is given as 1636 in Banco de la República's biographical entry.",
+  "claim_type": "authorship",
+  "epistemic_status": "strongly_supported",
+  "source_refs": [
+    "superhero:SRC-SH-COL-BANREP-FREYLE-BIO",
+    "superhero:SRC-SH-COL-FREYLE-EL-CARNERO-1636"
+  ],
+  "notes": []
+}

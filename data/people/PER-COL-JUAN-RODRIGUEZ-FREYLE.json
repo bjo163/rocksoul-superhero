@@ -1,0 +1,58 @@
+{
+  "id": "PER-COL-JUAN-RODRIGUEZ-FREYLE",
+  "canonical_name": "Juan Rodríguez Freyle",
+  "names": [
+    {
+      "value": "Juan Rodríguez Freyle",
+      "language": "Spanish",
+      "script": "Latin"
+    }
+  ],
+  "aliases": [
+    "Juan Rodríguez Freile"
+  ],
+  "identity_status": "attested",
+  "lifespan": {
+    "start": "1566-04-25",
+    "end": null,
+    "precision": "unknown",
+    "note": "Banco de la República gives birth on 25 April 1566 and death toward 1642; other Banco de la República scholarship uses 1638. End year remains unresolved in v0.1."
+  },
+  "active_period": {
+    "start": "1636",
+    "end": "1636",
+    "precision": "year",
+    "note": "Relevant writing horizon for El Carnero in Banrepcultural's description."
+  },
+  "place_refs": [],
+  "source_refs": [
+    "superhero:SRC-SH-COL-BANREP-FREYLE-BIO",
+    "superhero:SRC-SH-COL-BANREP-MUISCA-DORADO",
+    "superhero:SRC-SH-COL-FREYLE-EL-CARNERO-1636",
+    "superhero:SRC-SH-COL-MUISCA-RAFT-2021",
+    "legend:SRC-COL-CAMBRIDGE-GUATAVITA-2024"
+  ],
+  "claim_refs": [
+    "CLM-PER-COL-FREYLE-001",
+    "CLM-PER-COL-FREYLE-002",
+    "CLM-PER-COL-FREYLE-003",
+    "CLM-PER-COL-FREYLE-004",
+    "CLM-PER-COL-FREYLE-005"
+  ],
+  "relationship_refs": [
+    "REL-PER-COL-FREYLE-AUTHORED-EL-CARNERO",
+    "REL-PER-COL-FREYLE-RECORDED-MFTL-GUATAVITA",
+    "REL-PER-COL-FREYLE-INTERPRETED-LEGEND-GUATAVITA"
+  ],
+  "uncertainty": [
+    "Freyle was not a direct witness of the pre-contact Guatavita offering activity modeled in LEGEND.",
+    "His statement that don Juan was his informant is source evidence for a claimed transmission chain; don Juan is not yet canonicalized as a separate SUPERHERO person.",
+    "Being an early surviving recorder of a version does not establish that Freyle invented or originated the tradition.",
+    "Biographical references differ on Freyle's death year."
+  ],
+  "review": {
+    "status": "canonical",
+    "reviewed_by": "Rocksoul Research evidence review",
+    "note": "Canonical scope is historical identity and documented recorder/compiler role in the Guatavita/El Dorado transmission chain."
+  }
+}

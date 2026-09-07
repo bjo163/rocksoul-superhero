@@ -1,0 +1,18 @@
+{
+  "id": "REL-PER-COL-FREYLE-RECORDED-MFTL-GUATAVITA",
+  "subject_id": "PER-COL-JUAN-RODRIGUEZ-FREYLE",
+  "relation": "recorded",
+  "object_ref": "mftl:CAND-COL-MUISCA-EL-DORADO-GUATAVITA-000001",
+  "proximity": "later_compiler",
+  "status": "supported",
+  "confidence": 0.93,
+  "source_refs": [
+    "superhero:SRC-SH-COL-FREYLE-EL-CARNERO-1636",
+    "superhero:SRC-SH-COL-BANREP-MUISCA-DORADO",
+    "superhero:SRC-SH-COL-MUISCA-RAFT-2021"
+  ],
+  "uncertainty": [
+    "The MFTL target is a modern research candidate representing the Guatavita/El Dorado narrative family; this relation means Freyle is one historical recorder contributing to that narrative tradition, not that he recorded the modern JSON object."
+  ],
+  "note": "Recorder ≠ originator."
+}

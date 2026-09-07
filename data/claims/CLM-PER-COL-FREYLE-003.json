@@ -1,0 +1,14 @@
+{
+  "id": "CLM-PER-COL-FREYLE-003",
+  "subject_id": "PER-COL-JUAN-RODRIGUEZ-FREYLE",
+  "statement": "In his Guatavita account, Freyle states that don Juan, cacique and lord of Guatavita, told him the relevant antiquities/traditions.",
+  "claim_type": "transmission",
+  "epistemic_status": "supported_as_documentary_attestation",
+  "source_refs": [
+    "superhero:SRC-SH-COL-FREYLE-EL-CARNERO-1636",
+    "superhero:SRC-SH-COL-MUISCA-RAFT-2021"
+  ],
+  "notes": [
+    "This supports Freyle's claimed informant chain; it does not independently verify every detail attributed to don Juan."
+  ]
+}

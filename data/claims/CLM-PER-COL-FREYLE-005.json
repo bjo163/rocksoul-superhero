@@ -1,0 +1,14 @@
+{
+  "id": "CLM-PER-COL-FREYLE-005",
+  "subject_id": "PER-COL-JUAN-RODRIGUEZ-FREYLE",
+  "statement": "Modern scholarship identifies Freyle's version as an important point in the textual association of the Lake Guatavita ceremony with chiefly investiture/legitimation.",
+  "claim_type": "interpretation",
+  "epistemic_status": "probable",
+  "source_refs": [
+    "superhero:SRC-SH-COL-MUISCA-RAFT-2021",
+    "legend:SRC-COL-CAMBRIDGE-GUATAVITA-2024"
+  ],
+  "notes": [
+    "This is a scholarly interpretation of transmission history, not proof that Freyle single-handedly created the investiture motif."
+  ]
+}

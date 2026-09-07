@@ -1,0 +1,18 @@
+{
+  "id": "REL-PER-COL-FREYLE-INTERPRETED-LEGEND-GUATAVITA",
+  "subject_id": "PER-COL-JUAN-RODRIGUEZ-FREYLE",
+  "relation": "interpreted",
+  "object_ref": "legend:EVT-COL-GUATAVITA-OFFERINGS",
+  "proximity": "later_compiler",
+  "status": "probable",
+  "confidence": 0.86,
+  "source_refs": [
+    "superhero:SRC-SH-COL-BANREP-MUISCA-DORADO",
+    "superhero:SRC-SH-COL-MUISCA-RAFT-2021",
+    "legend:SRC-COL-CAMBRIDGE-GUATAVITA-2024"
+  ],
+  "uncertainty": [
+    "LEGEND's canonical event is limited to archaeologically defensible offering activity; Freyle's lavish investiture description is a later narrative interpretation and should not be collapsed into the event record."
+  ],
+  "note": "This relationship captures Freyle's later textual interpretation of the event tradition."
+}

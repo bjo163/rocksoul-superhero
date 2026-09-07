@@ -1,0 +1,14 @@
+{
+  "id": "CLM-PER-COL-FREYLE-004",
+  "subject_id": "PER-COL-JUAN-RODRIGUEZ-FREYLE",
+  "statement": "Freyle's Guatavita description is a later colonial record rather than direct eyewitness testimony of the pre-contact ritual activity.",
+  "claim_type": "chronology",
+  "epistemic_status": "strongly_supported",
+  "source_refs": [
+    "superhero:SRC-SH-COL-BANREP-MUISCA-DORADO",
+    "legend:SRC-COL-CAMBRIDGE-GUATAVITA-2024"
+  ],
+  "notes": [
+    "Temporal distance is modeled as proximity information, not as automatic unreliability."
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "EVD-PER-COL-FREYLE-004",
+  "claim_id": "CLM-PER-COL-FREYLE-004",
+  "relation": "contextualizes",
+  "evidence_type": "chronological",
+  "summary": "Banco de la República explicitly calls Freyle's 1636 description very late, while LEGEND's archaeological record models the relevant offering activity as pre-contact.",
+  "source_refs": [
+    "superhero:SRC-SH-COL-BANREP-MUISCA-DORADO",
+    "legend:SRC-COL-CAMBRIDGE-GUATAVITA-2024"
+  ],
+  "confidence": 0.98,
+  "limitations": [
+    "Late testimony can preserve earlier tradition; temporal distance alone does not settle accuracy."
+  ]
+}

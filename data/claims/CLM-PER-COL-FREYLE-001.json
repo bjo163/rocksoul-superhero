@@ -1,0 +1,11 @@
+{
+  "id": "CLM-PER-COL-FREYLE-001",
+  "subject_id": "PER-COL-JUAN-RODRIGUEZ-FREYLE",
+  "statement": "Juan Rodríguez Freyle was a historical colonial writer/chronicler associated with El Carnero.",
+  "claim_type": "identity",
+  "epistemic_status": "strongly_supported",
+  "source_refs": [
+    "superhero:SRC-SH-COL-BANREP-FREYLE-BIO"
+  ],
+  "notes": []
+}

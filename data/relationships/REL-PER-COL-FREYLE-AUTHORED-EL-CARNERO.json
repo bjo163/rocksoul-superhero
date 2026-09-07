@@ -1,0 +1,15 @@
+{
+  "id": "REL-PER-COL-FREYLE-AUTHORED-EL-CARNERO",
+  "subject_id": "PER-COL-JUAN-RODRIGUEZ-FREYLE",
+  "relation": "authored",
+  "object_ref": "superhero:SRC-SH-COL-FREYLE-EL-CARNERO-1636",
+  "proximity": "later_compiler",
+  "status": "supported",
+  "confidence": 0.99,
+  "source_refs": [
+    "superhero:SRC-SH-COL-BANREP-FREYLE-BIO",
+    "superhero:SRC-SH-COL-FREYLE-EL-CARNERO-1636"
+  ],
+  "uncertainty": [],
+  "note": "Proximity is relative to the pre-contact Guatavita event described in the source, not to the act of authoring the source itself."
+}
