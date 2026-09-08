@@ -55,7 +55,7 @@ if (!main.includes("publicRecordCollections")) failures.push("automatic public r
 if (!main.includes("snapshot.taxonomy.relations") || !main.includes("snapshot.taxonomy.proximity")) failures.push("taxonomy visualization")
 if (!main.includes("Object.entries(snapshot.schemas)")) failures.push("schema visualization")
 if (!main.includes("value.candidates") || !main.includes("candidatePeople") || !main.includes("candidateIds")) failures.push("candidate PERSON visualization")
-if (!main.includes("URLSearchParams") || !main.includes("history.replaceState") || !main.includes("history[mode === \"push\" ? \"pushState\" : \"replaceState\"]")) failures.push("shareable URL-state contract")
+if (!main.includes("URLSearchParams") || !main.includes("window.history") || !main.includes('"pushState"') || !main.includes('"replaceState"')) failures.push("shareable URL-state contract")
 if (!main.includes("identityFilter") || !main.includes("relationFilter") || !main.includes('id="superhero-search"')) failures.push("search/filter contract")
 if (!main.includes("QualitySection") || !main.includes("selectedSourceIds") || !main.includes("matrix_relation_map")) failures.push("research quality coverage contract")
 if (!main.includes("navigator.share") || !main.includes("fallbackCopy")) failures.push("dossier share contract")

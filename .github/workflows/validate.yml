@@ -48,10 +48,15 @@ jobs:
           git fetch origin --prune
           mapfile -t branches < <(git ls-remote --heads origin | awk '{sub("refs/heads/", "", $2); print $2}' | sort)
           for branch in "${branches[@]}"; do
-            if [ "$branch" != "main" ]; then
-              echo "Deleting noncanonical remote branch: $branch"
-              git push origin --delete "$branch"
+            if [ "$branch" = "main" ]; then
+              continue
             fi
+            if [[ "$branch" == dependabot/* ]]; then
+              echo "Preserving ephemeral dependency-update branch: $branch"
+              continue
+            fi
+            echo "Deleting noncanonical remote branch: $branch"
+            git push origin --delete "$branch"
           done
-          remaining="$(git ls-remote --heads origin | awk '{sub("refs/heads/", "", $2); print $2}' | sort)"
-          test "$remaining" = "main"
+          canonical="$(git ls-remote --heads origin | awk '{sub("refs/heads/", "", $2); print $2}' | grep -v '^dependabot/' | sort || true)"
+          test "$canonical" = "main"

@@ -47,3 +47,15 @@ test("public observatory metadata contract is explicit", () => {
   assert.equal(config.site.robots, "index,follow")
   assert.equal(config.schema_version, "1.1")
 })
+
+
+test("main-only enforcement preserves only ephemeral dependency automation branches", () => {
+  const workflow = fs.readFileSync(".github/workflows/validate.yml", "utf8")
+  const branching = fs.readFileSync("docs/BRANCHING.md", "utf8")
+  const dependabot = fs.readFileSync(".github/dependabot.yml", "utf8")
+  assert.match(workflow, /dependabot\/\*/)
+  assert.match(workflow, /grep -v '\^dependabot\/'/)
+  assert.match(branching, /only canonical, long-lived SUPERHERO branch/)
+  assert.match(branching, /dependabot\/\*/)
+  assert.match(dependabot, /target-branch: "main"/)
+})
