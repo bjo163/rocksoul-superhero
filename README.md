@@ -6,11 +6,22 @@
 
 ### **TRACE THE PERSON.**
 
-#### WHO CARRIED THE STORY?
+#### IDENTITY · WITNESSING · AUTHORSHIP · TRANSMISSION
 
-A provenance-first repository for reconstructing **human agency, authorship, witnessing, transmission, interpretation, and narrative chain of custody** across Rocksoul Research.
+A provenance-first repository for reconstructing **human agency, authorship, witnessing, transmission, interpretation, and narrative chain of custody** across MoonWitness / Rocksoul Research.
 
-**ROCKSOUL RESEARCH · STORY × EVENT × PERSON × TEXT**
+**MOONWITNESS · ROCKSOUL RESEARCH · STORY × EVENT × PERSON × TEXT × LAW**
+
+<br/>
+
+[![Validation](https://github.com/bjo163/rocksoul-superhero/actions/workflows/validate.yml/badge.svg?branch=main)](https://github.com/bjo163/rocksoul-superhero/actions/workflows/validate.yml)
+![Branch](https://img.shields.io/badge/branch-main-111111)
+![Domain](https://img.shields.io/badge/domain-PERSON-6F6F6F)
+![Method](https://img.shields.io/badge/method-provenance--first-B43A32)
+
+<br/>
+
+[Architecture](#narrative-chain-of-custody) · [Canonical chain](#first-canonical-transmission-chain) · [Shared proof](#four-way-proof-case) · [Repository map](#repository-atlas)
 
 </div>
 
@@ -37,58 +48,56 @@ WHICH source supports that relation?
 WHAT changed between one actor and the next?
 ```
 
-## Signature concept
+## Narrative chain of custody
 
-### NARRATIVE CHAIN OF CUSTODY
-
-```text
-EVENT
-  ↓ witnessed / participated
-PERSON
-  ↓ reported / recorded
-SOURCE
-  ↓ copied / translated / edited
-PERSON
-  ↓ transmitted / interpreted
-NARRATIVE
+```mermaid
+flowchart LR
+    A["EVENT"] -->|witnessed / participated| B["PERSON"]
+    B -->|reported / recorded| C["SOURCE"]
+    C -->|copied / translated / edited| D["PERSON"]
+    D -->|transmitted / interpreted| E["NARRATIVE"]
+    C --> F["CLAIMS"]
+    F --> G["EVIDENCE"]
+    G --> H["PROXIMITY + UNCERTAINTY"]
 ```
 
 A gap in the chain is itself data.
 
-## Rocksoul Research ecosystem
+<div align="center">
 
-| Repository | Domain | Question | Mantra |
+### **IDENTITY ≠ ROLE · WITNESS ≠ PERFECT WITNESS**
+
+</div>
+
+## MoonWitness / Rocksoul research map
+
+| Repository | Domain | Core question | Mantra |
 |---|---|---|---|
-| **rocksoul-mftl** | Narrative Intelligence | What was told? | TRACE THE STORY. |
-| **rocksoul-legend** | Historical & Event Intelligence | What happened? | TRACE THE EVENT. |
-| **rocksoul-superhero** | Actor & Transmission Intelligence | Who was involved? | TRACE THE PERSON. |
-| **rocksoul-rgbl** | Scripture & Revelation Reference | What does the source text say? | TRACE THE TEXT. |
-
-Ownership rule:
+| [`rocksoul-mftl`](https://github.com/bjo163/rocksoul-mftl) | STORY | What was told? | TRACE THE STORY. |
+| [`rocksoul-legend`](https://github.com/bjo163/rocksoul-legend) | EVENT | What happened? | TRACE THE EVENT. |
+| **`rocksoul-superhero`** | PERSON | Who was involved? | TRACE THE PERSON. |
+| [`rocksoul-rgbl`](https://github.com/bjo163/rocksoul-rgbl) | TEXT | What does the exact text say? | TRACE THE TEXT. |
+| [`rocksoul-aws`](https://github.com/bjo163/rocksoul-aws) | LAW | Was it allowed? | TRACE THE LAW. |
 
 ```text
 STORY   → MFTL
 EVENT   → LEGEND
 PERSON  → SUPERHERO
 TEXT    → RGBL
+LAW     → AWS
 ```
+
+**SUPERHERO owns canonical PERSON / actor / transmission records.** It contributes human proximity and chain-of-custody evidence without inheriting ownership of events, narratives, exact scripture text, or legal conclusions.
 
 ## Golden rules
 
-**IDENTITY ≠ ROLE.**
-
-**AUTHOR ≠ ORIGINATOR.**
-
-**WITNESS ≠ PERFECT WITNESS.**
-
-**RECORDED ≠ INVENTED.**
-
-**TRANSLATED ≠ AUTHORED.**
-
-**LATER COMPILER ≠ CONTEMPORARY SOURCE.**
-
-**PORTRAYED AS HERO ≠ OBJECTIVELY HERO.**
-
+**IDENTITY ≠ ROLE.**  
+**AUTHOR ≠ ORIGINATOR.**  
+**WITNESS ≠ PERFECT WITNESS.**  
+**RECORDED ≠ INVENTED.**  
+**TRANSLATED ≠ AUTHORED.**  
+**LATER COMPILER ≠ CONTEMPORARY SOURCE.**  
+**PORTRAYED AS HERO ≠ OBJECTIVELY HERO.**  
 **UNCERTAINTY IS DATA.**
 
 ## Four-way proof case
@@ -98,7 +107,7 @@ TEXT    → RGBL
 `PER-JERUSALEM-FLAVIUS-JOSEPHUS`
 
 ```text
-RGBL      Mark 13:2 text
+RGBL      Mark 13:2 exact text
 MFTL      prediction narrative
 LEGEND    70 CE destruction event
 SUPERHERO Josephus — direct witness / recorder
@@ -107,20 +116,6 @@ SUPERHERO Josephus — direct witness / recorder
 SUPERHERO contributes **human proximity and chain of custody**. Josephus's presence strengthens documentary provenance; it does not turn his interpretations into automatic fact and does not prove a theological reading of Mark 13:2.
 
 [Read the shared case →](docs/cases/JERUSALEM-70-TEMPLE.md)
-
-## Foundation target
-
-SUPERHERO v0.1 will remain intentionally small:
-
-- person identity + uncertainty;
-- actor-to-event/source/narrative relationships;
-- temporal proximity;
-- local claims + evidence;
-- cross-repository references to MFTL and LEGEND;
-- semantic graph validation from day one;
-- one complete transmission chain as proof.
-
-The first integration target uses the **Guatavita / El Dorado** research already present in MFTL and LEGEND.
 
 ## First canonical transmission chain
 
@@ -153,7 +148,7 @@ ORIGINATOR             NOT ESTABLISHED
 
 Freyle states that **don Juan, cacique of Guatavita**, told him the relevant traditions. SUPERHERO preserves that as a documented informant claim without prematurely creating a second canonical person.
 
-Current graph:
+## Current graph
 
 ```text
 2 canonical people
@@ -171,6 +166,41 @@ legend:EVT-COL-GUATAVITA-OFFERINGS
 mftl:CAND-COL-MUISCA-EL-DORADO-GUATAVITA-000001
 ```
 
-**SUPERHERO v0.1 is mature enough to stop expanding the foundation.**
+## Foundation boundary
 
-No UI, database, backend, scoring, hero ranking, psychology profiling, or automation is required for the foundation.
+SUPERHERO deliberately keeps the foundation bounded:
+
+- person identity + uncertainty;
+- actor-to-event/source/narrative relationships;
+- temporal proximity;
+- local claims + evidence;
+- cross-repository references;
+- semantic graph validation;
+- complete transmission chains as proof cases.
+
+No hero ranking, psychology profiling, or moral scoring is implied by the repository name.
+
+## Repository atlas
+
+```text
+rocksoul-superhero/
+├── data/            people, claims, evidence, actor relations
+├── docs/            method, cases, interoperability
+├── schemas/         machine-valid person/transmission contracts
+├── scripts/         validation and graph checks
+└── .github/         CI and repository automation
+```
+
+---
+
+<div align="center">
+
+## **TRACE THE PERSON.**
+
+### **IDENTITY · PROXIMITY · SOURCE · TRANSMISSION · UNCERTAINTY**
+
+**Follow the human chain without turning attribution into verdict.**
+
+`SUPERHERO / MoonWitness · Rocksoul Research`
+
+</div>
