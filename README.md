@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="https://raw.githubusercontent.com/bjo163/rocksoul-assets/main/moonwitness/brand/logo-horizontal.svg" alt="MoonWitness" width="380" />
+
 # SUPERHERO
 
 ## ACTOR & TRANSMISSION INTELLIGENCE
@@ -18,10 +20,12 @@ A provenance-first repository for reconstructing **human agency, authorship, wit
 ![Branch](https://img.shields.io/badge/branch-main-111111)
 ![Domain](https://img.shields.io/badge/domain-PERSON-6F6F6F)
 ![Method](https://img.shields.io/badge/method-provenance--first-B43A32)
+![Design](https://img.shields.io/badge/design-rocksoul--assets-6C63FF)
+![Console](https://img.shields.io/badge/console-rocksoul--crayon-2E8B57)
 
 <br/>
 
-[Architecture](#narrative-chain-of-custody) · [Canonical chain](#first-canonical-transmission-chain) · [Shared proof](#four-way-proof-case) · [Repository map](#repository-atlas)
+[Architecture](#narrative-chain-of-custody) · [Canonical chain](#first-canonical-transmission-chain) · [Shared proof](#four-way-proof-case) · [Repository map](#repository-atlas) · [Assets](https://github.com/bjo163/rocksoul-assets) · [Console](https://github.com/bjo163/rocksoul-crayon)
 
 </div>
 
@@ -36,6 +40,18 @@ A translator is not automatically an author.
 A famous role is not the same thing as historical identity.
 
 That separation is the foundation of SUPERHERO.
+
+## Visual + console boundary
+
+<div align="center">
+
+<img src="https://raw.githubusercontent.com/bjo163/rocksoul-assets/main/moonwitness/ui/v2/24-resources.svg" alt="Rocksoul resource navigation" width="860" />
+
+</div>
+
+- **`rocksoul-assets`** owns shared visual language and console references.
+- **`rocksoul-crayon`** exposes PERSON resources through the common AutoMenu / workspace shell.
+- **SUPERHERO remains canonical owner of PERSON / actor / transmission data.**
 
 ## Core question
 
@@ -71,15 +87,19 @@ A gap in the chain is itself data.
 
 ## MoonWitness / Rocksoul research map
 
-| Repository | Domain | Core question | Mantra |
-|---|---|---|---|
-| [`rocksoul-mftl`](https://github.com/bjo163/rocksoul-mftl) | STORY | What was told? | TRACE THE STORY. |
-| [`rocksoul-legend`](https://github.com/bjo163/rocksoul-legend) | EVENT | What happened? | TRACE THE EVENT. |
-| **`rocksoul-superhero`** | PERSON | Who was involved? | TRACE THE PERSON. |
-| [`rocksoul-rgbl`](https://github.com/bjo163/rocksoul-rgbl) | TEXT | What does the exact text say? | TRACE THE TEXT. |
-| [`rocksoul-aws`](https://github.com/bjo163/rocksoul-aws) | LAW | Was it allowed? | TRACE THE LAW. |
+| Repository | Layer | Core question / role |
+|---|---|---|
+| [`rocksoul-assets`](https://github.com/bjo163/rocksoul-assets) | DESIGN | How should the ecosystem look? |
+| [`rocksoul-crayon`](https://github.com/bjo163/rocksoul-crayon) | CONSOLE | How do operators work across it? |
+| [`rocksoul-mftl`](https://github.com/bjo163/rocksoul-mftl) | STORY | What was told? |
+| [`rocksoul-legend`](https://github.com/bjo163/rocksoul-legend) | EVENT | What happened? |
+| **`rocksoul-superhero`** | PERSON | Who was involved? |
+| [`rocksoul-rgbl`](https://github.com/bjo163/rocksoul-rgbl) | TEXT | What does the exact text say? |
+| [`rocksoul-aws`](https://github.com/bjo163/rocksoul-aws) | LAW | Was it allowed? |
 
 ```text
+DESIGN  → ASSETS
+CONSOLE → CRAYON
 STORY   → MFTL
 EVENT   → LEGEND
 PERSON  → SUPERHERO
@@ -194,6 +214,8 @@ rocksoul-superhero/
 ---
 
 <div align="center">
+
+<img src="https://raw.githubusercontent.com/bjo163/rocksoul-assets/main/moonwitness/brand/rocksoul-lockup.svg" alt="Rocksoul" width="480" />
 
 ## **TRACE THE PERSON.**
 
