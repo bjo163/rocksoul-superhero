@@ -3,7 +3,7 @@
   "source": {
     "repository": "bjo163/rocksoul-superhero",
     "ref": "main",
-    "dataset_sha256": "64f3606ec32b66d3814b92a6c57ab9fe2d33181a46caa716e10fa8347d7bd690"
+    "dataset_sha256": "6cf7c83704a1df05208d990e98e7a51946f075ead61647331564e941a3f2f550"
   },
   "counts": {
     "canonical_people": 3,
@@ -181,6 +181,7 @@
       }
     }
   ],
+  "candidates": [],
   "claims": [
     {
       "id": "CLM-PER-COL-FREYLE-001",
@@ -650,5 +651,777 @@
         "Used to support anonymous archaeological-person identity only; proposed names, royal status, kinship, cult role, and geographic ancestry remain hypotheses."
       ]
     }
-  ]
+  ],
+  "taxonomy": {
+    "schema_version": "0.1",
+    "relations": [
+      {
+        "code": "R01",
+        "id": "witnessed",
+        "label": "Witnessed"
+      },
+      {
+        "code": "R02",
+        "id": "participated_in",
+        "label": "Participated In"
+      },
+      {
+        "code": "R03",
+        "id": "caused",
+        "label": "Caused"
+      },
+      {
+        "code": "R04",
+        "id": "reported",
+        "label": "Reported"
+      },
+      {
+        "code": "R05",
+        "id": "recorded",
+        "label": "Recorded"
+      },
+      {
+        "code": "R06",
+        "id": "authored",
+        "label": "Authored"
+      },
+      {
+        "code": "R07",
+        "id": "copied",
+        "label": "Copied"
+      },
+      {
+        "code": "R08",
+        "id": "translated",
+        "label": "Translated"
+      },
+      {
+        "code": "R09",
+        "id": "edited",
+        "label": "Edited"
+      },
+      {
+        "code": "R10",
+        "id": "transmitted",
+        "label": "Transmitted"
+      },
+      {
+        "code": "R11",
+        "id": "interpreted",
+        "label": "Interpreted"
+      },
+      {
+        "code": "R12",
+        "id": "popularized",
+        "label": "Popularized"
+      },
+      {
+        "code": "R13",
+        "id": "investigated",
+        "label": "Investigated"
+      },
+      {
+        "code": "R14",
+        "id": "disputed",
+        "label": "Disputed"
+      },
+      {
+        "code": "R15",
+        "id": "cited",
+        "label": "Cited"
+      },
+      {
+        "code": "R16",
+        "id": "commissioned",
+        "label": "Commissioned"
+      }
+    ],
+    "proximity": [
+      "direct_participant",
+      "direct_witness",
+      "contemporary_non_witness",
+      "near_contemporary",
+      "later_compiler",
+      "later_interpreter",
+      "modern_researcher",
+      "unknown"
+    ]
+  },
+  "schemas": {
+    "person": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "$id": "https://rocksoul.dev/superhero/schemas/person.schema.json",
+      "title": "SUPERHERO Person Record",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "canonical_name",
+        "identity_status",
+        "lifespan",
+        "active_period",
+        "place_refs",
+        "source_refs",
+        "claim_refs",
+        "relationship_refs",
+        "uncertainty",
+        "review"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^PER-[A-Z0-9][A-Z0-9-]*$"
+        },
+        "canonical_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "names": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "value",
+              "language"
+            ],
+            "properties": {
+              "value": {
+                "type": "string",
+                "minLength": 1
+              },
+              "language": {
+                "type": "string",
+                "minLength": 1
+              },
+              "script": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          }
+        },
+        "aliases": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "identity_status": {
+          "enum": [
+            "attested",
+            "strongly_supported",
+            "probable",
+            "plausible",
+            "disputed",
+            "conflated",
+            "legendary",
+            "anonymous",
+            "indeterminate"
+          ]
+        },
+        "lifespan": {
+          "$ref": "#/definitions/timeRange"
+        },
+        "active_period": {
+          "$ref": "#/definitions/timeRange"
+        },
+        "place_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^legend:PLC-[A-Z0-9][A-Z0-9-]*$"
+          }
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/qualifiedRef"
+          }
+        },
+        "claim_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^CLM-PER-[A-Z0-9][A-Z0-9-]*$"
+          }
+        },
+        "relationship_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^REL-PER-[A-Z0-9][A-Z0-9-]*$"
+          }
+        },
+        "uncertainty": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "review": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status"
+          ],
+          "properties": {
+            "status": {
+              "enum": [
+                "candidate",
+                "reviewed",
+                "canonical",
+                "rejected"
+              ]
+            },
+            "reviewed_by": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "note": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        }
+      },
+      "definitions": {
+        "qualifiedRef": {
+          "type": "string",
+          "pattern": "^(mftl|legend|superhero):[A-Z0-9][A-Z0-9-]*$"
+        },
+        "timeRange": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "start",
+            "end",
+            "precision"
+          ],
+          "properties": {
+            "start": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "end": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "precision": {
+              "enum": [
+                "exact",
+                "date",
+                "year",
+                "year_range",
+                "century",
+                "century_range",
+                "period",
+                "relative",
+                "unknown"
+              ]
+            },
+            "note": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "claim": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "$id": "https://rocksoul.dev/superhero/schemas/claim.schema.json",
+      "title": "SUPERHERO Atomic Person Claim",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "subject_id",
+        "statement",
+        "claim_type",
+        "epistemic_status",
+        "source_refs",
+        "notes"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^CLM-PER-[A-Z0-9][A-Z0-9-]*$"
+        },
+        "subject_id": {
+          "type": "string",
+          "pattern": "^PER-[A-Z0-9][A-Z0-9-]*$"
+        },
+        "statement": {
+          "type": "string",
+          "minLength": 1
+        },
+        "claim_type": {
+          "enum": [
+            "identity",
+            "chronology",
+            "authorship",
+            "witnessing",
+            "participation",
+            "transmission",
+            "interpretation",
+            "attribution",
+            "other"
+          ]
+        },
+        "epistemic_status": {
+          "enum": [
+            "supported_as_documentary_attestation",
+            "strongly_supported",
+            "probable",
+            "plausible",
+            "disputed",
+            "unverified",
+            "contradicted",
+            "indeterminate"
+          ]
+        },
+        "source_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^(mftl|legend|superhero):[A-Z0-9][A-Z0-9-]*$"
+          }
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "evidence": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "$id": "https://rocksoul.dev/superhero/schemas/evidence.schema.json",
+      "title": "SUPERHERO Evidence Edge",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "claim_id",
+        "relation",
+        "evidence_type",
+        "summary",
+        "source_refs",
+        "confidence",
+        "limitations"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^EVD-PER-[A-Z0-9][A-Z0-9-]*$"
+        },
+        "claim_id": {
+          "type": "string",
+          "pattern": "^CLM-PER-[A-Z0-9][A-Z0-9-]*$"
+        },
+        "relation": {
+          "enum": [
+            "supports",
+            "contradicts",
+            "contextualizes",
+            "alternative_explanation",
+            "unresolved_uncertainty"
+          ]
+        },
+        "evidence_type": {
+          "enum": [
+            "textual",
+            "archival",
+            "biographical",
+            "documentary",
+            "epigraphic",
+            "manuscript",
+            "institutional",
+            "scholarly_interpretation",
+            "other"
+          ]
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^(mftl|legend|superhero):[A-Z0-9][A-Z0-9-]*$"
+          }
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "relationship": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "$id": "https://rocksoul.dev/superhero/schemas/relationship.schema.json",
+      "title": "SUPERHERO Actor Relationship",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "subject_id",
+        "relation",
+        "object_ref",
+        "proximity",
+        "status",
+        "confidence",
+        "source_refs",
+        "uncertainty"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^REL-PER-[A-Z0-9][A-Z0-9-]*$"
+        },
+        "subject_id": {
+          "type": "string",
+          "pattern": "^PER-[A-Z0-9][A-Z0-9-]*$"
+        },
+        "relation": {
+          "enum": [
+            "witnessed",
+            "participated_in",
+            "caused",
+            "reported",
+            "recorded",
+            "authored",
+            "copied",
+            "translated",
+            "edited",
+            "transmitted",
+            "interpreted",
+            "popularized",
+            "investigated",
+            "disputed",
+            "cited",
+            "commissioned"
+          ]
+        },
+        "object_ref": {
+          "type": "string",
+          "pattern": "^(mftl|legend|superhero):[A-Z0-9][A-Z0-9-]*$"
+        },
+        "proximity": {
+          "enum": [
+            "direct_participant",
+            "direct_witness",
+            "contemporary_non_witness",
+            "near_contemporary",
+            "later_compiler",
+            "later_interpreter",
+            "modern_researcher",
+            "unknown"
+          ]
+        },
+        "status": {
+          "enum": [
+            "supported",
+            "probable",
+            "plausible",
+            "disputed",
+            "rejected"
+          ]
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "source_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^(mftl|legend|superhero):[A-Z0-9][A-Z0-9-]*$"
+          }
+        },
+        "uncertainty": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "source": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "$id": "https://rocksoul.dev/superhero/schemas/source.schema.json",
+      "title": "SUPERHERO Local Source",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "source_type",
+        "creator",
+        "date",
+        "locator",
+        "provenance",
+        "quality",
+        "notes"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^SRC-SH-[A-Z0-9][A-Z0-9-]*$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_type": {
+          "enum": [
+            "primary_document",
+            "archival_record",
+            "manuscript",
+            "scholarly_work",
+            "institutional",
+            "museum",
+            "library",
+            "other"
+          ]
+        },
+        "creator": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "date": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "language": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "locator": {
+          "type": "string",
+          "minLength": 1
+        },
+        "provenance": {
+          "type": "string",
+          "minLength": 1
+        },
+        "quality": {
+          "enum": [
+            "primary",
+            "high",
+            "medium",
+            "discovery_only",
+            "unknown"
+          ]
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "ui": {
+    "schema_version": "1.0",
+    "source": {
+      "repository": "bjo163/rocksoul-superhero",
+      "ref": "main"
+    },
+    "site": {
+      "url": "https://rocksoul-superhero.vercel.app/",
+      "title": "SUPERHERO · MoonWitness / Rocksoul Research",
+      "description": "SUPERHERO — provenance-first actor and transmission intelligence for MoonWitness / Rocksoul Research.",
+      "theme_color": "#0b0b0b",
+      "favicon_asset": "brand/favicon.svg",
+      "apple_touch_asset": "brand/generated/apple-touch-icon-180.png",
+      "og_asset": "brand/generated/og-card-1200x630.png",
+      "twitter_card": "summary_large_image"
+    },
+    "header": {
+      "brand_label": "SUPERHERO / PERSON INTELLIGENCE",
+      "live_label": "Canonical snapshot",
+      "search_href": "#search"
+    },
+    "hero": {
+      "eyebrow": "MOONWITNESS / ROCKSOUL RESEARCH / PERSON",
+      "headline": "TRACE THE PERSON.",
+      "accent": "KEEP THE CHAIN.",
+      "copy": "Actor & transmission intelligence for reconstructing identity, witnessing, authorship, recording, interpretation, and narrative chain of custody without turning attribution into verdict.",
+      "rules": [
+        "IDENTITY ≠ ROLE",
+        "WITNESS ≠ PERFECT WITNESS",
+        "UNCERTAINTY IS DATA"
+      ],
+      "asset": "ui/v2/24-resources.svg"
+    },
+    "metrics": [
+      {
+        "key": "canonical_people",
+        "label": "Canonical people"
+      },
+      {
+        "key": "candidates",
+        "label": "Candidates"
+      },
+      {
+        "key": "claims",
+        "label": "Claims"
+      },
+      {
+        "key": "evidence_edges",
+        "label": "Evidence edges"
+      },
+      {
+        "key": "sources",
+        "label": "Sources"
+      },
+      {
+        "key": "relationships",
+        "label": "Relationships"
+      },
+      {
+        "key": "relation_types",
+        "label": "Relation types"
+      }
+    ],
+    "filters": {
+      "search_label": "Search person / claim / source",
+      "search_placeholder": "Name, alias, claim, relationship, source…",
+      "identity_label": "Identity status",
+      "identity_all_label": "All identity states",
+      "relation_label": "Actor relation",
+      "relation_all_label": "All relations"
+    },
+    "sections": [
+      {
+        "id": "people",
+        "nav": true,
+        "index": "01",
+        "label": "People",
+        "eyebrow": "PEOPLE INDEX",
+        "headline": "FIND THE ACTOR. INSPECT THE ATTRIBUTION.",
+        "description": "Canonical and candidate PERSON records remain distinct, searchable, and fully inspectable."
+      },
+      {
+        "id": "transmission",
+        "nav": true,
+        "index": "02",
+        "label": "Transmission",
+        "eyebrow": "TRANSMISSION",
+        "headline": "FOLLOW THE HUMAN CHAIN.",
+        "description": "Every actor relationship exposes role, temporal proximity, confidence, supporting references, and uncertainty."
+      },
+      {
+        "id": "claims",
+        "nav": true,
+        "index": "03",
+        "label": "Evidence",
+        "eyebrow": "CLAIMS + EVIDENCE",
+        "headline": "ATTRIBUTION NEEDS SUPPORT.",
+        "description": "Claims and evidence remain separate records; stance, confidence, limitations and sources stay visible."
+      },
+      {
+        "id": "sources",
+        "nav": true,
+        "index": "04",
+        "label": "Sources",
+        "eyebrow": "SOURCE TRAIL",
+        "headline": "OPEN THE RECORD.",
+        "description": "Local source records expose complete provenance, creator, date, locator, quality, notes and citation context."
+      },
+      {
+        "id": "uncertainty",
+        "nav": true,
+        "index": "05",
+        "label": "Uncertainty",
+        "eyebrow": "UNCERTAINTY REGISTER",
+        "headline": "GAPS ARE DATA.",
+        "description": "Identity, witnessing, authorship and transmission can be strong in one dimension and unresolved in another."
+      },
+      {
+        "id": "taxonomy",
+        "nav": true,
+        "index": "06",
+        "label": "Taxonomy",
+        "eyebrow": "RELATIONSHIP VOCABULARY",
+        "headline": "NAME THE EDGE.",
+        "description": "Relation types and proximity states come from the canonical taxonomy rather than UI literals."
+      },
+      {
+        "id": "contract",
+        "nav": true,
+        "index": "07",
+        "label": "Contract",
+        "eyebrow": "DATA CONTRACT",
+        "headline": "SHOW THE SCHEMA.",
+        "description": "Every record type exposes its machine-readable schema and field contract alongside the records it governs."
+      }
+    ],
+    "person_index": {
+      "title": "CANONICAL PEOPLE",
+      "empty": "No person matches the current filters.",
+      "principle_title": "SUPERHERO is a brand, not a verdict.",
+      "principle_copy": "People are modeled as source-relative actors, not ranked heroes or villains."
+    },
+    "dossier": {
+      "eyebrow": "PERSON / ACTOR DOSSIER",
+      "actions": {
+        "transmission": "Trace transmission",
+        "evidence": "Inspect evidence"
+      },
+      "identity_eyebrow": "IDENTITY RECORD"
+    },
+    "states": {
+      "loading_eyebrow": "SUPERHERO / PERSON INTELLIGENCE",
+      "loading_headline": "LOADING THE HUMAN CHAIN.",
+      "loading_copy": "Opening the deployment-pinned canonical snapshot.",
+      "error_eyebrow": "DATA LOAD ERROR",
+      "error_headline": "THE CHAIN COULD NOT BE LOADED.",
+      "no_people": "No canonical person records."
+    },
+    "footer": {
+      "slogan": "PEOPLE LEAVE TRACES. TRACE THE CHAIN.",
+      "asset": "brand/rocksoul-lockup.svg"
+    }
+  }
 }
