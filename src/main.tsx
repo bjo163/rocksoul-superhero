@@ -4,6 +4,7 @@ import {
   Badge,
   Button,
   Citation,
+  ConfidenceMeter,
   DossierHeader,
   EvidenceCard,
   Input,
@@ -11,97 +12,104 @@ import {
   MWHeader,
   MoonWitnessAssetProvider,
   MoonWitnessPersonMark,
+  ObservatorySectionNav,
   ProvenanceRail,
+  QualifiedReferenceView,
+  RecordFieldGrid,
   Select,
   SourceBlock,
+  canonicalOwnerFor,
+  parseQualifiedReference,
+  semanticStatusVariant,
 } from "@rocksoul/ui"
 import "@rocksoul/ui/styles.css"
 import "./styles.css"
+import observatoryConfigJson from "../config/public-observatory.json"
 import type {
   ClaimRecord,
   EvidenceRecord,
+  ObservatoryConfig,
+  ObservatorySection,
   PersonRecord,
   RelationshipRecord,
   SourceRecord,
   SuperheroSnapshot,
 } from "./types"
 
+const bootConfig = observatoryConfigJson as ObservatoryConfig
 const assetBase = `${MOONWITNESS_STABLE_REPOSITORY_BASE}/moonwitness`
+const personOwner = canonicalOwnerFor("PERSON")
 
 function titleCase(value = "") {
   return value.replaceAll("_", " ").replace(/\b\w/g, (letter) => letter.toUpperCase())
 }
 
-function claimVariant(status: string) {
-  if (status.includes("strongly") || status.includes("supported")) return "supported" as const
-  if (status.includes("probable") || status.includes("partial")) return "partial" as const
-  if (status.includes("disputed") || status.includes("contradicted")) return "disputed" as const
-  return "unresolved" as const
+function sectionFor(config: ObservatoryConfig, id: string) {
+  const section = config.sections.find((item) => item.id === id)
+  if (!section) throw new Error(`Missing observatory section contract: ${id}`)
+  return section
 }
 
-function relationVariant(status: string) {
-  if (status === "supported") return "supported" as const
-  if (status === "probable" || status === "plausible") return "partial" as const
-  if (status === "disputed" || status === "rejected") return "disputed" as const
-  return "unresolved" as const
-}
-
-function evidenceStatus(relation: string) {
-  if (relation === "supports") return "supported" as const
-  if (relation === "contradicts") return "disputed" as const
-  if (relation === "contextualizes") return "partial" as const
-  return "unresolved" as const
-}
-
-function kindFromRef(ref: string) {
-  if (ref.startsWith("legend:EVT")) return "event" as const
-  if (ref.startsWith("legend:PLC")) return "location" as const
-  if (ref.startsWith("mftl:")) return "story" as const
-  if (ref.startsWith("rgbl:")) return "text" as const
-  if (ref.startsWith("aws:")) return "law" as const
-  if (ref.includes(":SRC-")) return "source" as const
-  if (ref.includes(":PER-")) return "person" as const
-  return "source" as const
-}
-
-function labelFromRef(ref: string) {
-  return ref.split(":").at(-1)?.replaceAll("-", " ") ?? ref
+function referenceLabel(ref: string) {
+  const parsed = parseQualifiedReference(ref)
+  return titleCase((parsed?.id ?? ref).replaceAll("-", " "))
 }
 
 function localSourceId(ref: string) {
-  return ref.startsWith("superhero:") ? ref.slice("superhero:".length) : null
+  const parsed = parseQualifiedReference(ref)
+  return parsed?.domain === "PERSON" && parsed.kind === "source" ? parsed.id : null
 }
 
-function queryPersonId() {
-  return new URLSearchParams(window.location.search).get("person") ?? ""
+function referenceHref(ref: string) {
+  const id = localSourceId(ref)
+  return id ? `#source-${id}` : undefined
 }
 
-function updatePersonUrl(personId: string) {
+function externalHttpHref(value?: string | null) {
+  if (!value) return undefined
+  try {
+    const url = new URL(value)
+    return url.protocol === "http:" || url.protocol === "https:" ? url.toString() : undefined
+  } catch {
+    return undefined
+  }
+}
+
+function queryPersonId(config: ObservatoryConfig) {
+  return new URLSearchParams(window.location.search).get(config.routing.person_param) ?? ""
+}
+
+function updatePersonUrl(config: ObservatoryConfig, personId: string) {
   const url = new URL(window.location.href)
-  url.searchParams.set("person", personId)
+  url.searchParams.set(config.routing.person_param, personId)
   window.history.replaceState({}, "", url)
 }
 
 async function loadSnapshot() {
-  const response = await fetch("/data/superhero.snapshot.json", { cache: "no-cache" })
+  const response = await fetch(bootConfig.source.snapshot_path, { cache: "no-cache" })
   if (!response.ok) throw new Error(`Snapshot request failed: ${response.status}`)
   return response.json() as Promise<SuperheroSnapshot>
 }
 
-function MetricStrip({ snapshot }: { snapshot: SuperheroSnapshot }) {
-  const items = [
-    ["Canonical people", snapshot.counts.canonical_people],
-    ["Claims", snapshot.counts.claims],
-    ["Evidence edges", snapshot.counts.evidence_edges],
-    ["Sources", snapshot.counts.sources],
-    ["Relationships", snapshot.counts.relationships],
-  ]
+function SectionHeader({ section }: { section: ObservatorySection }) {
   return (
-    <div className="metric-strip" aria-label="SUPERHERO graph summary">
-      {items.map(([label, value]) => (
-        <div key={label}>
-          <strong>{String(value).padStart(2, "0")}</strong>
-          <span>{label}</span>
+    <header className="section-header">
+      <div>
+        <p className="rs-eyebrow">{section.index} / {section.eyebrow}</p>
+        <h2>{section.headline}</h2>
+      </div>
+      <p>{section.description}</p>
+    </header>
+  )
+}
+
+function MetricStrip({ snapshot }: { snapshot: SuperheroSnapshot }) {
+  return (
+    <div className="metric-strip" aria-label={snapshot.ui.header.brand_label}>
+      {snapshot.ui.metrics.map((metric) => (
+        <div key={metric.key}>
+          <strong>{String(snapshot.counts[metric.key]).padStart(2, "0")}</strong>
+          <span>{metric.label}</span>
         </div>
       ))}
     </div>
@@ -109,37 +117,35 @@ function MetricStrip({ snapshot }: { snapshot: SuperheroSnapshot }) {
 }
 
 function Hero({ snapshot }: { snapshot: SuperheroSnapshot }) {
+  const { hero } = snapshot.ui
   return (
     <section id="top" className="superhero-hero">
       <div className="hero-grid">
         <div>
-          <p className="rs-eyebrow">MOONWITNESS / ROCKSOUL RESEARCH / PERSON</p>
-          <h1>TRACE THE PERSON.<br /><em>KEEP THE CHAIN.</em></h1>
-          <p className="hero-copy">
-            Actor & transmission intelligence for reconstructing identity, witnessing, authorship,
-            recording, interpretation, and narrative chain of custody without turning attribution into verdict.
-          </p>
+          <p className="rs-eyebrow">{hero.eyebrow}</p>
+          <h1>{hero.headline}<br /><em>{hero.accent}</em></h1>
+          <p className="hero-copy">{hero.copy}</p>
           <div className="rule-strip">
-            <span>IDENTITY ≠ ROLE</span>
-            <span>WITNESS ≠ PERFECT WITNESS</span>
-            <span>UNCERTAINTY IS DATA</span>
+            {hero.rules.map((rule) => <span key={rule}>{rule}</span>)}
           </div>
         </div>
         <div className="hero-art" aria-hidden="true">
-          <img src={`${assetBase}/ui/v2/24-resources.svg`} alt="" />
+          <img src={`${assetBase}/${hero.asset}`} alt="" />
         </div>
       </div>
       <MetricStrip snapshot={snapshot} />
       <div className="snapshot-bar">
-        <span>DEPLOYMENT SNAPSHOT</span>
-        <code>{snapshot.source.repository} · dataset:{snapshot.source.dataset_sha256.slice(0, 12)}</code>
-        <span>SCHEMA {snapshot.schema_version}</span>
+        <span>{hero.snapshot_label}</span>
+        <code>{snapshot.source.repository} · dataset:{snapshot.source.dataset_sha256}</code>
+        <span>{hero.schema_label} {snapshot.schema_version}</span>
       </div>
     </section>
   )
 }
 
 function Filters({
+  snapshot,
+  section,
   query,
   setQuery,
   identityFilter,
@@ -147,9 +153,10 @@ function Filters({
   relationFilter,
   setRelationFilter,
   identityOptions,
-  relationOptions,
   count,
 }: {
+  snapshot: SuperheroSnapshot
+  section: ObservatorySection
   query: string
   setQuery: (value: string) => void
   identityFilter: string
@@ -157,42 +164,42 @@ function Filters({
   relationFilter: string
   setRelationFilter: (value: string) => void
   identityOptions: string[]
-  relationOptions: string[]
   count: number
 }) {
+  const { filters } = snapshot.ui
   return (
-    <section id="search" className="filter-panel" aria-label="Search and filter canonical people">
+    <section id="search" className="filter-panel" aria-label={section.label}>
       <div className="filter-heading">
         <div>
-          <p className="rs-eyebrow">01 / PEOPLE INDEX</p>
-          <h2>FIND THE ACTOR. INSPECT THE ATTRIBUTION.</h2>
+          <p className="rs-eyebrow">{section.index} / {section.eyebrow}</p>
+          <h2>{section.headline}</h2>
         </div>
-        <Badge variant="neutral">{count} matching records</Badge>
+        <Badge variant="neutral">{count} {filters.matching_suffix}</Badge>
       </div>
       <div className="filter-grid">
         <Input
-          label="Search person / claim / source"
+          label={filters.search_label}
           variant="search"
           value={query}
           onChange={(event) => setQuery(event.currentTarget.value)}
-          placeholder="Josephus, Guatavita, witness…"
+          placeholder={filters.search_placeholder}
         />
         <Select
-          label="Identity status"
+          label={filters.identity_label}
           value={identityFilter}
           onChange={(event) => setIdentityFilter(event.currentTarget.value)}
           options={[
-            { label: "All identity states", value: "all" },
+            { label: filters.identity_all_label, value: "all" },
             ...identityOptions.map((value) => ({ label: titleCase(value), value })),
           ]}
         />
         <Select
-          label="Actor relation"
+          label={filters.relation_label}
           value={relationFilter}
           onChange={(event) => setRelationFilter(event.currentTarget.value)}
           options={[
-            { label: "All relations", value: "all" },
-            ...relationOptions.map((value) => ({ label: titleCase(value), value })),
+            { label: filters.relation_all_label, value: "all" },
+            ...snapshot.taxonomy.relations.map((relation) => ({ label: relation.label, value: relation.id })),
           ]}
         />
       </div>
@@ -200,19 +207,25 @@ function Filters({
   )
 }
 
-function PersonIndex({
+function PersonIndexGroup({
+  title,
   people,
   selectedId,
   onSelect,
+  empty,
+  badge,
 }: {
+  title: string
   people: PersonRecord[]
   selectedId: string
   onSelect: (id: string) => void
+  empty: string
+  badge?: string
 }) {
   return (
-    <aside className="person-index" aria-label="Canonical people">
+    <div className="person-index-group">
       <div className="index-heading">
-        <span>CANONICAL PEOPLE</span>
+        <span>{title}</span>
         <strong>{String(people.length).padStart(2, "0")}</strong>
       </div>
       {people.map((person, index) => (
@@ -225,50 +238,86 @@ function PersonIndex({
           <span className="record-no">{String(index + 1).padStart(2, "0")}</span>
           <span className="person-label">
             <strong>{person.canonical_name}</strong>
-            <small>{titleCase(person.identity_status)} · {person.active_period.start ?? "unknown"}</small>
+            <small>{titleCase(person.identity_status)} · {person.active_period.start ?? "—"}</small>
+            {badge ? <Badge variant="info">{badge}</Badge> : null}
           </span>
           <span aria-hidden="true">→</span>
         </button>
       ))}
-      {!people.length ? <p className="index-empty">No person matches the current filters.</p> : null}
+      {!people.length ? <p className="index-empty">{empty}</p> : null}
+    </div>
+  )
+}
+
+function PersonIndex({
+  snapshot,
+  canonicalPeople,
+  candidatePeople,
+  selectedId,
+  onSelect,
+}: {
+  snapshot: SuperheroSnapshot
+  canonicalPeople: PersonRecord[]
+  candidatePeople: PersonRecord[]
+  selectedId: string
+  onSelect: (id: string) => void
+}) {
+  const copy = snapshot.ui.person_index
+  return (
+    <aside className="person-index" aria-label={sectionFor(snapshot.ui, "people").label}>
+      <PersonIndexGroup title={copy.title} people={canonicalPeople} selectedId={selectedId} onSelect={onSelect} empty={copy.empty} />
+      <PersonIndexGroup
+        title={copy.candidate_title}
+        people={candidatePeople}
+        selectedId={selectedId}
+        onSelect={onSelect}
+        empty={copy.candidate_empty}
+        badge={snapshot.ui.labels.candidate_badge}
+      />
       <div className="index-note">
-        <p>SUPERHERO is a brand, not a verdict.</p>
-        <span>People are modeled as source-relative actors, not ranked heroes or villains.</span>
+        <p>{copy.principle_title}</p>
+        <span>{copy.principle_copy}</span>
       </div>
     </aside>
   )
 }
 
 function PersonDossier({
+  snapshot,
   person,
   claims,
   relationships,
+  candidate,
 }: {
+  snapshot: SuperheroSnapshot
   person: PersonRecord
   claims: ClaimRecord[]
   relationships: RelationshipRecord[]
+  candidate: boolean
 }) {
-  const activePeriod = [person.active_period.start, person.active_period.end].filter(Boolean).join(" → ") || "Unknown"
-  const identityVariant = person.identity_status === "attested" ? "verified" : person.identity_status === "anonymous" ? "unresolved" : claimVariant(person.identity_status)
+  const activePeriod = [person.active_period.start, person.active_period.end].filter(Boolean).join(" → ") || "—"
+  const dossier = snapshot.ui.dossier
+  const recordClass = candidate ? dossier.candidate_label : dossier.canonical_label
 
   return (
     <div className="dossier-stack">
       <DossierHeader
-        eyebrow="PERSON / ACTOR DOSSIER"
+        eyebrow={dossier.eyebrow}
         title={person.canonical_name}
         summary={person.review.note ?? undefined}
         recordId={person.id}
-        status={{ label: titleCase(person.identity_status), variant: identityVariant }}
+        status={{ label: titleCase(person.identity_status), variant: semanticStatusVariant(person.identity_status) }}
         metadata={[
-          { label: "Review", value: person.review.status },
-          { label: "Active period", value: activePeriod },
-          { label: "Claims", value: String(claims.length) },
-          { label: "Relations", value: String(relationships.length) },
+          { label: dossier.metadata.review, value: person.review.status },
+          { label: dossier.metadata.active_period, value: activePeriod },
+          { label: dossier.metadata.claims, value: String(claims.length) },
+          { label: dossier.metadata.relations, value: String(relationships.length) },
+          { label: dossier.metadata.record_class, value: recordClass },
         ]}
         actions={
           <>
-            <Button onClick={() => document.getElementById("transmission")?.scrollIntoView({ behavior: "smooth" })}>Trace transmission</Button>
-            <Button variant="secondary" onClick={() => document.getElementById("claims")?.scrollIntoView({ behavior: "smooth" })}>Inspect evidence</Button>
+            <Button onClick={() => document.getElementById("transmission")?.scrollIntoView({ behavior: "smooth" })}>{dossier.actions.transmission}</Button>
+            <Button variant="secondary" onClick={() => document.getElementById("claims")?.scrollIntoView({ behavior: "smooth" })}>{dossier.actions.evidence}</Button>
           </>
         }
       />
@@ -276,104 +325,80 @@ function PersonDossier({
         <div className="identity-mark-card">
           <MoonWitnessPersonMark alt="" className="person-mark" />
           <div>
-            <p className="rs-eyebrow">IDENTITY RECORD</p>
+            <p className="rs-eyebrow">{dossier.identity_eyebrow}</p>
             <h3>{person.canonical_name}</h3>
-            <span>{person.aliases?.length ? person.aliases.join(" · ") : "No aliases recorded"}</span>
+            <Badge variant={candidate ? "info" : "verified"}>{recordClass}</Badge>
           </div>
         </div>
-        <dl className="identity-grid">
-          <div><dt>Identity status</dt><dd>{titleCase(person.identity_status)}</dd></div>
-          <div><dt>Birth / start</dt><dd>{person.lifespan.start ?? "Unresolved"}</dd></div>
-          <div><dt>Death / end</dt><dd>{person.lifespan.end ?? "Unresolved"}</dd></div>
-          <div><dt>Direct sources</dt><dd>{person.source_refs.length}</dd></div>
-        </dl>
-        {person.lifespan.note ? <p className="scope-note">{person.lifespan.note}</p> : null}
+        <div className="record-ledger-panel">
+          <p className="rs-eyebrow">{snapshot.ui.labels.record_fields}</p>
+          <RecordFieldGrid record={person as unknown as Record<string, unknown>} referenceHref={referenceHref} />
+        </div>
       </div>
     </div>
   )
 }
 
-function SourceRefList({ refs, sources }: { refs: string[]; sources: Map<string, SourceRecord> }) {
-  return (
-    <div className="ref-list">
-      {refs.map((ref) => {
-        const id = localSourceId(ref)
-        const local = id ? sources.get(id) : undefined
-        return local ? (
-          <a key={ref} href={`#source-${id}`}><code>{ref}</code></a>
-        ) : <code key={ref}>{ref}</code>
-      })}
-    </div>
-  )
-}
-
 function TransmissionSection({
+  snapshot,
   person,
   relationships,
-  sourceMap,
 }: {
+  snapshot: SuperheroSnapshot
   person: PersonRecord
   relationships: RelationshipRecord[]
-  sourceMap: Map<string, SourceRecord>
 }) {
+  const section = sectionFor(snapshot.ui, "transmission")
   const nodes = [
     { id: person.id, kind: "person" as const, label: person.canonical_name, detail: titleCase(person.identity_status), active: true },
-    ...relationships.slice(0, 5).map((relationship) => ({
-      id: relationship.id,
-      kind: kindFromRef(relationship.object_ref),
-      label: labelFromRef(relationship.object_ref),
-      detail: titleCase(relationship.relation),
-      external: !relationship.object_ref.startsWith("superhero:"),
-      unresolved: relationship.status !== "supported",
-    })),
+    ...relationships.map((relationship) => {
+      const parsed = parseQualifiedReference(relationship.object_ref)
+      const variant = semanticStatusVariant(relationship.status)
+      return {
+        id: relationship.id,
+        kind: parsed?.kind ?? personOwner.defaultKind,
+        label: referenceLabel(relationship.object_ref),
+        detail: titleCase(relationship.relation),
+        external: parsed ? parsed.domain !== "PERSON" : true,
+        unresolved: variant === "unresolved" || variant === "contested" || variant === "disputed",
+      }
+    }),
   ]
 
   return (
-    <section id="transmission" className="research-section">
-      <header className="section-header">
-        <div>
-          <p className="rs-eyebrow">02 / TRANSMISSION</p>
-          <h2>FOLLOW THE HUMAN CHAIN.</h2>
-        </div>
-        <p>Every actor relationship exposes role, temporal proximity, confidence, supporting sources, and its own uncertainty register.</p>
-      </header>
+    <section id={section.id} className="research-section">
+      <SectionHeader section={section} />
       <ProvenanceRail nodes={nodes} description={nodes.map((node) => `${node.kind.toUpperCase()}: ${node.label}`).join(" → ")} />
       <div className="relationship-grid">
         {relationships.map((relationship) => (
           <article key={relationship.id} className="relationship-card">
             <div className="relationship-head">
-              <Badge variant={relationVariant(relationship.status)}>{relationship.status}</Badge>
-              <span>{Math.round(relationship.confidence * 100)}% confidence</span>
+              <Badge variant={semanticStatusVariant(relationship.status)}>{titleCase(relationship.status)}</Badge>
+              <QualifiedReferenceView value={relationship.object_ref} href={referenceHref(relationship.object_ref)} compact />
             </div>
             <p className="relationship-type">{titleCase(relationship.relation)}</p>
-            <dl>
-              <div><dt>Proximity</dt><dd>{titleCase(relationship.proximity)}</dd></div>
-              <div><dt>Target</dt><dd><code>{relationship.object_ref}</code></dd></div>
-            </dl>
-            <SourceRefList refs={relationship.source_refs} sources={sourceMap} />
-            {relationship.uncertainty.length ? (
-              <div className="relation-uncertainty">
-                <strong>Known uncertainty</strong>
-                {relationship.uncertainty.map((item) => <p key={item}>{item}</p>)}
-              </div>
-            ) : null}
-            {relationship.note ? <p className="relation-note">{relationship.note}</p> : null}
+            <ConfidenceMeter value={relationship.confidence} label={snapshot.ui.labels.confidence} detail={titleCase(relationship.proximity)} />
+            <RecordFieldGrid
+              record={relationship as unknown as Record<string, unknown>}
+              referenceHref={referenceHref}
+              className="relationship-record-grid"
+            />
           </article>
         ))}
-        {!relationships.length ? <div className="empty-state">No direct actor relationships recorded yet.</div> : null}
+        {!relationships.length ? <div className="empty-state">{snapshot.ui.labels.no_relationships}</div> : null}
       </div>
     </section>
   )
 }
 
 function EvidenceForClaim({
+  snapshot,
   claim,
   evidence,
-  sourceMap,
 }: {
+  snapshot: SuperheroSnapshot
   claim: ClaimRecord
   evidence: EvidenceRecord[]
-  sourceMap: Map<string, SourceRecord>
 }) {
   return (
     <article className="claim-block">
@@ -382,125 +407,120 @@ function EvidenceForClaim({
           <p className="rs-eyebrow">{titleCase(claim.claim_type)}</p>
           <h3>{claim.statement}</h3>
         </div>
-        <Badge variant={claimVariant(claim.epistemic_status)}>{titleCase(claim.epistemic_status)}</Badge>
+        <Badge variant={semanticStatusVariant(claim.epistemic_status)}>{titleCase(claim.epistemic_status)}</Badge>
       </div>
-      <p className="claim-id">{claim.id}</p>
-      <SourceRefList refs={claim.source_refs} sources={sourceMap} />
+      <RecordFieldGrid
+        record={claim as unknown as Record<string, unknown>}
+        referenceHref={referenceHref}
+        className="claim-record-grid"
+      />
       <div className="evidence-grid">
-        {evidence.map((item) => (
-          <div key={item.id} className="evidence-item">
-            <EvidenceCard
-              domain="PERSON"
-              recordId={item.id}
-              repo="rocksoul-superhero"
-              claim={item.summary}
-              provenance={item.source_refs.join(" · ")}
-              verification={`${titleCase(item.evidence_type)} · ${Math.round(item.confidence * 100)}%`}
-              status={evidenceStatus(item.relation)}
-              canonical
-              flagged={item.relation !== "supports"}
-              sourceHref={localSourceId(item.source_refs[0] ?? "") ? `#source-${localSourceId(item.source_refs[0] ?? "")}` : undefined}
-            />
-            {item.limitations.length ? (
-              <div className="evidence-limitations">
-                <strong>Limitations</strong>
-                {item.limitations.map((limitation) => <p key={limitation}>{limitation}</p>)}
-              </div>
-            ) : null}
-          </div>
-        ))}
-        {!evidence.length ? <div className="empty-state">No evidence edge recorded for this claim.</div> : null}
+        {evidence.map((item) => {
+          const status = semanticStatusVariant(item.relation)
+          return (
+            <div key={item.id} className="evidence-item">
+              <EvidenceCard
+                domain="PERSON"
+                recordId={item.id}
+                repo={personOwner.repository}
+                claim={item.summary}
+                provenance={item.source_refs.join(" · ")}
+                verification={titleCase(item.evidence_type)}
+                status={status}
+                canonical
+                flagged={status === "disputed" || status === "contested"}
+                sourceHref={referenceHref(item.source_refs[0] ?? "")}
+              />
+              <ConfidenceMeter value={item.confidence} label={snapshot.ui.labels.confidence} />
+              <RecordFieldGrid
+                record={item as unknown as Record<string, unknown>}
+                referenceHref={referenceHref}
+                className="evidence-record-grid"
+              />
+            </div>
+          )
+        })}
+        {!evidence.length ? <div className="empty-state">{snapshot.ui.labels.no_evidence}</div> : null}
       </div>
     </article>
   )
 }
 
 function ClaimsEvidenceSection({
+  snapshot,
   claims,
   evidence,
-  sourceMap,
 }: {
+  snapshot: SuperheroSnapshot
   claims: ClaimRecord[]
   evidence: EvidenceRecord[]
-  sourceMap: Map<string, SourceRecord>
 }) {
+  const section = sectionFor(snapshot.ui, "claims")
   return (
-    <section id="claims" className="research-section">
-      <header className="section-header">
-        <div>
-          <p className="rs-eyebrow">03 / CLAIMS + EVIDENCE</p>
-          <h2>ATTRIBUTION NEEDS SUPPORT.</h2>
-        </div>
-        <p>Claims and evidence remain separate records. Confidence, limitations, source refs, and documentary status stay visible at the point of inspection.</p>
-      </header>
+    <section id={section.id} className="research-section">
+      <SectionHeader section={section} />
       <div className="claim-stack">
         {claims.map((claim) => (
           <EvidenceForClaim
             key={claim.id}
+            snapshot={snapshot}
             claim={claim}
             evidence={evidence.filter((item) => item.claim_id === claim.id)}
-            sourceMap={sourceMap}
           />
         ))}
-        {!claims.length ? <div className="empty-state">No atomic claims recorded for this person.</div> : null}
+        {!claims.length ? <div className="empty-state">{snapshot.ui.labels.no_claims}</div> : null}
       </div>
     </section>
   )
 }
 
-function SourcesSection({ sources }: { sources: SourceRecord[] }) {
+function SourcesSection({ snapshot }: { snapshot: SuperheroSnapshot }) {
+  const section = sectionFor(snapshot.ui, "sources")
   return (
-    <section id="sources" className="research-section source-section">
-      <header className="section-header">
-        <div>
-          <p className="rs-eyebrow">04 / SOURCE TRAIL</p>
-          <h2>OPEN THE RECORD.</h2>
-        </div>
-        <p>Local source records expose creator, date, locator, provenance, quality, and citation context. External domain refs remain visibly external.</p>
-      </header>
+    <section id={section.id} className="research-section source-section">
+      <SectionHeader section={section} />
       <div className="source-grid">
-        {sources.map((source) => (
-          <article key={source.id} id={`source-${source.id}`} className="source-wrapper">
-            <SourceBlock
-              sourceId={source.id}
-              title={source.title}
-              excerpt={source.provenance}
-              citation={source.id}
-              provenance={source.locator ?? "No locator recorded"}
-              verification={source.quality ?? source.source_type}
-            />
-            <dl className="source-meta">
-              <div><dt>Type</dt><dd>{titleCase(source.source_type)}</dd></div>
-              <div><dt>Creator</dt><dd>{source.creator ?? "Not recorded"}</dd></div>
-              <div><dt>Date</dt><dd>{source.date ?? "Not recorded"}</dd></div>
-              <div><dt>Language</dt><dd>{source.language ?? "Not recorded"}</dd></div>
-            </dl>
-            <div className="source-actions">
-              <Citation code={source.id} source={source.title} locator={source.locator ?? "No locator recorded"} variant="block" />
-              {source.locator?.startsWith("http") ? (
-                <a className="source-open" href={source.locator} target="_blank" rel="noreferrer">OPEN PRIMARY LOCATOR ↗</a>
-              ) : null}
-            </div>
-            {source.notes.length ? (
-              <div className="source-notes">
-                {source.notes.map((note) => <p key={note}>{note}</p>)}
+        {snapshot.sources.map((source) => {
+          const href = externalHttpHref(source.locator)
+          return (
+            <article key={source.id} id={`source-${source.id}`} className="source-wrapper">
+              <SourceBlock
+                sourceId={source.id}
+                title={source.title}
+                excerpt={source.provenance}
+                citation={source.id}
+                provenance={source.locator ?? snapshot.ui.labels.source_no_locator}
+                verification={source.quality ?? source.source_type}
+              />
+              <RecordFieldGrid record={source as unknown as Record<string, unknown>} referenceHref={referenceHref} />
+              <div className="source-actions">
+                <Citation
+                  code={source.id}
+                  source={source.title}
+                  locator={source.locator ?? snapshot.ui.labels.source_no_locator}
+                  variant="block"
+                />
+                {href ? (
+                  <a className="source-open" href={href} target="_blank" rel="noreferrer">{snapshot.ui.labels.source_open}</a>
+                ) : null}
               </div>
-            ) : null}
-          </article>
-        ))}
-        {!sources.length ? <div className="empty-state">No local source records resolve for this person.</div> : null}
+            </article>
+          )
+        })}
+        {!snapshot.sources.length ? <div className="empty-state">{snapshot.ui.labels.no_sources}</div> : null}
       </div>
     </section>
   )
 }
 
-function UncertaintySection({ person }: { person: PersonRecord }) {
+function UncertaintySection({ snapshot, person }: { snapshot: SuperheroSnapshot; person: PersonRecord }) {
+  const section = sectionFor(snapshot.ui, "uncertainty")
   return (
-    <section id="uncertainty" className="uncertainty-section">
+    <section id={section.id} className="uncertainty-section">
       <div>
-        <p className="rs-eyebrow">05 / UNCERTAINTY REGISTER</p>
-        <h2>GAPS ARE DATA.</h2>
-        <p className="uncertainty-copy">A person can be strongly attested in one dimension and unresolved in another. The interface must preserve that separation.</p>
+        <p className="rs-eyebrow">{section.index} / {section.eyebrow}</p>
+        <h2>{section.headline}</h2>
+        <p className="uncertainty-copy">{section.description}</p>
       </div>
       <div className="uncertainty-list">
         {person.uncertainty.map((item, index) => (
@@ -509,6 +529,94 @@ function UncertaintySection({ person }: { person: PersonRecord }) {
             <p>{item}</p>
           </article>
         ))}
+        {!person.uncertainty.length ? <div className="empty-state">{snapshot.ui.labels.no_uncertainty}</div> : null}
+      </div>
+    </section>
+  )
+}
+
+function TaxonomySection({ snapshot }: { snapshot: SuperheroSnapshot }) {
+  const section = sectionFor(snapshot.ui, "taxonomy")
+  return (
+    <section id={section.id} className="research-section taxonomy-section">
+      <SectionHeader section={section} />
+      <div className="taxonomy-block">
+        <p className="rs-eyebrow">{snapshot.ui.labels.taxonomy_relations} · {snapshot.taxonomy.relations.length}</p>
+        <div className="taxonomy-grid">
+          {snapshot.taxonomy.relations.map((relation) => (
+            <RecordFieldGrid key={relation.id} record={relation as unknown as Record<string, unknown>} />
+          ))}
+        </div>
+      </div>
+      <div className="taxonomy-block">
+        <p className="rs-eyebrow">{snapshot.ui.labels.taxonomy_proximity} · {snapshot.taxonomy.proximity.length}</p>
+        <div className="proximity-grid">
+          {snapshot.taxonomy.proximity.map((value) => <Badge key={value} variant="neutral">{titleCase(value)}</Badge>)}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function publicRecordCollections(snapshot: SuperheroSnapshot) {
+  return Object.entries(snapshot)
+    .filter(([, value]) => Array.isArray(value))
+    .map(([key, value]) => [
+      key,
+      (value as unknown[]).filter((item): item is Record<string, unknown> => Boolean(item) && typeof item === "object" && !Array.isArray(item)),
+    ] as const)
+}
+
+function ContractSection({ snapshot }: { snapshot: SuperheroSnapshot }) {
+  const section = sectionFor(snapshot.ui, "contract")
+  const collections = publicRecordCollections(snapshot)
+
+  return (
+    <section id={section.id} className="research-section contract-section">
+      <SectionHeader section={section} />
+      <div className="contract-block">
+        <div className="contract-heading">
+          <p className="rs-eyebrow">{snapshot.ui.labels.schemas}</p>
+          <p>{snapshot.ui.labels.schema_copy}</p>
+        </div>
+        <div className="schema-stack">
+          {Object.entries(snapshot.schemas).map(([name, schema]) => (
+            <details key={name} open>
+              <summary>
+                <strong>{schema.title ?? titleCase(name)}</strong>
+                <code>{schema.$id ?? name}</code>
+              </summary>
+              <RecordFieldGrid record={schema as Record<string, unknown>} />
+            </details>
+          ))}
+        </div>
+      </div>
+      <div className="contract-block">
+        <div className="contract-heading">
+          <p className="rs-eyebrow">{snapshot.ui.labels.record_ledger}</p>
+          <p>{snapshot.ui.labels.ledger_copy}</p>
+        </div>
+        <div className="ledger-stack">
+          {collections.map(([name, records]) => (
+            <details key={name}>
+              <summary>
+                <strong>{titleCase(name)}</strong>
+                <Badge variant="neutral">{records.length}</Badge>
+              </summary>
+              <div className="ledger-records">
+                {records.map((record, index) => (
+                  <details key={String(record.id ?? `${name}-${index}`)}>
+                    <summary>
+                      <code>{String(record.id ?? `${name}-${index + 1}`)}</code>
+                    </summary>
+                    <RecordFieldGrid record={record} referenceHref={referenceHref} />
+                  </details>
+                ))}
+                {!records.length ? <div className="empty-state">0</div> : null}
+              </div>
+            </details>
+          ))}
+        </div>
       </div>
     </section>
   )
@@ -517,9 +625,9 @@ function UncertaintySection({ person }: { person: PersonRecord }) {
 function Footer({ snapshot }: { snapshot: SuperheroSnapshot }) {
   return (
     <footer className="superhero-footer">
-      <img src={`${assetBase}/brand/rocksoul-lockup.svg`} alt="Rocksoul" />
-      <p>PEOPLE LEAVE TRACES. TRACE THE CHAIN.</p>
-      <span>{snapshot.source.repository} · {snapshot.source.dataset_sha256.slice(0, 12)}</span>
+      <img src={`${assetBase}/${snapshot.ui.footer.asset}`} alt="Rocksoul" />
+      <p>{snapshot.ui.footer.slogan}</p>
+      <span>{snapshot.source.repository} · {snapshot.source.dataset_sha256}</span>
     </footer>
   )
 }
@@ -527,7 +635,7 @@ function Footer({ snapshot }: { snapshot: SuperheroSnapshot }) {
 function App() {
   const [snapshot, setSnapshot] = useState<SuperheroSnapshot | null>(null)
   const [error, setError] = useState("")
-  const [selectedId, setSelectedId] = useState(queryPersonId())
+  const [selectedId, setSelectedId] = useState(queryPersonId(bootConfig))
   const [query, setQuery] = useState("")
   const [identityFilter, setIdentityFilter] = useState("all")
   const [relationFilter, setRelationFilter] = useState("all")
@@ -538,15 +646,19 @@ function App() {
       .then((value) => {
         if (!active) return
         setSnapshot(value)
-        const requested = queryPersonId()
-        const valid = value.people.some((person) => person.id === requested)
-        const initial = valid ? requested : value.people[0]?.id ?? ""
+        const records = [...value.people, ...value.candidates]
+        const requested = queryPersonId(value.ui)
+        const valid = records.some((person) => person.id === requested)
+        const initial = valid ? requested : records[0]?.id ?? ""
         setSelectedId(initial)
-        if (initial) updatePersonUrl(initial)
+        if (initial) updatePersonUrl(value.ui, initial)
       })
       .catch((cause) => active && setError(cause instanceof Error ? cause.message : String(cause)))
     return () => { active = false }
   }, [])
+
+  const allPeople = useMemo(() => [...(snapshot?.people ?? []), ...(snapshot?.candidates ?? [])], [snapshot])
+  const candidateIds = useMemo(() => new Set((snapshot?.candidates ?? []).map((person) => person.id)), [snapshot])
 
   const relationshipByPerson = useMemo(() => {
     const map = new Map<string, RelationshipRecord[]>()
@@ -569,13 +681,12 @@ function App() {
   }, [snapshot])
 
   const sourceMap = useMemo(() => new Map((snapshot?.sources ?? []).map((source) => [source.id, source])), [snapshot])
-  const identityOptions = useMemo(() => [...new Set((snapshot?.people ?? []).map((person) => person.identity_status))].sort(), [snapshot])
-  const relationOptions = useMemo(() => [...new Set((snapshot?.relationships ?? []).map((relationship) => relationship.relation))].sort(), [snapshot])
+  const identityOptions = useMemo(() => [...new Set(allPeople.map((person) => person.identity_status))].sort(), [allPeople])
 
   const filteredPeople = useMemo(() => {
     if (!snapshot) return []
     const needle = query.trim().toLowerCase()
-    return snapshot.people.filter((person) => {
+    return allPeople.filter((person) => {
       if (identityFilter !== "all" && person.identity_status !== identityFilter) return false
       const personRelations = relationshipByPerson.get(person.id) ?? []
       if (relationFilter !== "all" && !personRelations.some((item) => item.relation === relationFilter)) return false
@@ -585,8 +696,8 @@ function App() {
         ...person.source_refs,
         ...personClaims.flatMap((claim) => claim.source_refs),
         ...personRelations.flatMap((relationship) => relationship.source_refs),
-      ].map((ref) => localSourceId(ref)).filter(Boolean))
-      const sourceTitles = [...refIds].map((id) => id ? sourceMap.get(id)?.title ?? "" : "")
+      ].map(localSourceId).filter((id): id is string => Boolean(id)))
+      const sourceTitles = [...refIds].map((id) => sourceMap.get(id)?.title ?? "")
       const haystack = [
         person.id,
         person.canonical_name,
@@ -597,61 +708,55 @@ function App() {
       ].join(" ").toLowerCase()
       return haystack.includes(needle)
     })
-  }, [snapshot, query, identityFilter, relationFilter, relationshipByPerson, claimByPerson, sourceMap])
+  }, [snapshot, allPeople, query, identityFilter, relationFilter, relationshipByPerson, claimByPerson, sourceMap])
 
   if (!snapshot) {
+    const states = bootConfig.states
     return (
       <main className="boot-state" role={error ? "alert" : "status"}>
-        <p className="rs-eyebrow">{error ? "DATA LOAD ERROR" : "SUPERHERO / PERSON INTELLIGENCE"}</p>
-        <h1>{error ? "THE CHAIN COULD NOT BE LOADED." : "LOADING THE HUMAN CHAIN."}</h1>
-        <p>{error || "Opening the deployment-pinned canonical snapshot."}</p>
+        <p className="rs-eyebrow">{error ? states.error_eyebrow : states.loading_eyebrow}</p>
+        <h1>{error ? states.error_headline : states.loading_headline}</h1>
+        <p>{error || states.loading_copy}</p>
       </main>
     )
   }
 
-  const person = snapshot.people.find((item) => item.id === selectedId) ?? snapshot.people[0]
-  if (!person) return <main className="boot-state">No canonical person records.</main>
+  const person = allPeople.find((item) => item.id === selectedId) ?? allPeople[0]
+  if (!person) return <main className="boot-state">{snapshot.ui.states.no_people}</main>
 
   const personClaims = claimByPerson.get(person.id) ?? []
   const personRelationships = relationshipByPerson.get(person.id) ?? []
   const personEvidence = snapshot.evidence.filter((item) => personClaims.some((claim) => claim.id === item.claim_id))
-  const sourceRefs = new Set([
-    ...person.source_refs,
-    ...personClaims.flatMap((claim) => claim.source_refs),
-    ...personEvidence.flatMap((item) => item.source_refs),
-    ...personRelationships.flatMap((relationship) => relationship.source_refs),
-  ])
-  const personSources = [...sourceRefs]
-    .map((ref) => localSourceId(ref))
-    .filter((id): id is string => Boolean(id))
-    .map((id) => sourceMap.get(id))
-    .filter((source): source is SourceRecord => Boolean(source))
+  const canonicalFiltered = filteredPeople.filter((item) => !candidateIds.has(item.id))
+  const candidateFiltered = filteredPeople.filter((item) => candidateIds.has(item.id))
 
   const selectPerson = (id: string) => {
     setSelectedId(id)
-    updatePersonUrl(id)
+    updatePersonUrl(snapshot.ui, id)
     document.getElementById("people")?.scrollIntoView({ behavior: "smooth", block: "start" })
   }
+
+  const navItems = snapshot.ui.sections.filter((section) => section.nav).map((section) => ({ label: section.label, href: `#${section.id}` }))
 
   return (
     <MoonWitnessAssetProvider baseUrl={assetBase}>
       <div className="superhero-app">
         <MWHeader
           variant="auto"
-          brandLabel="SUPERHERO / PERSON INTELLIGENCE"
-          liveLabel="Canonical snapshot"
-          navItems={[
-            { label: "People", href: "#people" },
-            { label: "Transmission", href: "#transmission" },
-            { label: "Evidence", href: "#claims" },
-            { label: "Sources", href: "#sources" },
-            { label: "Uncertainty", href: "#uncertainty" },
-          ]}
-          searchHref="#search"
+          brandLabel={snapshot.ui.header.brand_label}
+          liveLabel={snapshot.ui.header.live_label}
+          navItems={navItems}
+          searchHref={snapshot.ui.header.search_href}
         />
         <main>
           <Hero snapshot={snapshot} />
+          <ObservatorySectionNav
+            className="observatory-nav"
+            items={snapshot.ui.sections.filter((section) => section.nav).map((section) => ({ id: section.id, label: section.label }))}
+          />
           <Filters
+            snapshot={snapshot}
+            section={sectionFor(snapshot.ui, "people")}
             query={query}
             setQuery={setQuery}
             identityFilter={identityFilter}
@@ -659,17 +764,30 @@ function App() {
             relationFilter={relationFilter}
             setRelationFilter={setRelationFilter}
             identityOptions={identityOptions}
-            relationOptions={relationOptions}
             count={filteredPeople.length}
           />
           <section id="people" className="people-workbench">
-            <PersonIndex people={filteredPeople} selectedId={person.id} onSelect={selectPerson} />
-            <PersonDossier person={person} claims={personClaims} relationships={personRelationships} />
+            <PersonIndex
+              snapshot={snapshot}
+              canonicalPeople={canonicalFiltered}
+              candidatePeople={candidateFiltered}
+              selectedId={person.id}
+              onSelect={selectPerson}
+            />
+            <PersonDossier
+              snapshot={snapshot}
+              person={person}
+              claims={personClaims}
+              relationships={personRelationships}
+              candidate={candidateIds.has(person.id)}
+            />
           </section>
-          <TransmissionSection person={person} relationships={personRelationships} sourceMap={sourceMap} />
-          <ClaimsEvidenceSection claims={personClaims} evidence={personEvidence} sourceMap={sourceMap} />
-          <SourcesSection sources={personSources} />
-          <UncertaintySection person={person} />
+          <TransmissionSection snapshot={snapshot} person={person} relationships={personRelationships} />
+          <ClaimsEvidenceSection snapshot={snapshot} claims={personClaims} evidence={personEvidence} />
+          <SourcesSection snapshot={snapshot} />
+          <UncertaintySection snapshot={snapshot} person={person} />
+          <TaxonomySection snapshot={snapshot} />
+          <ContractSection snapshot={snapshot} />
         </main>
         <Footer snapshot={snapshot} />
       </div>
