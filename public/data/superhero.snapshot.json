@@ -3,7 +3,7 @@
   "source": {
     "repository": "bjo163/rocksoul-superhero",
     "ref": "main",
-    "dataset_sha256": "f1f5af888788d994a87c78101eba29cf2c58d84538f42f314f2d0dd4e95307ba"
+    "dataset_sha256": "470f138126126c36d5967cb46e1c162e7e70c3df46db04683d8cdeef72b065c4"
   },
   "counts": {
     "canonical_people": 3,
@@ -1262,7 +1262,7 @@
     }
   },
   "ui": {
-    "schema_version": "1.0",
+    "schema_version": "1.1",
     "source": {
       "repository": "bjo163/rocksoul-superhero",
       "ref": "main",
@@ -1276,7 +1276,10 @@
       "favicon_asset": "brand/favicon.svg",
       "apple_touch_asset": "brand/generated/apple-touch-icon-180.png",
       "og_asset": "brand/generated/og-card-1200x630.png",
-      "twitter_card": "summary_large_image"
+      "twitter_card": "summary_large_image",
+      "language": "en",
+      "robots": "index,follow",
+      "application_name": "SUPERHERO"
     },
     "header": {
       "brand_label": "SUPERHERO / PERSON INTELLIGENCE",
@@ -1335,7 +1338,9 @@
       "identity_all_label": "All identity states",
       "relation_label": "Actor relation",
       "relation_all_label": "All relations",
-      "matching_suffix": "matching records"
+      "matching_suffix": "matching records",
+      "reset_label": "Reset filters",
+      "search_hint": "Press / to focus search · Escape to clear."
     },
     "sections": [
       {
@@ -1366,9 +1371,18 @@
         "description": "Claims and evidence remain separate records; stance, confidence, limitations and sources stay visible."
       },
       {
-        "id": "sources",
+        "id": "quality",
         "nav": true,
         "index": "04",
+        "label": "Quality",
+        "eyebrow": "RESEARCH QUALITY",
+        "headline": "MEASURE COVERAGE. NEVER SCORE TRUTH.",
+        "description": "Coverage metrics expose how much documentary support is visible for the selected PERSON record without collapsing evidence into a verdict."
+      },
+      {
+        "id": "sources",
+        "nav": true,
+        "index": "05",
         "label": "Sources",
         "eyebrow": "SOURCE TRAIL",
         "headline": "OPEN THE RECORD.",
@@ -1377,7 +1391,7 @@
       {
         "id": "uncertainty",
         "nav": true,
-        "index": "05",
+        "index": "06",
         "label": "Uncertainty",
         "eyebrow": "UNCERTAINTY REGISTER",
         "headline": "GAPS ARE DATA.",
@@ -1386,7 +1400,7 @@
       {
         "id": "taxonomy",
         "nav": true,
-        "index": "06",
+        "index": "07",
         "label": "Taxonomy",
         "eyebrow": "RELATIONSHIP VOCABULARY",
         "headline": "NAME THE EDGE.",
@@ -1395,7 +1409,7 @@
       {
         "id": "contract",
         "nav": true,
-        "index": "07",
+        "index": "08",
         "label": "Contract",
         "eyebrow": "DATA CONTRACT",
         "headline": "SHOW THE SCHEMA.",
@@ -1414,7 +1428,8 @@
       "eyebrow": "PERSON / ACTOR DOSSIER",
       "actions": {
         "transmission": "Trace transmission",
-        "evidence": "Inspect evidence"
+        "evidence": "Inspect evidence",
+        "share": "Share dossier"
       },
       "identity_eyebrow": "IDENTITY RECORD",
       "metadata": {
@@ -1425,7 +1440,9 @@
         "record_class": "Record class"
       },
       "canonical_label": "canonical",
-      "candidate_label": "candidate"
+      "candidate_label": "candidate",
+      "share_success": "Dossier link is ready to share.",
+      "share_error": "This browser could not share or copy the dossier link."
     },
     "states": {
       "loading_eyebrow": "SUPERHERO / PERSON INTELLIGENCE",
@@ -1433,7 +1450,8 @@
       "loading_copy": "Opening the deployment-pinned canonical snapshot.",
       "error_eyebrow": "DATA LOAD ERROR",
       "error_headline": "THE CHAIN COULD NOT BE LOADED.",
-      "no_people": "No canonical person records."
+      "no_people": "No canonical person records.",
+      "retry_label": "Retry snapshot"
     },
     "footer": {
       "slogan": "PEOPLE LEAVE TRACES. TRACE THE CHAIN.",
@@ -1458,10 +1476,33 @@
       "ledger_copy": "Every public JSON record is inspectable here. New array-backed record collections appear automatically without a consumer code change.",
       "schema_copy": "Required fields, property definitions, enums, nested objects and additional-property policy stay visible beside the rendered data.",
       "candidate_badge": "candidate",
-      "canonical_badge": "canonical"
+      "canonical_badge": "canonical",
+      "selected_sources": "Sources linked to the selected dossier",
+      "all_sources": "Complete local source registry",
+      "skip_to_content": "Skip to research content"
     },
     "routing": {
-      "person_param": "person"
+      "person_param": "person",
+      "query_param": "q",
+      "identity_param": "identity",
+      "relation_param": "relation"
+    },
+    "quality": {
+      "disclaimer": "Coverage is not a truth score. High coverage can still contain disagreement, ambiguity, bias, or unresolved transmission gaps.",
+      "matrix_caption": "Claim-by-evidence stance matrix for the selected PERSON record",
+      "claim_coverage": "Claims with evidence",
+      "evidence_edges": "Evidence edges",
+      "mean_confidence": "Mean edge confidence",
+      "source_coverage": "Linked local sources",
+      "external_domains": "Cross-domain references",
+      "explicit_caveats": "Explicit caveats",
+      "unresolved_edges": "Unmapped / unresolved edges",
+      "matrix_relation_map": {
+        "supports": "support",
+        "contradicts": "counter",
+        "contextualizes": "context",
+        "alternative_explanation": "alternative"
+      }
     }
   }
 }
