@@ -1,4 +1,4 @@
-import { StrictMode, useMemo, useState } from "react"
+import { StrictMode, useEffect, useMemo, useState } from "react"
 import { createRoot } from "react-dom/client"
 import {
   Badge,
@@ -12,17 +12,39 @@ import {
 } from "@rocksoul/ui"
 import "@rocksoul/ui/styles.css"
 import "./styles.css"
-import repoIndex from "../data/index.json"
-
-const peopleModules = import.meta.glob("../data/people/*.json", { eager: true, import: "default" })
-const claimModules = import.meta.glob("../data/claims/*.json", { eager: true, import: "default" })
-const relationshipModules = import.meta.glob("../data/relationships/*.json", { eager: true, import: "default" })
-
-const people = Object.values(peopleModules).sort((a, b) => a.canonical_name.localeCompare(b.canonical_name))
-const claims = Object.values(claimModules)
-const relationships = Object.values(relationshipModules)
 
 const assetBase = `${MOONWITNESS_STABLE_REPOSITORY_BASE}/moonwitness`
+const repositoryRawBase = "https://raw.githubusercontent.com/bjo163/rocksoul-superhero/main"
+const peopleApi = "https://api.github.com/repos/bjo163/rocksoul-superhero/contents/data/people?ref=main"
+
+async function fetchJson(url) {
+  const response = await fetch(url, { headers: { accept: "application/json" } })
+  if (!response.ok) throw new Error(`Request failed ${response.status}: ${url}`)
+  return response.json()
+}
+
+async function loadDataset() {
+  const [repoIndex, peopleDirectory] = await Promise.all([
+    fetchJson(`${repositoryRawBase}/data/index.json`),
+    fetchJson(peopleApi),
+  ])
+
+  const people = (await Promise.all(
+    peopleDirectory
+      .filter((entry) => entry.type === "file" && entry.name.endsWith(".json"))
+      .map((entry) => fetchJson(entry.download_url)),
+  )).sort((a, b) => a.canonical_name.localeCompare(b.canonical_name))
+
+  const claimIds = [...new Set(people.flatMap((person) => person.claim_refs ?? []))]
+  const relationshipIds = [...new Set(people.flatMap((person) => person.relationship_refs ?? []))]
+
+  const [claims, relationships] = await Promise.all([
+    Promise.all(claimIds.map((id) => fetchJson(`${repositoryRawBase}/data/claims/${id}.json`))),
+    Promise.all(relationshipIds.map((id) => fetchJson(`${repositoryRawBase}/data/relationships/${id}.json`))),
+  ])
+
+  return { repoIndex, people, claims, relationships }
+}
 
 function titleCase(value = "") {
   return value.replaceAll("_", " ").replace(/\b\w/g, (letter) => letter.toUpperCase())
@@ -77,7 +99,7 @@ function AppHeader() {
   )
 }
 
-function SystemIntro() {
+function SystemIntro({ repoIndex }) {
   const counts = repoIndex.counts
   const stats = [
     ["Canonical people", counts.canonical_people],
@@ -117,7 +139,7 @@ function SystemIntro() {
   )
 }
 
-function PersonIndex({ selectedId, onSelect }) {
+function PersonIndex({ people, selectedId, onSelect }) {
   return (
     <aside className="person-index" aria-label="Canonical people">
       <div className="index-heading">
@@ -315,29 +337,57 @@ function Footer() {
   )
 }
 
+function LoadingState({ error }) {
+  return (
+    <div className="superhero-app">
+      <AppHeader />
+      <main className="boot-state">
+        <p className="eyebrow">{error ? "DATA LOAD ERROR" : "SUPERHERO / PERSON INTELLIGENCE"}</p>
+        <h1>{error ? "THE CHAIN COULD NOT BE LOADED." : "LOADING THE HUMAN CHAIN."}</h1>
+        <p>{error ?? "Reading canonical people, claims, and actor relationships from rocksoul-superhero/main."}</p>
+      </main>
+    </div>
+  )
+}
+
 function App() {
-  const [selectedId, setSelectedId] = useState(people[0]?.id)
-  const person = people.find((item) => item.id === selectedId) ?? people[0]
+  const [dataset, setDataset] = useState(null)
+  const [error, setError] = useState("")
+  const [selectedId, setSelectedId] = useState("")
+
+  useEffect(() => {
+    let active = true
+    loadDataset()
+      .then((value) => {
+        if (!active) return
+        setDataset(value)
+        setSelectedId(value.people[0]?.id ?? "")
+      })
+      .catch((cause) => active && setError(cause instanceof Error ? cause.message : String(cause)))
+    return () => { active = false }
+  }, [])
+
+  const person = dataset?.people.find((item) => item.id === selectedId) ?? dataset?.people[0]
 
   const personClaims = useMemo(
-    () => claims.filter((claim) => claim.subject_id === person?.id),
-    [person?.id],
+    () => dataset?.claims.filter((claim) => claim.subject_id === person?.id) ?? [],
+    [dataset, person?.id],
   )
   const personRelations = useMemo(
-    () => relationships.filter((relation) => relation.subject_id === person?.id),
-    [person?.id],
+    () => dataset?.relationships.filter((relation) => relation.subject_id === person?.id) ?? [],
+    [dataset, person?.id],
   )
 
-  if (!person) return <main className="empty-state">No canonical people found.</main>
+  if (!dataset || !person) return <LoadingState error={error} />
 
   return (
     <MoonWitnessAssetProvider baseUrl={assetBase}>
       <div className="superhero-app">
         <AppHeader />
         <main>
-          <SystemIntro />
+          <SystemIntro repoIndex={dataset.repoIndex} />
           <section id="people" className="people-workbench">
-            <PersonIndex selectedId={person.id} onSelect={setSelectedId} />
+            <PersonIndex people={dataset.people} selectedId={person.id} onSelect={setSelectedId} />
             <PersonDossier person={person} personClaims={personClaims} personRelations={personRelations} />
           </section>
           <TransmissionSection person={person} personRelations={personRelations} />
