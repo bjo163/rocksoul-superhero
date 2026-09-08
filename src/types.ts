@@ -98,7 +98,8 @@ export interface ObservatorySection {
 
 export interface ObservatoryConfig {
   schema_version: string
-  source: { repository: string; ref: string }
+  source: { repository: string; ref: string; snapshot_path: string }
+  routing: { person_param: string }
   site: {
     url: string
     title: string
