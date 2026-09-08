@@ -13,7 +13,7 @@ const snapshot = fs.existsSync(snapshotFile)
   : null
 
 function assetUrl(relativePath) {
-  return `${MOONWITNESS_STABLE_REPOSITORY_BASE}/moonwitness/${relativePath.replace(/^\\/+/, "")}`
+  return `${MOONWITNESS_STABLE_REPOSITORY_BASE}/moonwitness/${relativePath.replace(/^\/+/, "")}`
 }
 
 const assetOrigin = new URL(MOONWITNESS_STABLE_REPOSITORY_BASE).origin
