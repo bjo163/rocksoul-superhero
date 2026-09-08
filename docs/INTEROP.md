@@ -1,13 +1,17 @@
 # Rocksoul Research Interoperability
 
-## Three-domain model
+## Research-domain model
 
 ```text
-MFTL       STORY     What was told?
-LEGEND     EVENT     What happened?
-SUPERHERO  PERSON    Who was involved?
-RGBL       TEXT      What does the source text say?
+MFTL       STORY        What was told?
+LEGEND     EVENT        What happened?
+SUPERHERO  PERSON       Who was involved?
+RGBL       TEXT         What does the source text say?
+AWS        LAW          Was it legally applicable?
+JIZZ       PERSPECTIVE  How is the record observed or framed?
 ```
+
+`rocksoul-correlation` owns reviewed RELATIONSHIP semantics between independently canonical records.
 
 ## Qualified references
 
@@ -17,19 +21,15 @@ Examples:
 
 ```text
 mftl:MYTH-MES-INANA-DESCENT-000001
-mftl:SOURCE-ETCSL-INANA-DESCENT
-
 legend:EVT-IDN-KRAKATAU-1883
-legend:SRC-IDN-NOAA-KRAKATAU-1883
-
 superhero:PER-...
-superhero:SRC-SH-...
-
 rgbl:mw:work:...
-rgbl:mw:passage:...
+aws:LAW-...
+jizz:PERSP-...
+correlation:CORR-...
 ```
 
-This does **not** require MFTL or LEGEND to rename any existing IDs.
+This does **not** require any owner repository to rename existing IDs.
 
 ## Accepted external namespaces
 
@@ -45,26 +45,30 @@ This does **not** require MFTL or LEGEND to rename any existing IDs.
 
 `PER-*`, `SRC-SH-*`, `CLM-PER-*`, `EVD-PER-*`, `REL-PER-*`
 
+Machine-level namespace expansion remains evidence-driven. A documented foreign domain does not need to be accepted by every local schema until a real PERSON record requires that reference.
+
 ## Ownership test
 
 - What was told? → MFTL.
 - What happened? → LEGEND.
 - Who acted, witnessed, recorded, translated, transmitted, interpreted, or disputed it? → SUPERHERO.
+- What does the exact source text say? → RGBL.
+- Was it legally applicable? → AWS.
+- How is the record observed, framed, or situated? → JIZZ.
 
 A foreign reference never transfers ownership.
 
-
 ## Cross-repository validation boundary
 
-Qualified references make ownership explicit, but SUPERHERO does not remotely fetch MFTL or LEGEND on every CI run.
+Qualified references make ownership explicit, but SUPERHERO does not remotely fetch every owner on every CI run.
 
 ```text
 local SUPERHERO target
 → must exist locally
 
-external mftl:/legend: target
-→ namespace/prefix validated locally
-→ target existence verified during research/audit
+external qualified target
+→ namespace/prefix validated locally where implemented
+→ target existence verified during research/audit/integration certification
 ```
 
 This is intentional. A temporary failure or change in another repository must not make SUPERHERO's local schema build fail.
@@ -72,36 +76,27 @@ This is intentional. A temporary failure or change in another repository must no
 ## Shared ownership contract
 
 ```text
-mftl:*       → narrative / story ownership
-legend:*     → event / historical-core ownership
-superhero:*  → person / human-agency ownership
-rgbl:mw:*     → scripture/text corpus ownership
+mftl:*        → STORY ownership
+legend:*      → EVENT ownership
+superhero:*   → PERSON ownership
+rgbl:mw:*     → TEXT ownership
+aws:*         → LAW ownership
+jizz:*        → PERSPECTIVE ownership
+correlation:* → RELATIONSHIP ownership
 ```
 
-MFTL may contain event reports or named-person mentions as narrative context, but it should not duplicate canonical LEGEND events or canonical SUPERHERO person/transmission records.
-
+MFTL may contain named-person mentions as narrative context, RGBL may contain corpus-level person referents, JIZZ may frame or observe a person, and AWS may assess legal relevance. None of those replace canonical SUPERHERO PERSON / actor / transmission research.
 
 ## RGBL boundary
 
-SUPERHERO may later link a person to an exact RGBL work/passage when research needs to establish authorship, transmission, quotation, translation, interpretation, or scriptural-role evidence.
+SUPERHERO may link a person to an exact RGBL work/passage when research establishes authorship, transmission, quotation, translation, interpretation, or scriptural-role evidence.
 
-For v0.1, RGBL references are documented but not yet accepted by the SUPERHERO machine schemas because no canonical person record currently requires one. Add machine support only when a real research case needs it.
-
-This preserves the stop rule: interoperability first, schema expansion only from real data.
-
-
-## RGBL person/figure coexistence
-
-RGBL already contains corpus-level religious/scriptural person and figure entities under its own `mw:*` identity system. That does not replace SUPERHERO.
-
-Use the distinction:
+RGBL corpus-level person and figure entities do not replace SUPERHERO.
 
 ```text
 RGBL mw:person:*
 → corpus referent
-→ names / external IDs
-→ scoped scriptural or religious-role assertions
-→ exact passage evidence
+→ scoped textual/religious-role assertions
 
 SUPERHERO PER-*
 → historical actor research
@@ -110,37 +105,40 @@ SUPERHERO PER-*
 → chain of custody
 ```
 
-The same real-world person may therefore have records in both repositories.
+Do not infer identity from matching names. An explicit crosswalk between `PER-*` and `mw:person:*` requires reconciliation evidence and may remain disputed.
 
-Do not infer identity from matching names. An explicit crosswalk between `PER-*` and `mw:person:*` requires reconciliation evidence and should preserve disputed/conflated identity states where relevant.
+## AWS boundary
 
-This also means SUPERHERO does not need to copy RGBL's world-religion registry or scoped role assertions merely to know that a source calls someone a prophet, teacher, king, apostle, or other role.
-
-
-## Fifth research domain — AWS
-
-`rocksoul-aws` owns **LAW / applicability / legal assessment**.
+`rocksoul-aws` owns LAW / applicability / legal assessment. A PERSON record may be legally relevant without moving its identity, agency, or transmission semantics into AWS.
 
 ```text
-MFTL       STORY       What was told?
-LEGEND     EVENT       What happened?
-SUPERHERO  PERSON      Who was involved?
-RGBL       TEXT        What does the exact source text say?
-AWS        LAW         Was it allowed / legally applicable?
+LEGAL RELEVANCE ≠ PERSON OWNERSHIP
+LEGAL RESULT ≠ IDENTITY VERDICT
 ```
 
-Public research grammar:
+## JIZZ boundary
+
+`rocksoul-jizz` owns PERSPECTIVE / observation / framing.
+
+A JIZZ perspective may observe, frame, react to, or situate a PERSON record, but it does not rewrite canonical identity, role, proximity, authorship, witnessing, or transmission claims in SUPERHERO.
 
 ```text
-STORY × EVENT × PERSON × RGBL × AWS
+superhero:PER-...
+        ↓ observed / framed by
+jizz:PERSP-...
 ```
 
-AWS may reference records owned by the first four repositories, but it stores them as foreign references and must not copy their canonical ownership into the legal domain.
+`PERSPECTIVE ≠ PERSON` and `PERSPECTIVE ≠ IDENTITY`.
+
+## SUPERHERO relationships vs global Correlation
+
+SUPERHERO `REL-PER-*` objects are local actor/transmission graph facts needed to make PERSON research inspectable. They remain canonical inside SUPERHERO.
+
+`rocksoul-correlation` owns reviewed ecosystem-wide RELATIONSHIP semantics, explainability, freshness and targeted re-analysis.
 
 ```text
-FOREIGN REFERENCE ≠ OWNERSHIP
-LEGAL APPLICABILITY ≠ HISTORICAL FACT
-LEGAL RESULT ≠ MIZAN
+SUPERHERO REL-PER-*            local PERSON / transmission graph
+rocksoul-correlation CORR-*    reviewed cross-domain relationship
 ```
 
-The first five-domain proof remains Jerusalem 70 CE. The historical/textual four-way chain stays intact; AWS adds a separate applicability analysis.
+Local actor relations are therefore not a second global correlation store, and Correlation must not duplicate the underlying PERSON record.
