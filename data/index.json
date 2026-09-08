@@ -1,9 +1,9 @@
 {
   "schema_version": "0.1",
   "counts": {
-    "canonical_people": 2,
+    "canonical_people": 3,
     "candidates": 0,
-    "sources": 7,
+    "sources": 8,
     "claims": 9,
     "evidence_edges": 9,
     "relationships": 6,
