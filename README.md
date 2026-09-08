@@ -25,7 +25,7 @@ A provenance-first repository for reconstructing **human agency, authorship, wit
 
 <br/>
 
-[Live Observatory](https://rocksoul-superhero.vercel.app) · [Architecture](#narrative-chain-of-custody) · [Canonical chain](#first-canonical-transmission-chain) · [Shared proof](#shared-five-domain-proof) · [Repository map](#repository-atlas) · [Assets](https://github.com/bjo163/rocksoul-assets) · [UI](https://github.com/bjo163/rocksoul-ui)
+[Live Observatory](https://rocksoul-superhero.vercel.app) · [Observatory Contract](docs/OBSERVATORY.md) · [Production Ops](docs/OPERATIONS.md) · [Architecture](#narrative-chain-of-custody) · [Canonical chain](#first-canonical-transmission-chain) · [Shared proof](#shared-five-domain-proof) · [Repository map](#repository-atlas) · [Assets](https://github.com/bjo163/rocksoul-assets) · [UI](https://github.com/bjo163/rocksoul-ui)
 
 </div>
 
@@ -266,6 +266,22 @@ canonical JSON
 The browser reads the deployment snapshot rather than live GitHub APIs, so the visible claims, evidence, relationships and sources stay reproducible for that deployment.
 
 **Production:** https://rocksoul-superhero.vercel.app
+
+## v0.5 observatory hardening
+
+The public PERSON surface now includes a research-quality layer in addition to raw record inspection:
+
+- **Evidence Quality Matrix** — claim-by-evidence stance coverage using the presentation contract; coverage is explicitly not a truth score.
+- **Shareable URL state** — selected PERSON, search query, identity filter, and relation filter survive copied links and browser navigation.
+- **Selected source highlighting** — the complete source registry stays visible while sources connected to the current dossier are visually marked.
+- **Accessible navigation** — skip link, keyboard search shortcut (`/`), Escape-to-clear, retry state, focus-safe anchors, and semantic live status.
+- **Reproducible discovery metadata** — structured Dataset JSON-LD carries the deployment snapshot identifier and public count metrics.
+- **Production hardening** — CSP, frame denial, permissions policy, referrer policy, nosniff, immutable bundle caching, and explicit snapshot revalidation.
+- **Regression gates** — CI checks the UX contract, metadata, security headers, routing parameter uniqueness, evidence matrix mapping, and deployment snapshot consistency.
+
+The observable quality metrics describe **coverage and documentary shape**, never moral worth, historical truth percentage, or person ranking.
+
+[Read the complete observatory contract →](docs/OBSERVATORY.md)
 
 ## Branch model
 
