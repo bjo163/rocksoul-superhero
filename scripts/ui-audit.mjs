@@ -53,7 +53,7 @@ if (!main.includes("bootConfig.source.snapshot_path")) failures.push("contract-d
 if (!main.includes("publicRecordCollections")) failures.push("automatic public record ledger")
 if (!main.includes("snapshot.taxonomy.relations") || !main.includes("snapshot.taxonomy.proximity")) failures.push("taxonomy visualization")
 if (!main.includes("Object.entries(snapshot.schemas)")) failures.push("schema visualization")
-if (!main.includes("snapshot.candidates")) failures.push("candidate PERSON visualization")
+if (!main.includes("value.candidates") || !main.includes("candidatePeople") || !main.includes("candidateIds")) failures.push("candidate PERSON visualization")
 if (!main.includes("URLSearchParams") || !main.includes("history.replaceState")) failures.push("person deep-link contract")
 if (!main.includes("identityFilter") || !main.includes("relationFilter")) failures.push("search/filter contract")
 if (pkg.scripts?.build !== "npm run build:data && npm run typecheck && vite build") failures.push("build gate")
