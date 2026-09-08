@@ -25,11 +25,31 @@ A provenance-first repository for reconstructing **human agency, authorship, wit
 
 <br/>
 
-[Architecture](#narrative-chain-of-custody) · [Canonical chain](#first-canonical-transmission-chain) · [Shared proof](#four-way-proof-case) · [Repository map](#repository-atlas) · [Assets](https://github.com/bjo163/rocksoul-assets) · [Console](https://github.com/bjo163/rocksoul-crayon)
+[Architecture](#narrative-chain-of-custody) · [Canonical chain](#first-canonical-transmission-chain) · [Shared proof](#shared-five-domain-proof) · [Repository map](#repository-atlas) · [Assets](https://github.com/bjo163/rocksoul-assets) · [Console](https://github.com/bjo163/rocksoul-crayon)
 
 </div>
 
+
 ---
+<!-- ROCKSOUL_FIELD_NOTE_START -->
+<div align="center">
+
+### **PEOPLE LEAVE TRACES. TRACE THE CHAIN.**
+
+`/// MOONWITNESS FIELD NOTE ///`
+
+</div>
+
+> No chosen-one shortcut. No hero worship disguised as data. SUPERHERO models people as actors, witnesses, authors, transmitters, editors, translators, interpreters—and keeps every role source-relative.
+
+```text
+PERSON → ACTION → SOURCE → TRANSMISSION → PROXIMITY → UNCERTAINTY
+```
+
+**NO VIBES-ONLY CLAIMS · NO SOURCELESS LORE · UNCERTAINTY IS DATA**
+
+<!-- ROCKSOUL_FIELD_NOTE_END -->
+
 
 > **SUPERHERO is a brand, not a verdict. A person is not automatically classified as a hero, villain, saint, martyr, or savior. Those are source-relative narrative attributions.**
 
@@ -120,7 +140,7 @@ LAW     → AWS
 **PORTRAYED AS HERO ≠ OBJECTIVELY HERO.**  
 **UNCERTAINTY IS DATA.**
 
-## Four-way proof case
+## Shared five-domain proof
 
 ### **CASE 001 — JERUSALEM 70 CE**
 
