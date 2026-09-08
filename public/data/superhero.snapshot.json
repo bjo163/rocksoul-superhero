@@ -3,7 +3,7 @@
   "source": {
     "repository": "bjo163/rocksoul-superhero",
     "ref": "main",
-    "dataset_sha256": "f2ce57c7b81cbefab18a93574486c0165606484dc6c953267a6e640c73a5c448"
+    "dataset_sha256": "f1f5af888788d994a87c78101eba29cf2c58d84538f42f314f2d0dd4e95307ba"
   },
   "counts": {
     "canonical_people": 3,
@@ -1265,7 +1265,8 @@
     "schema_version": "1.0",
     "source": {
       "repository": "bjo163/rocksoul-superhero",
-      "ref": "main"
+      "ref": "main",
+      "snapshot_path": "/data/superhero.snapshot.json"
     },
     "site": {
       "url": "https://rocksoul-superhero.vercel.app/",
@@ -1458,6 +1459,9 @@
       "schema_copy": "Required fields, property definitions, enums, nested objects and additional-property policy stay visible beside the rendered data.",
       "candidate_badge": "candidate",
       "canonical_badge": "canonical"
+    },
+    "routing": {
+      "person_param": "person"
     }
   }
 }
