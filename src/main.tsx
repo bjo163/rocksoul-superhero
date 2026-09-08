@@ -132,7 +132,7 @@ function Hero({ snapshot }: { snapshot: SuperheroSnapshot }) {
       <MetricStrip snapshot={snapshot} />
       <div className="snapshot-bar">
         <span>DEPLOYMENT SNAPSHOT</span>
-        <code>{snapshot.source.repository}@{snapshot.source.commit === "unresolved" ? `dataset:${snapshot.source.dataset_sha256.slice(0, 12)}` : snapshot.source.commit.slice(0, 12)}</code>
+        <code>{snapshot.source.repository} · dataset:{snapshot.source.dataset_sha256.slice(0, 12)}</code>
         <span>SCHEMA {snapshot.schema_version}</span>
       </div>
     </section>
