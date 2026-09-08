@@ -70,7 +70,7 @@ export interface SourceRecord {
 
 export interface SuperheroSnapshot {
   schema_version: string
-  source: { repository: string; ref: string; commit: string }
+  source: { repository: string; ref: string; commit: string; dataset_sha256: string }
   counts: {
     canonical_people: number
     candidates: number
