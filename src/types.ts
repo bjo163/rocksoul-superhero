@@ -99,7 +99,7 @@ export interface ObservatorySection {
 export interface ObservatoryConfig {
   schema_version: string
   source: { repository: string; ref: string; snapshot_path: string }
-  routing: { person_param: string }
+  routing: { person_param: string; query_param: string; identity_param: string; relation_param: string }
   site: {
     url: string
     title: string
@@ -109,6 +109,9 @@ export interface ObservatoryConfig {
     apple_touch_asset: string
     og_asset: string
     twitter_card: string
+    language: string
+    robots: string
+    application_name: string
   }
   header: { brand_label: string; live_label: string; search_href: string; nav_label: string }
   hero: {
@@ -130,6 +133,8 @@ export interface ObservatoryConfig {
     relation_label: string
     relation_all_label: string
     matching_suffix: string
+    reset_label: string
+    search_hint: string
   }
   sections: ObservatorySection[]
   person_index: {
@@ -142,8 +147,10 @@ export interface ObservatoryConfig {
   }
   dossier: {
     eyebrow: string
-    actions: { transmission: string; evidence: string }
+    actions: { transmission: string; evidence: string; share: string }
     identity_eyebrow: string
+    share_success: string
+    share_error: string
     metadata: { review: string; active_period: string; claims: string; relations: string; record_class: string }
     canonical_label: string
     candidate_label: string
@@ -155,6 +162,7 @@ export interface ObservatoryConfig {
     error_eyebrow: string
     error_headline: string
     no_people: string
+    retry_label: string
   }
   labels: {
     confidence: string
@@ -176,6 +184,21 @@ export interface ObservatoryConfig {
     schema_copy: string
     candidate_badge: string
     canonical_badge: string
+    selected_sources: string
+    all_sources: string
+    skip_to_content: string
+  }
+  quality: {
+    disclaimer: string
+    matrix_caption: string
+    claim_coverage: string
+    evidence_edges: string
+    mean_confidence: string
+    source_coverage: string
+    external_domains: string
+    explicit_caveats: string
+    unresolved_edges: string
+    matrix_relation_map: Record<string, "support" | "counter" | "context" | "alternative">
   }
   footer: { slogan: string; asset: string }
 }

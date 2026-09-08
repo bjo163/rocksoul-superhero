@@ -7,6 +7,7 @@ import {
   ConfidenceMeter,
   DossierHeader,
   EvidenceCard,
+  EvidenceMatrix,
   Input,
   MOONWITNESS_STABLE_REPOSITORY_BASE,
   MWHeader,
@@ -75,14 +76,44 @@ function externalHttpHref(value?: string | null) {
   }
 }
 
-function queryPersonId(config: ObservatoryConfig) {
-  return new URLSearchParams(window.location.search).get(config.routing.person_param) ?? ""
+function readUrlState(config: ObservatoryConfig) {
+  const params = new URLSearchParams(window.location.search)
+  return {
+    person: params.get(config.routing.person_param) ?? "",
+    query: params.get(config.routing.query_param) ?? "",
+    identity: params.get(config.routing.identity_param) ?? "all",
+    relation: params.get(config.routing.relation_param) ?? "all",
+  }
 }
 
-function updatePersonUrl(config: ObservatoryConfig, personId: string) {
+function syncUrlState(
+  config: ObservatoryConfig,
+  state: { person: string; query: string; identity: string; relation: string },
+  mode: "replace" | "push" = "replace",
+) {
   const url = new URL(window.location.href)
-  url.searchParams.set(config.routing.person_param, personId)
-  window.history.replaceState({}, "", url)
+  const setOptional = (key: string, value: string, emptyValue = "") => {
+    if (value && value !== emptyValue) url.searchParams.set(key, value)
+    else url.searchParams.delete(key)
+  }
+  setOptional(config.routing.person_param, state.person)
+  setOptional(config.routing.query_param, state.query.trim())
+  setOptional(config.routing.identity_param, state.identity, "all")
+  setOptional(config.routing.relation_param, state.relation, "all")
+  window.history[mode === "push" ? "pushState" : "replaceState"]({}, "", url)
+}
+
+function fallbackCopy(text: string) {
+  const node = document.createElement("textarea")
+  node.value = text
+  node.setAttribute("readonly", "")
+  node.style.position = "fixed"
+  node.style.opacity = "0"
+  document.body.appendChild(node)
+  node.select()
+  const copied = document.execCommand("copy")
+  node.remove()
+  if (!copied) throw new Error("Copy command was rejected")
 }
 
 async function loadSnapshot() {
@@ -154,6 +185,8 @@ function Filters({
   setRelationFilter,
   identityOptions,
   count,
+  hasFilters,
+  onReset,
 }: {
   snapshot: SuperheroSnapshot
   section: ObservatorySection
@@ -165,6 +198,8 @@ function Filters({
   setRelationFilter: (value: string) => void
   identityOptions: string[]
   count: number
+  hasFilters: boolean
+  onReset: () => void
 }) {
   const { filters } = snapshot.ui
   return (
@@ -174,11 +209,16 @@ function Filters({
           <p className="rs-eyebrow">{section.index} / {section.eyebrow}</p>
           <h2>{section.headline}</h2>
         </div>
-        <Badge variant="neutral">{count} {filters.matching_suffix}</Badge>
+        <div className="filter-meta">
+          <span aria-live="polite"><Badge variant="neutral">{count} {filters.matching_suffix}</Badge></span>
+          {hasFilters ? <Button variant="ghost" onClick={onReset}>{filters.reset_label}</Button> : null}
+        </div>
       </div>
       <div className="filter-grid">
         <Input
+          id="superhero-search"
           label={filters.search_label}
+          helper={filters.search_hint}
           variant="search"
           value={query}
           onChange={(event) => setQuery(event.currentTarget.value)}
@@ -288,12 +328,16 @@ function PersonDossier({
   claims,
   relationships,
   candidate,
+  onShare,
+  shareStatus,
 }: {
   snapshot: SuperheroSnapshot
   person: PersonRecord
   claims: ClaimRecord[]
   relationships: RelationshipRecord[]
   candidate: boolean
+  onShare: () => void
+  shareStatus: string
 }) {
   const activePeriod = [person.active_period.start, person.active_period.end].filter(Boolean).join(" → ") || "—"
   const dossier = snapshot.ui.dossier
@@ -318,9 +362,11 @@ function PersonDossier({
           <>
             <Button onClick={() => document.getElementById("transmission")?.scrollIntoView({ behavior: "smooth" })}>{dossier.actions.transmission}</Button>
             <Button variant="secondary" onClick={() => document.getElementById("claims")?.scrollIntoView({ behavior: "smooth" })}>{dossier.actions.evidence}</Button>
+            <Button variant="ghost" onClick={onShare}>{dossier.actions.share}</Button>
           </>
         }
       />
+      {shareStatus ? <p className="dossier-share-status" role="status" aria-live="polite">{shareStatus}</p> : null}
       <div className="identity-panel">
         <div className="identity-mark-card">
           <MoonWitnessPersonMark alt="" className="person-mark" />
@@ -401,7 +447,7 @@ function EvidenceForClaim({
   evidence: EvidenceRecord[]
 }) {
   return (
-    <article className="claim-block">
+    <article id={`claim-${claim.id}`} className="claim-block">
       <div className="claim-heading">
         <div>
           <p className="rs-eyebrow">{titleCase(claim.claim_type)}</p>
@@ -474,16 +520,149 @@ function ClaimsEvidenceSection({
   )
 }
 
-function SourcesSection({ snapshot }: { snapshot: SuperheroSnapshot }) {
+function sourceIdsForPerson(
+  person: PersonRecord,
+  claims: ClaimRecord[],
+  evidence: EvidenceRecord[],
+  relationships: RelationshipRecord[],
+) {
+  const refs = [
+    ...person.source_refs,
+    ...claims.flatMap((claim) => claim.source_refs),
+    ...evidence.flatMap((item) => item.source_refs),
+    ...relationships.flatMap((relationship) => relationship.source_refs),
+  ]
+  return new Set(refs.map(localSourceId).filter((id): id is string => Boolean(id)))
+}
+
+function QualitySection({
+  snapshot,
+  person,
+  claims,
+  evidence,
+  relationships,
+  selectedSourceIds,
+}: {
+  snapshot: SuperheroSnapshot
+  person: PersonRecord
+  claims: ClaimRecord[]
+  evidence: EvidenceRecord[]
+  relationships: RelationshipRecord[]
+  selectedSourceIds: Set<string>
+}) {
+  const section = sectionFor(snapshot.ui, "quality")
+  const rows = claims.map((claim) => {
+    const claimEvidence = evidence.filter((item) => item.claim_id === claim.id)
+    const values: Partial<Record<"support" | "counter" | "context" | "alternative", number>> = {}
+    for (const item of claimEvidence) {
+      const stance = snapshot.ui.quality.matrix_relation_map[item.relation]
+      if (stance) values[stance] = (values[stance] ?? 0) + 1
+    }
+    return {
+      id: claim.id,
+      label: claim.statement,
+      context: claim.id,
+      epistemic: titleCase(claim.epistemic_status),
+      sourceCount: new Set([...claim.source_refs, ...claimEvidence.flatMap((item) => item.source_refs)]).size,
+      values,
+    }
+  })
+
+  const evidencedClaims = new Set(evidence.map((item) => item.claim_id)).size
+  const meanConfidence = evidence.length
+    ? evidence.reduce((sum, item) => sum + item.confidence, 0) / evidence.length
+    : null
+  const externalDomains = new Set<string>()
+  const refs = [
+    ...person.place_refs,
+    ...person.source_refs,
+    ...claims.flatMap((claim) => claim.source_refs),
+    ...evidence.flatMap((item) => item.source_refs),
+    ...relationships.flatMap((relationship) => [relationship.object_ref, ...relationship.source_refs]),
+  ]
+  for (const ref of refs) {
+    const parsed = parseQualifiedReference(ref)
+    if (parsed && parsed.domain !== "PERSON") externalDomains.add(parsed.domain)
+  }
+  const explicitCaveats =
+    person.uncertainty.length +
+    relationships.reduce((sum, relationship) => sum + relationship.uncertainty.length, 0) +
+    evidence.reduce((sum, item) => sum + item.limitations.length, 0)
+  const unresolvedEdges = evidence.filter((item) => !snapshot.ui.quality.matrix_relation_map[item.relation]).length
+
+  const metrics = [
+    {
+      label: snapshot.ui.quality.claim_coverage,
+      value: `${evidencedClaims}/${claims.length}`,
+      detail: claims.length ? `${Math.round((evidencedClaims / claims.length) * 100)}%` : "—",
+    },
+    { label: snapshot.ui.quality.evidence_edges, value: String(evidence.length), detail: person.id },
+    {
+      label: snapshot.ui.quality.mean_confidence,
+      value: meanConfidence === null ? "—" : `${Math.round(meanConfidence * 100)}%`,
+      detail: evidence.length ? `${evidence.length} edges` : "no edges",
+    },
+    { label: snapshot.ui.quality.source_coverage, value: String(selectedSourceIds.size), detail: `${snapshot.sources.length} registry total` },
+    { label: snapshot.ui.quality.external_domains, value: String(externalDomains.size), detail: [...externalDomains].sort().join(" · ") || "none" },
+    { label: snapshot.ui.quality.explicit_caveats, value: String(explicitCaveats), detail: snapshot.ui.quality.unresolved_edges + `: ${unresolvedEdges}` },
+  ]
+
+  return (
+    <section id={section.id} className="research-section quality-section">
+      <SectionHeader section={section} />
+      <div className="quality-principle">
+        <Badge variant="info">coverage ≠ truth</Badge>
+        <p>{snapshot.ui.quality.disclaimer}</p>
+      </div>
+      <div className="quality-metrics" aria-label={section.label}>
+        {metrics.map((metric) => (
+          <article key={metric.label}>
+            <span>{metric.label}</span>
+            <strong>{metric.value}</strong>
+            <small>{metric.detail}</small>
+          </article>
+        ))}
+      </div>
+      <EvidenceMatrix
+        className="quality-matrix"
+        rows={rows}
+        caption={snapshot.ui.quality.matrix_caption}
+        onActivateRow={(row) => document.getElementById(`claim-${row.id}`)?.scrollIntoView({ behavior: "smooth", block: "start" })}
+      />
+    </section>
+  )
+}
+
+function SourcesSection({
+  snapshot,
+  selectedSourceIds,
+}: {
+  snapshot: SuperheroSnapshot
+  selectedSourceIds: Set<string>
+}) {
   const section = sectionFor(snapshot.ui, "sources")
+  const selectedCount = snapshot.sources.filter((source) => selectedSourceIds.has(source.id)).length
   return (
     <section id={section.id} className="research-section source-section">
       <SectionHeader section={section} />
+      <div className="source-selection-summary">
+        <div>
+          <p className="rs-eyebrow">{snapshot.ui.labels.selected_sources}</p>
+          <p>{snapshot.ui.labels.all_sources}</p>
+        </div>
+        <Badge variant={selectedCount ? "info" : "neutral"}>{selectedCount}/{snapshot.sources.length}</Badge>
+      </div>
       <div className="source-grid">
         {snapshot.sources.map((source) => {
           const href = externalHttpHref(source.locator)
+          const selected = selectedSourceIds.has(source.id)
           return (
-            <article key={source.id} id={`source-${source.id}`} className="source-wrapper">
+            <article
+              key={source.id}
+              id={`source-${source.id}`}
+              className="source-wrapper"
+              data-selected={selected ? "true" : "false"}
+            >
               <SourceBlock
                 sourceId={source.id}
                 title={source.title}
@@ -635,27 +814,34 @@ function Footer({ snapshot }: { snapshot: SuperheroSnapshot }) {
 function App() {
   const [snapshot, setSnapshot] = useState<SuperheroSnapshot | null>(null)
   const [error, setError] = useState("")
-  const [selectedId, setSelectedId] = useState(queryPersonId(bootConfig))
-  const [query, setQuery] = useState("")
-  const [identityFilter, setIdentityFilter] = useState("all")
-  const [relationFilter, setRelationFilter] = useState("all")
+  const [loadAttempt, setLoadAttempt] = useState(0)
+  const [shareStatus, setShareStatus] = useState("")
+  const [selectedId, setSelectedId] = useState(() => readUrlState(bootConfig).person)
+  const [query, setQuery] = useState(() => readUrlState(bootConfig).query)
+  const [identityFilter, setIdentityFilter] = useState(() => readUrlState(bootConfig).identity)
+  const [relationFilter, setRelationFilter] = useState(() => readUrlState(bootConfig).relation)
 
   useEffect(() => {
     let active = true
+    setError("")
     loadSnapshot()
       .then((value) => {
         if (!active) return
         setSnapshot(value)
         const records = [...value.people, ...value.candidates]
-        const requested = queryPersonId(value.ui)
-        const valid = records.some((person) => person.id === requested)
-        const initial = valid ? requested : records[0]?.id ?? ""
+        const urlState = readUrlState(value.ui)
+        const validIdentity = new Set(records.map((person) => person.identity_status))
+        const validRelations = new Set(value.taxonomy.relations.map((relation) => relation.id))
+        const validPerson = records.some((person) => person.id === urlState.person)
+        const initial = validPerson ? urlState.person : records[0]?.id ?? ""
         setSelectedId(initial)
-        if (initial) updatePersonUrl(value.ui, initial)
+        setQuery(urlState.query)
+        setIdentityFilter(urlState.identity === "all" || validIdentity.has(urlState.identity) ? urlState.identity : "all")
+        setRelationFilter(urlState.relation === "all" || validRelations.has(urlState.relation) ? urlState.relation : "all")
       })
       .catch((cause) => active && setError(cause instanceof Error ? cause.message : String(cause)))
     return () => { active = false }
-  }, [])
+  }, [loadAttempt])
 
   const allPeople = useMemo(() => [...(snapshot?.people ?? []), ...(snapshot?.candidates ?? [])], [snapshot])
   const candidateIds = useMemo(() => new Set((snapshot?.candidates ?? []).map((person) => person.id)), [snapshot])
@@ -682,6 +868,54 @@ function App() {
 
   const sourceMap = useMemo(() => new Map((snapshot?.sources ?? []).map((source) => [source.id, source])), [snapshot])
   const identityOptions = useMemo(() => [...new Set(allPeople.map((person) => person.identity_status))].sort(), [allPeople])
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      const target = event.target
+      const editable = target instanceof HTMLElement &&
+        (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.tagName === "SELECT" || target.isContentEditable)
+      if (event.key === "/" && !editable && !event.metaKey && !event.ctrlKey && !event.altKey) {
+        event.preventDefault()
+        document.getElementById("superhero-search")?.focus()
+      }
+      if (event.key === "Escape" && document.activeElement?.id === "superhero-search" && query) {
+        setQuery("")
+      }
+    }
+    window.addEventListener("keydown", onKeyDown)
+    return () => window.removeEventListener("keydown", onKeyDown)
+  }, [query])
+
+  useEffect(() => {
+    if (!snapshot) return
+    syncUrlState(snapshot.ui, {
+      person: selectedId,
+      query,
+      identity: identityFilter,
+      relation: relationFilter,
+    })
+  }, [snapshot, selectedId, query, identityFilter, relationFilter])
+
+  useEffect(() => {
+    if (!snapshot) return
+    const onPopState = () => {
+      const state = readUrlState(snapshot.ui)
+      const validPerson = allPeople.some((person) => person.id === state.person)
+      setSelectedId(validPerson ? state.person : allPeople[0]?.id ?? "")
+      setQuery(state.query)
+      setIdentityFilter(state.identity)
+      setRelationFilter(state.relation)
+      setShareStatus("")
+    }
+    window.addEventListener("popstate", onPopState)
+    return () => window.removeEventListener("popstate", onPopState)
+  }, [snapshot, allPeople])
+
+  useEffect(() => {
+    if (!snapshot) return
+    const person = allPeople.find((item) => item.id === selectedId)
+    document.title = person ? `${person.canonical_name} · ${snapshot.ui.site.title}` : snapshot.ui.site.title
+  }, [snapshot, selectedId, allPeople])
 
   const filteredPeople = useMemo(() => {
     if (!snapshot) return []
@@ -713,10 +947,11 @@ function App() {
   if (!snapshot) {
     const states = bootConfig.states
     return (
-      <main className="boot-state" role={error ? "alert" : "status"}>
+      <main className="boot-state" role={error ? "alert" : "status"} aria-busy={error ? undefined : true}>
         <p className="rs-eyebrow">{error ? states.error_eyebrow : states.loading_eyebrow}</p>
         <h1>{error ? states.error_headline : states.loading_headline}</h1>
         <p>{error || states.loading_copy}</p>
+        {error ? <Button onClick={() => setLoadAttempt((value) => value + 1)}>{states.retry_label}</Button> : null}
       </main>
     )
   }
@@ -727,13 +962,50 @@ function App() {
   const personClaims = claimByPerson.get(person.id) ?? []
   const personRelationships = relationshipByPerson.get(person.id) ?? []
   const personEvidence = snapshot.evidence.filter((item) => personClaims.some((claim) => claim.id === item.claim_id))
+  const selectedSourceIds = sourceIdsForPerson(person, personClaims, personEvidence, personRelationships)
   const canonicalFiltered = filteredPeople.filter((item) => !candidateIds.has(item.id))
   const candidateFiltered = filteredPeople.filter((item) => candidateIds.has(item.id))
+  const hasFilters = Boolean(query.trim()) || identityFilter !== "all" || relationFilter !== "all"
+
+  const resetFilters = () => {
+    setQuery("")
+    setIdentityFilter("all")
+    setRelationFilter("all")
+  }
 
   const selectPerson = (id: string) => {
     setSelectedId(id)
-    updatePersonUrl(snapshot.ui, id)
+    setShareStatus("")
+    syncUrlState(snapshot.ui, {
+      person: id,
+      query,
+      identity: identityFilter,
+      relation: relationFilter,
+    }, "push")
     document.getElementById("people")?.scrollIntoView({ behavior: "smooth", block: "start" })
+  }
+
+  const sharePerson = async () => {
+    const url = window.location.href
+    const shareData = {
+      title: `${person.canonical_name} · ${snapshot.ui.site.title}`,
+      text: person.review.note ?? snapshot.ui.site.description,
+      url,
+    }
+    setShareStatus("")
+    try {
+      if (typeof navigator.share === "function") {
+        await navigator.share(shareData)
+      } else if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(url)
+      } else {
+        fallbackCopy(url)
+      }
+      setShareStatus(snapshot.ui.dossier.share_success)
+    } catch (cause) {
+      if (cause instanceof DOMException && cause.name === "AbortError") return
+      setShareStatus(snapshot.ui.dossier.share_error)
+    }
   }
 
   const navItems = snapshot.ui.sections.filter((section) => section.nav).map((section) => ({ label: section.label, href: `#${section.id}` }))
@@ -741,6 +1013,7 @@ function App() {
   return (
     <MoonWitnessAssetProvider baseUrl={assetBase}>
       <div className="superhero-app">
+        <a className="skip-link" href="#main-content">{snapshot.ui.labels.skip_to_content}</a>
         <MWHeader
           variant="auto"
           brandLabel={snapshot.ui.header.brand_label}
@@ -748,7 +1021,7 @@ function App() {
           navItems={navItems}
           searchHref={snapshot.ui.header.search_href}
         />
-        <main>
+        <main id="main-content" tabIndex={-1}>
           <Hero snapshot={snapshot} />
           <ObservatorySectionNav
             className="observatory-nav"
@@ -765,6 +1038,8 @@ function App() {
             setRelationFilter={setRelationFilter}
             identityOptions={identityOptions}
             count={filteredPeople.length}
+            hasFilters={hasFilters}
+            onReset={resetFilters}
           />
           <section id="people" className="people-workbench">
             <PersonIndex
@@ -780,11 +1055,21 @@ function App() {
               claims={personClaims}
               relationships={personRelationships}
               candidate={candidateIds.has(person.id)}
+              onShare={() => { void sharePerson() }}
+              shareStatus={shareStatus}
             />
           </section>
           <TransmissionSection snapshot={snapshot} person={person} relationships={personRelationships} />
           <ClaimsEvidenceSection snapshot={snapshot} claims={personClaims} evidence={personEvidence} />
-          <SourcesSection snapshot={snapshot} />
+          <QualitySection
+            snapshot={snapshot}
+            person={person}
+            claims={personClaims}
+            evidence={personEvidence}
+            relationships={personRelationships}
+            selectedSourceIds={selectedSourceIds}
+          />
+          <SourcesSection snapshot={snapshot} selectedSourceIds={selectedSourceIds} />
           <UncertaintySection snapshot={snapshot} person={person} />
           <TaxonomySection snapshot={snapshot} />
           <ContractSection snapshot={snapshot} />
