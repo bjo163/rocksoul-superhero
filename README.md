@@ -17,7 +17,7 @@ A provenance-first repository for reconstructing **human agency, authorship, wit
 <br/>
 
 [![Validation](https://github.com/bjo163/rocksoul-superhero/actions/workflows/validate.yml/badge.svg?branch=main)](https://github.com/bjo163/rocksoul-superhero/actions/workflows/validate.yml)
-![Branches](https://img.shields.io/badge/branches-main%20%2B%20dev-111111)
+![Branches](https://img.shields.io/badge/branch-main--only-111111)
 ![Domain](https://img.shields.io/badge/domain-PERSON-6F6F6F)
 ![Method](https://img.shields.io/badge/method-provenance--first-B43A32)
 ![Design](https://img.shields.io/badge/design-rocksoul--assets-6C63FF)
@@ -25,7 +25,7 @@ A provenance-first repository for reconstructing **human agency, authorship, wit
 
 <br/>
 
-[Architecture](#narrative-chain-of-custody) · [Canonical chain](#first-canonical-transmission-chain) · [Shared proof](#shared-five-domain-proof) · [Repository map](#repository-atlas) · [Assets](https://github.com/bjo163/rocksoul-assets) · [Console](https://github.com/bjo163/rocksoul-crayon)
+[Live Observatory](https://rocksoul-superhero.vercel.app) · [Architecture](#narrative-chain-of-custody) · [Canonical chain](#first-canonical-transmission-chain) · [Shared proof](#shared-five-domain-proof) · [Repository map](#repository-atlas) · [Assets](https://github.com/bjo163/rocksoul-assets) · [UI](https://github.com/bjo163/rocksoul-ui)
 
 </div>
 
@@ -191,8 +191,8 @@ Freyle states that **don Juan, cacique of Guatavita**, told him the relevant tra
 ## Current graph
 
 ```text
-2 canonical people
-7 local sources
+3 canonical people
+8 local sources
 9 atomic claims
 9 evidence edges
 6 actor relationships
@@ -224,10 +224,12 @@ No hero ranking, psychology profiling, or moral scoring is implied by the reposi
 
 ```text
 rocksoul-superhero/
-├── data/            people, claims, evidence, actor relations
+├── data/            people, claims, evidence, sources, actor relations
+├── src/             React + TypeScript public PERSON observatory
+├── public/data/     build-generated deployment snapshot
 ├── docs/            method, cases, interoperability
 ├── schemas/         machine-valid person/transmission contracts
-├── scripts/         validation and graph checks
+├── scripts/         validation, indexing, snapshot + UI audits
 └── .github/         CI and repository automation
 ```
 
@@ -248,13 +250,29 @@ rocksoul-superhero/
 </div>
 
 
+## Public observatory
+
+The repository now ships its PERSON research surface directly with **React 19 + TypeScript + Vite**, consuming `@rocksoul/ui` and the canonical `rocksoul-assets` visual registry.
+
+```text
+canonical JSON
+  → schema validation
+  → generated index
+  → deployment-pinned web snapshot
+  → TypeScript / UI contract audit
+  → Vite production bundle
+```
+
+The browser reads the deployment snapshot rather than live GitHub APIs, so the visible claims, evidence, relationships and sources stay reproducible for that deployment.
+
+**Production:** https://rocksoul-superhero.vercel.app
+
 ## Branch model
 
 ```text
-main  ← stable / release
-dev   ← all development
+main  ← stable, development, maintenance, and release
 ```
 
-Development lands in `dev`. Release promotion is only `dev → main`. Noncanonical remote branches are removed automatically by the branch-policy workflow.
+SUPERHERO uses one canonical remote branch. CI removes noncanonical remote branches after trusted non-PR runs.
 
 [Read the branching contract →](docs/BRANCHING.md)
