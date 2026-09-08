@@ -1,0 +1,14 @@
+{
+  "id": "PER-OSEBERG-TWO-WOMEN",
+  "canonical_name": "Two women buried at Oseberg",
+  "names": [{"value": "Oseberg women", "language": "English", "script": "Latin"}],
+  "aliases": ["The Oseberg women"],
+  "identity_status": "anonymous",
+  "lifespan": {"start": null, "end": "834 CE", "precision": "unknown", "note": "The burial is dated to 834 CE; individual birth dates and exact historical identities are unknown."},
+  "active_period": {"start": null, "end": "834 CE", "precision": "unknown", "note": "No historical activity is asserted beyond their archaeological association with the burial."},
+  "place_refs": [],
+  "source_refs": ["superhero:SRC-SH-NOR-OSEBERG-WOMEN"],
+  "claim_refs": [], "relationship_refs": [],
+  "uncertainty": ["Their personal names are unknown.", "Their relationship to one another is unresolved.", "Royal, kinship, religious-specialist, and ritual-role identifications remain interpretive hypotheses.", "Biological observations must not be converted into unsupported social identity claims."],
+  "review": {"status": "canonical", "reviewed_by": "Rocksoul correlation canonicalization review", "note": "Canonical scope is deliberately anonymous: two female archaeological persons/remains associated with the Oseberg burial. EVENT association is owned by cross-repo correlation, not source_refs."}
+}
