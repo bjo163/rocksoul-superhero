@@ -115,3 +115,32 @@ The same real-world person may therefore have records in both repositories.
 Do not infer identity from matching names. An explicit crosswalk between `PER-*` and `mw:person:*` requires reconciliation evidence and should preserve disputed/conflated identity states where relevant.
 
 This also means SUPERHERO does not need to copy RGBL's world-religion registry or scoped role assertions merely to know that a source calls someone a prophet, teacher, king, apostle, or other role.
+
+
+## Fifth research domain — AWS
+
+`rocksoul-aws` owns **LAW / applicability / legal assessment**.
+
+```text
+MFTL       STORY       What was told?
+LEGEND     EVENT       What happened?
+SUPERHERO  PERSON      Who was involved?
+RGBL       TEXT        What does the exact source text say?
+AWS        LAW         Was it allowed / legally applicable?
+```
+
+Public research grammar:
+
+```text
+STORY × EVENT × PERSON × RGBL × AWS
+```
+
+AWS may reference records owned by the first four repositories, but it stores them as foreign references and must not copy their canonical ownership into the legal domain.
+
+```text
+FOREIGN REFERENCE ≠ OWNERSHIP
+LEGAL APPLICABILITY ≠ HISTORICAL FACT
+LEGAL RESULT ≠ MIZAN
+```
+
+The first five-domain proof remains Jerusalem 70 CE. The historical/textual four-way chain stays intact; AWS adds a separate applicability analysis.

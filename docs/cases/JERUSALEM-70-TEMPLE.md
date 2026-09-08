@@ -79,3 +79,54 @@ EVENT ≠ WITNESS
 CORRESPONDENCE ≠ CAUSATION
 ATTESTATION ≠ THEOLOGICAL VERDICT
 ```
+
+
+## Fifth domain — AWS legal applicability
+
+The same case is also consumed by `rocksoul-aws` as a distinct LAW domain:
+
+```text
+RGBL exact text
+   ↓
+MFTL story
+   ↓
+LEGEND event
+   ↑
+SUPERHERO person
+   │
+   └──────────────► AWS law / applicability
+```
+
+AWS does **not** own or rewrite the STORY, EVENT, PERSON, or RGBL records. It asks a separate legal question:
+
+> **Was a selected legal basis applicable to this event?**
+
+For Jerusalem 70 CE, AWS records:
+
+```text
+APPL-JERUSALEM-70-GCIV
+TEMPORAL       DOES_NOT_APPLY
+APPLICABILITY  NOT_APPLICABLE
+LEGAL RESULT   UNRESOLVED
+MIZAN          NOT_RUN
+```
+
+Stable AWS refs:
+
+```text
+aws:CASE-AWS-JERUSALEM-70
+aws:APPL-JERUSALEM-70-GCIV
+aws:LCLAIM-JERUSALEM-70-GCIV-TEMPORAL
+aws:LASSMT-JERUSALEM-70-GCIV
+```
+
+The five-domain stop rule is therefore:
+
+```text
+TEXT ≠ STORY
+STORY ≠ EVENT
+EVENT ≠ WITNESS
+CORRESPONDENCE ≠ CAUSATION
+HISTORICAL FACT ≠ LEGAL APPLICABILITY
+LEGAL APPLICABILITY ≠ MIZAN
+```
