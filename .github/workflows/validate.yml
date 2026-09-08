@@ -2,15 +2,21 @@ name: Validate SUPERHERO
 
 on:
   push:
-    branches: [main, dev]
+    branches: [main]
   pull_request:
     branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -19,3 +25,18 @@ jobs:
       - run: npm run index
       - name: Ensure generated index is current
         run: git diff --exit-code -- data/index.json
+      - name: Enforce main-only remote
+        if: github.event_name != 'pull_request'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin --prune
+          mapfile -t branches < <(git ls-remote --heads origin | awk '{sub("refs/heads/", "", $2); print $2}' | sort)
+          for branch in "${branches[@]}"; do
+            if [ "$branch" != "main" ]; then
+              echo "Deleting noncanonical remote branch: $branch"
+              git push origin --delete "$branch"
+            fi
+          done
+          remaining="$(git ls-remote --heads origin | awk '{sub("refs/heads/", "", $2); print $2}' | sort)"
+          test "$remaining" = "main"
