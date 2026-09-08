@@ -109,7 +109,7 @@ export interface ObservatoryConfig {
     og_asset: string
     twitter_card: string
   }
-  header: { brand_label: string; live_label: string; search_href: string }
+  header: { brand_label: string; live_label: string; search_href: string; nav_label: string }
   hero: {
     eyebrow: string
     headline: string
@@ -117,6 +117,8 @@ export interface ObservatoryConfig {
     copy: string
     rules: string[]
     asset: string
+    snapshot_label: string
+    schema_label: string
   }
   metrics: Array<{ key: keyof SuperheroSnapshot["counts"]; label: string }>
   filters: {
@@ -126,6 +128,7 @@ export interface ObservatoryConfig {
     identity_all_label: string
     relation_label: string
     relation_all_label: string
+    matching_suffix: string
   }
   sections: ObservatorySection[]
   person_index: {
@@ -133,11 +136,16 @@ export interface ObservatoryConfig {
     empty: string
     principle_title: string
     principle_copy: string
+    candidate_title: string
+    candidate_empty: string
   }
   dossier: {
     eyebrow: string
     actions: { transmission: string; evidence: string }
     identity_eyebrow: string
+    metadata: { review: string; active_period: string; claims: string; relations: string; record_class: string }
+    canonical_label: string
+    candidate_label: string
   }
   states: {
     loading_eyebrow: string
@@ -146,6 +154,27 @@ export interface ObservatoryConfig {
     error_eyebrow: string
     error_headline: string
     no_people: string
+  }
+  labels: {
+    confidence: string
+    known_uncertainty: string
+    limitations: string
+    no_relationships: string
+    no_claims: string
+    no_evidence: string
+    no_sources: string
+    no_uncertainty: string
+    source_open: string
+    source_no_locator: string
+    record_fields: string
+    taxonomy_relations: string
+    taxonomy_proximity: string
+    schemas: string
+    record_ledger: string
+    ledger_copy: string
+    schema_copy: string
+    candidate_badge: string
+    canonical_badge: string
   }
   footer: { slogan: string; asset: string }
 }
