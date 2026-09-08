@@ -1,6 +1,7 @@
 import fs from "node:fs"
 import path from "node:path"
 import { execFileSync } from "node:child_process"
+import { createHash } from "node:crypto"
 
 const root = process.cwd()
 
@@ -27,19 +28,24 @@ function resolveCommit() {
 }
 
 const index = readJson("data/index.json")
+const records = {
+  people: readJsonDirectory("data/people"),
+  claims: readJsonDirectory("data/claims"),
+  evidence: readJsonDirectory("data/evidence"),
+  relationships: readJsonDirectory("data/relationships"),
+  sources: readJsonDirectory("data/sources"),
+}
+const datasetSha256 = createHash("sha256").update(JSON.stringify(records)).digest("hex")
 const snapshot = {
   schema_version: index.schema_version,
   source: {
     repository: "bjo163/rocksoul-superhero",
     ref: "main",
     commit: resolveCommit(),
+    dataset_sha256: datasetSha256,
   },
   counts: index.counts,
-  people: readJsonDirectory("data/people"),
-  claims: readJsonDirectory("data/claims"),
-  evidence: readJsonDirectory("data/evidence"),
-  relationships: readJsonDirectory("data/relationships"),
-  sources: readJsonDirectory("data/sources"),
+  ...records,
 }
 
 const targetDir = path.join(root, "public", "data")
