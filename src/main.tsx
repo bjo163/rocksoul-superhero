@@ -44,13 +44,6 @@ function titleCase(value = "") {
   return value.replaceAll("_", " ").replace(/\b\w/g, (letter) => letter.toUpperCase())
 }
 
-function evidenceStatus(relation: string) {
-  if (relation === "supports") return "supported" as const
-  if (relation === "contradicts") return "disputed" as const
-  if (relation === "contextualizes") return "partial" as const
-  return "unresolved" as const
-}
-
 function sectionFor(config: ObservatoryConfig, id: string) {
   const section = config.sections.find((item) => item.id === id)
   if (!section) throw new Error(`Missing observatory section contract: ${id}`)
