@@ -423,7 +423,7 @@ function EvidenceForClaim({
       />
       <div className="evidence-grid">
         {evidence.map((item) => {
-          const status = evidenceStatus(item.relation)
+          const status = semanticStatusVariant(item.relation)
           return (
             <div key={item.id} className="evidence-item">
               <EvidenceCard
@@ -435,7 +435,7 @@ function EvidenceForClaim({
                 verification={titleCase(item.evidence_type)}
                 status={status}
                 canonical
-                flagged={status === "disputed"}
+                flagged={status === "disputed" || status === "contested"}
                 sourceHref={referenceHref(item.source_refs[0] ?? "")}
               />
               <ConfidenceMeter value={item.confidence} label={snapshot.ui.labels.confidence} />
