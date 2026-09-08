@@ -68,6 +68,88 @@ export interface SourceRecord {
   notes: string[]
 }
 
+export interface RelationTaxonomy {
+  schema_version: string
+  relations: Array<{ code: string; id: string; label: string }>
+  proximity: string[]
+}
+
+export interface JsonSchemaContract {
+  $schema?: string
+  $id?: string
+  title?: string
+  type?: string
+  additionalProperties?: boolean
+  required?: string[]
+  properties?: Record<string, unknown>
+  definitions?: Record<string, unknown>
+  [key: string]: unknown
+}
+
+export interface ObservatorySection {
+  id: string
+  nav: boolean
+  index: string
+  label: string
+  eyebrow: string
+  headline: string
+  description: string
+}
+
+export interface ObservatoryConfig {
+  schema_version: string
+  source: { repository: string; ref: string }
+  site: {
+    url: string
+    title: string
+    description: string
+    theme_color: string
+    favicon_asset: string
+    apple_touch_asset: string
+    og_asset: string
+    twitter_card: string
+  }
+  header: { brand_label: string; live_label: string; search_href: string }
+  hero: {
+    eyebrow: string
+    headline: string
+    accent: string
+    copy: string
+    rules: string[]
+    asset: string
+  }
+  metrics: Array<{ key: keyof SuperheroSnapshot["counts"]; label: string }>
+  filters: {
+    search_label: string
+    search_placeholder: string
+    identity_label: string
+    identity_all_label: string
+    relation_label: string
+    relation_all_label: string
+  }
+  sections: ObservatorySection[]
+  person_index: {
+    title: string
+    empty: string
+    principle_title: string
+    principle_copy: string
+  }
+  dossier: {
+    eyebrow: string
+    actions: { transmission: string; evidence: string }
+    identity_eyebrow: string
+  }
+  states: {
+    loading_eyebrow: string
+    loading_headline: string
+    loading_copy: string
+    error_eyebrow: string
+    error_headline: string
+    no_people: string
+  }
+  footer: { slogan: string; asset: string }
+}
+
 export interface SuperheroSnapshot {
   schema_version: string
   source: { repository: string; ref: string; dataset_sha256: string }
@@ -81,8 +163,12 @@ export interface SuperheroSnapshot {
     relation_types: number
   }
   people: PersonRecord[]
+  candidates: PersonRecord[]
   claims: ClaimRecord[]
   evidence: EvidenceRecord[]
   relationships: RelationshipRecord[]
   sources: SourceRecord[]
+  taxonomy: RelationTaxonomy
+  schemas: Record<"person" | "claim" | "evidence" | "relationship" | "source", JsonSchemaContract>
+  ui: ObservatoryConfig
 }
