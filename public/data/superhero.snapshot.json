@@ -1,0 +1,654 @@
+{
+  "schema_version": "0.1",
+  "source": {
+    "repository": "bjo163/rocksoul-superhero",
+    "ref": "main",
+    "dataset_sha256": "64f3606ec32b66d3814b92a6c57ab9fe2d33181a46caa716e10fa8347d7bd690"
+  },
+  "counts": {
+    "canonical_people": 3,
+    "candidates": 0,
+    "sources": 8,
+    "claims": 9,
+    "evidence_edges": 9,
+    "relationships": 6,
+    "relation_types": 16
+  },
+  "people": [
+    {
+      "id": "PER-COL-JUAN-RODRIGUEZ-FREYLE",
+      "canonical_name": "Juan Rodríguez Freyle",
+      "names": [
+        {
+          "value": "Juan Rodríguez Freyle",
+          "language": "Spanish",
+          "script": "Latin"
+        }
+      ],
+      "aliases": [
+        "Juan Rodríguez Freile"
+      ],
+      "identity_status": "attested",
+      "lifespan": {
+        "start": "1566-04-25",
+        "end": null,
+        "precision": "unknown",
+        "note": "Banco de la República gives birth on 25 April 1566 and death toward 1642; other Banco de la República scholarship uses 1638. End year remains unresolved in v0.1."
+      },
+      "active_period": {
+        "start": "1636",
+        "end": "1636",
+        "precision": "year",
+        "note": "Relevant writing horizon for El Carnero in Banrepcultural's description."
+      },
+      "place_refs": [],
+      "source_refs": [
+        "superhero:SRC-SH-COL-BANREP-FREYLE-BIO",
+        "superhero:SRC-SH-COL-BANREP-MUISCA-DORADO",
+        "superhero:SRC-SH-COL-FREYLE-EL-CARNERO-1636",
+        "superhero:SRC-SH-COL-MUISCA-RAFT-2021",
+        "legend:SRC-COL-CAMBRIDGE-GUATAVITA-2024"
+      ],
+      "claim_refs": [
+        "CLM-PER-COL-FREYLE-001",
+        "CLM-PER-COL-FREYLE-002",
+        "CLM-PER-COL-FREYLE-003",
+        "CLM-PER-COL-FREYLE-004",
+        "CLM-PER-COL-FREYLE-005"
+      ],
+      "relationship_refs": [
+        "REL-PER-COL-FREYLE-AUTHORED-EL-CARNERO",
+        "REL-PER-COL-FREYLE-RECORDED-MFTL-GUATAVITA",
+        "REL-PER-COL-FREYLE-INTERPRETED-LEGEND-GUATAVITA"
+      ],
+      "uncertainty": [
+        "Freyle was not a direct witness of the pre-contact Guatavita offering activity modeled in LEGEND.",
+        "His statement that don Juan was his informant is source evidence for a claimed transmission chain; don Juan is not yet canonicalized as a separate SUPERHERO person.",
+        "Being an early surviving recorder of a version does not establish that Freyle invented or originated the tradition.",
+        "Biographical references differ on Freyle's death year."
+      ],
+      "review": {
+        "status": "canonical",
+        "reviewed_by": "Rocksoul Research evidence review",
+        "note": "Canonical scope is historical identity and documented recorder/compiler role in the Guatavita/El Dorado transmission chain."
+      }
+    },
+    {
+      "id": "PER-JERUSALEM-FLAVIUS-JOSEPHUS",
+      "canonical_name": "Flavius Josephus",
+      "names": [
+        {
+          "value": "Flavius Josephus",
+          "language": "English / Latinized",
+          "script": "Latin"
+        },
+        {
+          "value": "Joseph, son of Matthias",
+          "language": "English rendering of Josephus's self-identification",
+          "script": "Latin"
+        }
+      ],
+      "aliases": [
+        "Josephus",
+        "Joseph ben Matthias"
+      ],
+      "identity_status": "attested",
+      "lifespan": {
+        "start": null,
+        "end": null,
+        "precision": "unknown",
+        "note": "Full biographical dating is outside this integration case; the record only requires identity and war-era activity supported by the cited sources."
+      },
+      "active_period": {
+        "start": "66 CE",
+        "end": "ca. 75 CE",
+        "precision": "year_range",
+        "note": "Relevant period covers his participation in the Jewish–Roman War through the approximate composition horizon of The Jewish War."
+      },
+      "place_refs": [
+        "legend:PLC-JERUSALEM-SECOND-TEMPLE"
+      ],
+      "source_refs": [
+        "superhero:SRC-SH-JERUSALEM-JOSEPHUS-WAR",
+        "superhero:SRC-SH-JERUSALEM-JOSEPHUS-LIFE-75",
+        "superhero:SRC-SH-JERUSALEM-MET-JOSEPHUS",
+        "legend:SRC-JERUSALEM-MET-WORLD-BETWEEN-EMPIRES"
+      ],
+      "claim_refs": [
+        "CLM-PER-JERUSALEM-JOSEPHUS-001",
+        "CLM-PER-JERUSALEM-JOSEPHUS-002",
+        "CLM-PER-JERUSALEM-JOSEPHUS-003",
+        "CLM-PER-JERUSALEM-JOSEPHUS-004"
+      ],
+      "relationship_refs": [
+        "REL-PER-JERUSALEM-JOSEPHUS-AUTHORED-WAR",
+        "REL-PER-JERUSALEM-JOSEPHUS-WITNESSED-TEMPLE70",
+        "REL-PER-JERUSALEM-JOSEPHUS-RECORDED-TEMPLE70"
+      ],
+      "uncertainty": [
+        "Josephus's presence and authorship are strongly attested, but witness proximity does not make every detail or interpretation in his account neutral or infallible.",
+        "The SUPERHERO record does not infer anything about Mark 13:2's authorship, date, or theological fulfillment.",
+        "The person record is scoped to the actor/recorder role required by the four-way case rather than attempting a complete biography."
+      ],
+      "review": {
+        "status": "canonical",
+        "reviewed_by": "Rocksoul four-way integration review",
+        "note": "Canonical scope: historical identity, presence at the Jerusalem siege, authorship/recording role, and relationship to the 70 CE event."
+      }
+    },
+    {
+      "id": "PER-OSEBERG-TWO-WOMEN",
+      "canonical_name": "Two women buried at Oseberg",
+      "names": [
+        {
+          "value": "Oseberg women",
+          "language": "English",
+          "script": "Latin"
+        }
+      ],
+      "aliases": [
+        "The Oseberg women"
+      ],
+      "identity_status": "anonymous",
+      "lifespan": {
+        "start": null,
+        "end": "834 CE",
+        "precision": "unknown",
+        "note": "The burial is dated to 834 CE; individual birth dates and exact historical identities are unknown."
+      },
+      "active_period": {
+        "start": null,
+        "end": "834 CE",
+        "precision": "unknown",
+        "note": "No historical activity is asserted beyond their archaeological association with the burial."
+      },
+      "place_refs": [],
+      "source_refs": [
+        "superhero:SRC-SH-NOR-OSEBERG-WOMEN"
+      ],
+      "claim_refs": [],
+      "relationship_refs": [],
+      "uncertainty": [
+        "Their personal names are unknown.",
+        "Their relationship to one another is unresolved.",
+        "Royal, kinship, religious-specialist, and ritual-role identifications remain interpretive hypotheses.",
+        "Biological observations must not be converted into unsupported social identity claims."
+      ],
+      "review": {
+        "status": "canonical",
+        "reviewed_by": "Rocksoul correlation canonicalization review",
+        "note": "Canonical scope is deliberately anonymous: two female archaeological persons/remains associated with the Oseberg burial. EVENT association is owned by cross-repo correlation, not source_refs."
+      }
+    }
+  ],
+  "claims": [
+    {
+      "id": "CLM-PER-COL-FREYLE-001",
+      "subject_id": "PER-COL-JUAN-RODRIGUEZ-FREYLE",
+      "statement": "Juan Rodríguez Freyle was a historical colonial writer/chronicler associated with El Carnero.",
+      "claim_type": "identity",
+      "epistemic_status": "strongly_supported",
+      "source_refs": [
+        "superhero:SRC-SH-COL-BANREP-FREYLE-BIO"
+      ],
+      "notes": []
+    },
+    {
+      "id": "CLM-PER-COL-FREYLE-002",
+      "subject_id": "PER-COL-JUAN-RODRIGUEZ-FREYLE",
+      "statement": "Freyle authored El Carnero, whose own title/content frame includes the origin of the celebrated name El Dorado and whose writing horizon is given as 1636 in Banco de la República's biographical entry.",
+      "claim_type": "authorship",
+      "epistemic_status": "strongly_supported",
+      "source_refs": [
+        "superhero:SRC-SH-COL-BANREP-FREYLE-BIO",
+        "superhero:SRC-SH-COL-FREYLE-EL-CARNERO-1636"
+      ],
+      "notes": []
+    },
+    {
+      "id": "CLM-PER-COL-FREYLE-003",
+      "subject_id": "PER-COL-JUAN-RODRIGUEZ-FREYLE",
+      "statement": "In his Guatavita account, Freyle states that don Juan, cacique and lord of Guatavita, told him the relevant antiquities/traditions.",
+      "claim_type": "transmission",
+      "epistemic_status": "supported_as_documentary_attestation",
+      "source_refs": [
+        "superhero:SRC-SH-COL-FREYLE-EL-CARNERO-1636",
+        "superhero:SRC-SH-COL-MUISCA-RAFT-2021"
+      ],
+      "notes": [
+        "This supports Freyle's claimed informant chain; it does not independently verify every detail attributed to don Juan."
+      ]
+    },
+    {
+      "id": "CLM-PER-COL-FREYLE-004",
+      "subject_id": "PER-COL-JUAN-RODRIGUEZ-FREYLE",
+      "statement": "Freyle's Guatavita description is a later colonial record rather than direct eyewitness testimony of the pre-contact ritual activity.",
+      "claim_type": "chronology",
+      "epistemic_status": "strongly_supported",
+      "source_refs": [
+        "superhero:SRC-SH-COL-BANREP-MUISCA-DORADO",
+        "legend:SRC-COL-CAMBRIDGE-GUATAVITA-2024"
+      ],
+      "notes": [
+        "Temporal distance is modeled as proximity information, not as automatic unreliability."
+      ]
+    },
+    {
+      "id": "CLM-PER-COL-FREYLE-005",
+      "subject_id": "PER-COL-JUAN-RODRIGUEZ-FREYLE",
+      "statement": "Modern scholarship identifies Freyle's version as an important point in the textual association of the Lake Guatavita ceremony with chiefly investiture/legitimation.",
+      "claim_type": "interpretation",
+      "epistemic_status": "probable",
+      "source_refs": [
+        "superhero:SRC-SH-COL-MUISCA-RAFT-2021",
+        "legend:SRC-COL-CAMBRIDGE-GUATAVITA-2024"
+      ],
+      "notes": [
+        "This is a scholarly interpretation of transmission history, not proof that Freyle single-handedly created the investiture motif."
+      ]
+    },
+    {
+      "id": "CLM-PER-JERUSALEM-JOSEPHUS-001",
+      "subject_id": "PER-JERUSALEM-FLAVIUS-JOSEPHUS",
+      "statement": "Flavius Josephus was a first-century Jewish priest and war participant who became a major historical writer on the Jewish–Roman War.",
+      "claim_type": "identity",
+      "epistemic_status": "strongly_supported",
+      "source_refs": [
+        "superhero:SRC-SH-JERUSALEM-JOSEPHUS-WAR",
+        "superhero:SRC-SH-JERUSALEM-MET-JOSEPHUS"
+      ],
+      "notes": [
+        "This claim establishes historical identity/role, not source neutrality."
+      ]
+    },
+    {
+      "id": "CLM-PER-JERUSALEM-JOSEPHUS-002",
+      "subject_id": "PER-JERUSALEM-FLAVIUS-JOSEPHUS",
+      "statement": "Josephus authored The Jewish War and explicitly presents himself as someone who first fought against the Romans and was later present for subsequent events.",
+      "claim_type": "authorship",
+      "epistemic_status": "supported_as_documentary_attestation",
+      "source_refs": [
+        "superhero:SRC-SH-JERUSALEM-JOSEPHUS-WAR"
+      ],
+      "notes": []
+    },
+    {
+      "id": "CLM-PER-JERUSALEM-JOSEPHUS-003",
+      "subject_id": "PER-JERUSALEM-FLAVIUS-JOSEPHUS",
+      "statement": "Josephus states in his Life that he was sent together with Titus to the siege of Jerusalem.",
+      "claim_type": "witnessing",
+      "epistemic_status": "supported_as_documentary_attestation",
+      "source_refs": [
+        "superhero:SRC-SH-JERUSALEM-JOSEPHUS-LIFE-75"
+      ],
+      "notes": [
+        "This is strong first-person evidence of presence, while remaining autobiographical testimony."
+      ]
+    },
+    {
+      "id": "CLM-PER-JERUSALEM-JOSEPHUS-004",
+      "subject_id": "PER-JERUSALEM-FLAVIUS-JOSEPHUS",
+      "statement": "Josephus's Jewish War records the burning and destruction of the Jerusalem Temple during the Roman siege.",
+      "claim_type": "transmission",
+      "epistemic_status": "strongly_supported",
+      "source_refs": [
+        "superhero:SRC-SH-JERUSALEM-JOSEPHUS-WAR",
+        "legend:SRC-JERUSALEM-MET-WORLD-BETWEEN-EMPIRES"
+      ],
+      "notes": [
+        "The historical event is owned and assessed in LEGEND; SUPERHERO owns Josephus's recorder relationship."
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "id": "EVD-PER-COL-FREYLE-001",
+      "claim_id": "CLM-PER-COL-FREYLE-001",
+      "relation": "supports",
+      "evidence_type": "biographical",
+      "summary": "Banco de la República's biographical entry identifies Juan Rodríguez Freyle as a colonial writer/chronicler and author of El Carnero.",
+      "source_refs": [
+        "superhero:SRC-SH-COL-BANREP-FREYLE-BIO"
+      ],
+      "confidence": 0.99,
+      "limitations": [
+        "Institutional biographical summaries still contain uncertainty in some life dates."
+      ]
+    },
+    {
+      "id": "EVD-PER-COL-FREYLE-002",
+      "claim_id": "CLM-PER-COL-FREYLE-002",
+      "relation": "supports",
+      "evidence_type": "documentary",
+      "summary": "Banrepcultural identifies El Carnero as Freyle's principal work, and the institutional digital collection reproduces the Guatavita/El Dorado passage under his authorship.",
+      "source_refs": [
+        "superhero:SRC-SH-COL-BANREP-FREYLE-BIO",
+        "superhero:SRC-SH-COL-FREYLE-EL-CARNERO-1636"
+      ],
+      "confidence": 0.98,
+      "limitations": []
+    },
+    {
+      "id": "EVD-PER-COL-FREYLE-003",
+      "claim_id": "CLM-PER-COL-FREYLE-003",
+      "relation": "supports",
+      "evidence_type": "textual",
+      "summary": "Freyle's reproduced passage explicitly says don Juan, cacique and lord of Guatavita, told him these antiquities; modern scholarship independently discusses the same claimed informant chain.",
+      "source_refs": [
+        "superhero:SRC-SH-COL-FREYLE-EL-CARNERO-1636",
+        "superhero:SRC-SH-COL-MUISCA-RAFT-2021"
+      ],
+      "confidence": 0.95,
+      "limitations": [
+        "Evidence establishes what Freyle says about his informant, not independent verification of the informant's entire testimony."
+      ]
+    },
+    {
+      "id": "EVD-PER-COL-FREYLE-004",
+      "claim_id": "CLM-PER-COL-FREYLE-004",
+      "relation": "contextualizes",
+      "evidence_type": "documentary",
+      "summary": "Banco de la República explicitly calls Freyle's 1636 description very late, while LEGEND's archaeological record models the relevant offering activity as pre-contact.",
+      "source_refs": [
+        "superhero:SRC-SH-COL-BANREP-MUISCA-DORADO",
+        "legend:SRC-COL-CAMBRIDGE-GUATAVITA-2024"
+      ],
+      "confidence": 0.98,
+      "limitations": [
+        "Late testimony can preserve earlier tradition; temporal distance alone does not settle accuracy."
+      ]
+    },
+    {
+      "id": "EVD-PER-COL-FREYLE-005",
+      "claim_id": "CLM-PER-COL-FREYLE-005",
+      "relation": "supports",
+      "evidence_type": "scholarly_interpretation",
+      "summary": "Modern scholarship treats Freyle's version as especially influential in associating the Guatavita lake ceremony with investiture/legitimation of the heir, while earlier chroniclers did not necessarily make the same association.",
+      "source_refs": [
+        "superhero:SRC-SH-COL-MUISCA-RAFT-2021",
+        "legend:SRC-COL-CAMBRIDGE-GUATAVITA-2024"
+      ],
+      "confidence": 0.86,
+      "limitations": [
+        "Transmission history is reconstructed from surviving texts; lost or unpreserved intermediaries may have existed."
+      ]
+    },
+    {
+      "id": "EVD-PER-JERUSALEM-JOSEPHUS-001",
+      "claim_id": "CLM-PER-JERUSALEM-JOSEPHUS-001",
+      "relation": "supports",
+      "evidence_type": "biographical",
+      "summary": "Josephus self-identifies as Joseph son of Matthias, a priest who initially fought the Romans; Metropolitan Museum scholarship treats him as a critical ancient source for the war.",
+      "source_refs": [
+        "superhero:SRC-SH-JERUSALEM-JOSEPHUS-WAR",
+        "superhero:SRC-SH-JERUSALEM-MET-JOSEPHUS"
+      ],
+      "confidence": 0.98,
+      "limitations": [
+        "The evidence establishes identity and role, not impartiality."
+      ]
+    },
+    {
+      "id": "EVD-PER-JERUSALEM-JOSEPHUS-002",
+      "claim_id": "CLM-PER-JERUSALEM-JOSEPHUS-002",
+      "relation": "supports",
+      "evidence_type": "textual",
+      "summary": "The preface to The Jewish War explicitly identifies Josephus as the author and describes his relationship to the events.",
+      "source_refs": [
+        "superhero:SRC-SH-JERUSALEM-JOSEPHUS-WAR"
+      ],
+      "confidence": 0.99,
+      "limitations": []
+    },
+    {
+      "id": "EVD-PER-JERUSALEM-JOSEPHUS-003",
+      "claim_id": "CLM-PER-JERUSALEM-JOSEPHUS-003",
+      "relation": "supports",
+      "evidence_type": "documentary",
+      "summary": "Josephus's autobiographical Life §75 states that he was sent with Titus to the siege of Jerusalem.",
+      "source_refs": [
+        "superhero:SRC-SH-JERUSALEM-JOSEPHUS-LIFE-75"
+      ],
+      "confidence": 0.97,
+      "limitations": [
+        "First-person autobiographical testimony still requires normal source criticism."
+      ]
+    },
+    {
+      "id": "EVD-PER-JERUSALEM-JOSEPHUS-004",
+      "claim_id": "CLM-PER-JERUSALEM-JOSEPHUS-004",
+      "relation": "supports",
+      "evidence_type": "textual",
+      "summary": "The Jewish War Book VI contains Josephus's detailed account of the Temple fire and destruction; modern museum scholarship independently identifies his work as a critical source for the period.",
+      "source_refs": [
+        "superhero:SRC-SH-JERUSALEM-JOSEPHUS-WAR",
+        "legend:SRC-JERUSALEM-MET-WORLD-BETWEEN-EMPIRES"
+      ],
+      "confidence": 0.98,
+      "limitations": [
+        "Specific causal or moral interpretations inside Josephus should remain distinct from the event facts they accompany."
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "id": "REL-PER-COL-FREYLE-AUTHORED-EL-CARNERO",
+      "subject_id": "PER-COL-JUAN-RODRIGUEZ-FREYLE",
+      "relation": "authored",
+      "object_ref": "superhero:SRC-SH-COL-FREYLE-EL-CARNERO-1636",
+      "proximity": "later_compiler",
+      "status": "supported",
+      "confidence": 0.99,
+      "source_refs": [
+        "superhero:SRC-SH-COL-BANREP-FREYLE-BIO",
+        "superhero:SRC-SH-COL-FREYLE-EL-CARNERO-1636"
+      ],
+      "uncertainty": [],
+      "note": "Proximity is relative to the pre-contact Guatavita event described in the source, not to the act of authoring the source itself."
+    },
+    {
+      "id": "REL-PER-COL-FREYLE-INTERPRETED-LEGEND-GUATAVITA",
+      "subject_id": "PER-COL-JUAN-RODRIGUEZ-FREYLE",
+      "relation": "interpreted",
+      "object_ref": "legend:EVT-COL-GUATAVITA-OFFERINGS",
+      "proximity": "later_compiler",
+      "status": "probable",
+      "confidence": 0.86,
+      "source_refs": [
+        "superhero:SRC-SH-COL-BANREP-MUISCA-DORADO",
+        "superhero:SRC-SH-COL-MUISCA-RAFT-2021",
+        "legend:SRC-COL-CAMBRIDGE-GUATAVITA-2024"
+      ],
+      "uncertainty": [
+        "LEGEND's canonical event is limited to archaeologically defensible offering activity; Freyle's lavish investiture description is a later narrative interpretation and should not be collapsed into the event record."
+      ],
+      "note": "This relationship captures Freyle's later textual interpretation of the event tradition."
+    },
+    {
+      "id": "REL-PER-COL-FREYLE-RECORDED-MFTL-GUATAVITA",
+      "subject_id": "PER-COL-JUAN-RODRIGUEZ-FREYLE",
+      "relation": "recorded",
+      "object_ref": "mftl:CAND-COL-MUISCA-EL-DORADO-GUATAVITA-000001",
+      "proximity": "later_compiler",
+      "status": "supported",
+      "confidence": 0.93,
+      "source_refs": [
+        "superhero:SRC-SH-COL-FREYLE-EL-CARNERO-1636",
+        "superhero:SRC-SH-COL-BANREP-MUISCA-DORADO",
+        "superhero:SRC-SH-COL-MUISCA-RAFT-2021"
+      ],
+      "uncertainty": [
+        "The MFTL target is a modern research candidate representing the Guatavita/El Dorado narrative family; this relation means Freyle is one historical recorder contributing to that narrative tradition, not that he recorded the modern JSON object."
+      ],
+      "note": "Recorder ≠ originator."
+    },
+    {
+      "id": "REL-PER-JERUSALEM-JOSEPHUS-AUTHORED-WAR",
+      "subject_id": "PER-JERUSALEM-FLAVIUS-JOSEPHUS",
+      "relation": "authored",
+      "object_ref": "superhero:SRC-SH-JERUSALEM-JOSEPHUS-WAR",
+      "proximity": "direct_witness",
+      "status": "supported",
+      "confidence": 0.99,
+      "source_refs": [
+        "superhero:SRC-SH-JERUSALEM-JOSEPHUS-WAR"
+      ],
+      "uncertainty": [],
+      "note": "Proximity is relative to the war events narrated in the source."
+    },
+    {
+      "id": "REL-PER-JERUSALEM-JOSEPHUS-RECORDED-TEMPLE70",
+      "subject_id": "PER-JERUSALEM-FLAVIUS-JOSEPHUS",
+      "relation": "recorded",
+      "object_ref": "legend:EVT-JERUSALEM-SECOND-TEMPLE-DESTRUCTION-70",
+      "proximity": "direct_witness",
+      "status": "supported",
+      "confidence": 0.98,
+      "source_refs": [
+        "superhero:SRC-SH-JERUSALEM-JOSEPHUS-WAR",
+        "superhero:SRC-SH-JERUSALEM-MET-JOSEPHUS"
+      ],
+      "uncertainty": [
+        "Recorder relationship establishes documentary chain of custody, not neutrality or theological authority."
+      ],
+      "note": "SUPERHERO records human agency; LEGEND remains owner of the event historicity."
+    },
+    {
+      "id": "REL-PER-JERUSALEM-JOSEPHUS-WITNESSED-TEMPLE70",
+      "subject_id": "PER-JERUSALEM-FLAVIUS-JOSEPHUS",
+      "relation": "witnessed",
+      "object_ref": "legend:EVT-JERUSALEM-SECOND-TEMPLE-DESTRUCTION-70",
+      "proximity": "direct_witness",
+      "status": "supported",
+      "confidence": 0.96,
+      "source_refs": [
+        "superhero:SRC-SH-JERUSALEM-JOSEPHUS-LIFE-75",
+        "superhero:SRC-SH-JERUSALEM-MET-JOSEPHUS"
+      ],
+      "uncertainty": [
+        "Presence is strongly supported; it does not mean Josephus personally observed every instant or location described in the siege narrative."
+      ],
+      "note": "Witness ≠ perfect witness."
+    }
+  ],
+  "sources": [
+    {
+      "id": "SRC-SH-COL-BANREP-FREYLE-BIO",
+      "title": "Juan Rodríguez Freyle",
+      "source_type": "institutional",
+      "creator": "Banco de la República / Banrepcultural",
+      "date": null,
+      "language": "Spanish",
+      "locator": "https://enciclopedia.banrepcultural.org/index.php?title=Juan_Rodr%C3%ADguez_Freyle",
+      "provenance": "Banco de la República cultural encyclopedia biography.",
+      "quality": "high",
+      "notes": [
+        "Supports Freyle's historical identity, chronicler/writer role, authorship of El Carnero, birth date, and the work's 1636 writing horizon.",
+        "Biographical references differ on his death year; SUPERHERO preserves that uncertainty."
+      ]
+    },
+    {
+      "id": "SRC-SH-COL-BANREP-MUISCA-DORADO",
+      "title": "Muisca — Ceremonia de El Dorado",
+      "source_type": "institutional",
+      "creator": "Banco de la República / Banrepcultural",
+      "date": null,
+      "language": "Spanish",
+      "locator": "https://enciclopedia.banrepcultural.org/index.php?title=Muisca",
+      "provenance": "Banco de la República cultural encyclopedia entry summarizing Muisca/El Dorado chronicler traditions and quoting Freyle's 1636 account.",
+      "quality": "high",
+      "notes": [
+        "Explicitly characterizes Freyle's 1636 description as late while preserving its importance in the Guatavita/El Dorado textual tradition."
+      ]
+    },
+    {
+      "id": "SRC-SH-COL-FREYLE-EL-CARNERO-1636",
+      "title": "El cacique Guatavita y la leyenda de El Dorado — Juan Rodríguez Freyle excerpt",
+      "source_type": "primary_document",
+      "creator": "Juan Rodríguez Freyle",
+      "date": "1636 textual horizon; institutional later transcription/edition",
+      "language": "Spanish",
+      "locator": "https://babel.banrepcultural.org/digital/api/collection/p17054coll3/id/52/download",
+      "provenance": "Banco de la República digital collection reproducing Freyle's El Carnero passage on Guatavita and El Dorado.",
+      "quality": "primary",
+      "notes": [
+        "Freyle states that don Juan, cacique and lord of Guatavita, told him the relevant antiquities/traditions.",
+        "This is evidence for Freyle's recorded version and claimed informant chain, not direct archaeological proof of the pre-contact ceremony."
+      ]
+    },
+    {
+      "id": "SRC-SH-COL-MUISCA-RAFT-2021",
+      "title": "The Muisca Raft: Context, Materiality and Technology",
+      "source_type": "scholarly_work",
+      "creator": "María Alicia Uribe Villegas, Marcos Martinón-Torres and Juan Pablo Quintero Guzmán",
+      "date": "2021",
+      "language": "English",
+      "locator": "https://api.repository.cam.ac.uk/server/api/core/bitstreams/f908fef3-39a1-43bf-8605-c2423881c0d3/content",
+      "provenance": "Published in Pre-Columbian Central America, Colombia, and Ecuador: Toward an Integrated Approach, Dumbarton Oaks, 2021, pp. 275–303; repository copy hosted by University of Cambridge.",
+      "quality": "high",
+      "notes": [
+        "Identifies Rodríguez Freyle's version as the most popular among recorded versions and notes his statement that don Juan, cacique of Guatavita, was his informant.",
+        "Useful for distinguishing textual transmission from direct event observation."
+      ]
+    },
+    {
+      "id": "SRC-SH-JERUSALEM-JOSEPHUS-LIFE-75",
+      "title": "The Life of Flavius Josephus — section 75",
+      "source_type": "primary_document",
+      "creator": "Flavius Josephus",
+      "date": "late 1st century CE work; Perseus English translation",
+      "language": "English translation / Ancient Greek work",
+      "locator": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.01.0150%3Awhiston+section%3D75",
+      "provenance": "Perseus Digital Library edition of Josephus's autobiographical Life, section 75.",
+      "quality": "primary",
+      "notes": [
+        "Josephus states that he was sent together with Titus to the siege of Jerusalem and describes what followed after the city was taken.",
+        "Autobiographical testimony supports presence; it is still self-testimony and should be read critically."
+      ]
+    },
+    {
+      "id": "SRC-SH-JERUSALEM-JOSEPHUS-WAR",
+      "title": "The Jewish War — Flavius Josephus",
+      "source_type": "primary_document",
+      "creator": "Flavius Josephus",
+      "date": "ca. 75 CE work; Perseus English translation 1895",
+      "language": "English translation / Ancient Greek work",
+      "locator": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.01.0148",
+      "provenance": "Perseus Digital Library edition. Josephus's preface self-identifies the author and states that he first fought against the Romans and was later compelled to be present at subsequent events.",
+      "quality": "primary",
+      "notes": [
+        "Primary source for Josephus's authorship/self-positioning and for his detailed account of the war.",
+        "Proximity does not remove authorial perspective or source-critical limitations."
+      ]
+    },
+    {
+      "id": "SRC-SH-JERUSALEM-MET-JOSEPHUS",
+      "title": "The World between Empires: Art and Identity in the Ancient Middle East — Judaea",
+      "source_type": "museum",
+      "creator": "The Metropolitan Museum of Art",
+      "date": "2019",
+      "language": "English",
+      "locator": "https://resources.metmuseum.org/resources/metpublications/pdf/The_World_between_Empires_Art_and_Identity_in_the_Ancient_Middle_East.pdf",
+      "provenance": "Metropolitan Museum scholarly catalogue describing Josephus as a critical ancient source for the Judaean war and the 70 CE destruction.",
+      "quality": "high",
+      "notes": [
+        "Independent modern context for Josephus's role as a major ancient source.",
+        "The canonical event itself remains owned by LEGEND."
+      ]
+    },
+    {
+      "id": "SRC-SH-NOR-OSEBERG-WOMEN",
+      "title": "Who were the Oseberg Women?",
+      "source_type": "institutional",
+      "creator": "Oseberg Viking Heritage Foundation",
+      "date": "2025-02-03",
+      "language": "en",
+      "locator": "https://osebergvikingarv.no/eng/2025/02/03/who-were-the-oseberg-women/",
+      "provenance": "Oseberg-focused heritage account summarizing the excavated remains of two women and explicitly reviewing competing identity hypotheses and later skeletal re-examination.",
+      "quality": "medium",
+      "notes": [
+        "Used to support anonymous archaeological-person identity only; proposed names, royal status, kinship, cult role, and geographic ancestry remain hypotheses."
+      ]
+    }
+  ]
+}
