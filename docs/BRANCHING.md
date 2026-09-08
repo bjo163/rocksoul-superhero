@@ -1,21 +1,18 @@
 # Branching Contract
 
-This repository uses exactly two canonical remote branches:
+This repository uses exactly one canonical remote branch:
 
 ```text
-main  ← stable / release
-dev   ← all development
+main  ← stable, development, maintenance, and release
 ```
 
 ## Rules
 
-- All implementation, research data, schemas, docs, CI and maintenance work lands in `dev`.
-- `main` is stable/release only.
-- Release promotion is `dev → main`.
-- Do not create persistent remote `feature/*`, `fix/*`, `hotfix/*`, `release/*`, `chore/*`, `experiment/*`, `agent/*`, or `phase*` branches.
-- Temporary local branches are allowed but must not become canonical remote branches.
-- Emergency fixes are made on `dev`, verified, then promoted to `main`.
+- All implementation, research issues, schemas, docs, CI, and maintenance work targets `main`.
+- Do not maintain persistent remote `dev`, `feature/*`, `fix/*`, `hotfix/*`, `release/*`, `chore/*`, `experiment/*`, `agent/*`, or `phase*` branches.
+- Temporary local branches are allowed, but they must not become canonical remote branches.
+- The single validation workflow checks repository health and removes noncanonical remote branches after trusted non-PR runs.
+- Research discovered by the SUPERHERO Steward is issue-first: browsing may create or update research Issues, but must not directly canonicalize PERSON, actor, or transmission records.
 - Release automation may create tags/releases, never additional branches.
-- The branch-policy workflow deletes noncanonical remote branches.
 
-If an older document or inherited workflow describes another branching model, this file wins.
+If an older document describes another branching model, this file wins.
