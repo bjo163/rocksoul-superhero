@@ -12,12 +12,12 @@
 
 A provenance-first repository for reconstructing **human agency, authorship, witnessing, transmission, interpretation, and narrative chain of custody** across MoonWitness / Rocksoul Research.
 
-**MOONWITNESS · ROCKSOUL RESEARCH · STORY × EVENT × PERSON × RGBL × AWS**
+**MOONWITNESS · ROCKSOUL RESEARCH · STORY × EVENT × PERSON × TEXT × LAW × PERSPECTIVE**
 
 <br/>
 
 [![Validation](https://github.com/bjo163/rocksoul-superhero/actions/workflows/validate.yml/badge.svg?branch=main)](https://github.com/bjo163/rocksoul-superhero/actions/workflows/validate.yml)
-![Branches](https://img.shields.io/badge/branches-main%20%2B%20dev-111111)
+![Branch](https://img.shields.io/badge/branch-main-111111)
 ![Domain](https://img.shields.io/badge/domain-PERSON-6F6F6F)
 ![Method](https://img.shields.io/badge/method-provenance--first-B43A32)
 ![Design](https://img.shields.io/badge/design-rocksoul--assets-6C63FF)
@@ -116,18 +116,22 @@ A gap in the chain is itself data.
 | **`rocksoul-superhero`** | PERSON | Who was involved? |
 | [`rocksoul-rgbl`](https://github.com/bjo163/rocksoul-rgbl) | TEXT | What does the exact text say? |
 | [`rocksoul-aws`](https://github.com/bjo163/rocksoul-aws) | LAW | Was it allowed? |
+| [`rocksoul-jizz`](https://github.com/bjo163/rocksoul-jizz) | PERSPECTIVE | How is the record observed or framed? |
+| [`rocksoul-correlation`](https://github.com/bjo163/rocksoul-correlation) | RELATIONSHIP | How do reviewed records relate? |
 
 ```text
-DESIGN  → ASSETS
-CONSOLE → CRAYON
-STORY   → MFTL
-EVENT   → LEGEND
-PERSON  → SUPERHERO
-TEXT    → RGBL
-LAW     → AWS
+DESIGN       → ASSETS
+CONSOLE      → CRAYON
+STORY        → MFTL
+EVENT        → LEGEND
+PERSON       → SUPERHERO
+TEXT         → RGBL
+LAW          → AWS
+PERSPECTIVE  → JIZZ
+RELATIONSHIP → CORRELATION
 ```
 
-**SUPERHERO owns canonical PERSON / actor / transmission records.** It contributes human proximity and chain-of-custody evidence without inheriting ownership of events, narratives, exact scripture text, or legal conclusions.
+**SUPERHERO owns canonical PERSON / actor / transmission records.** It contributes human proximity and chain-of-custody evidence without inheriting ownership of events, narratives, exact scripture text, legal conclusions, perspectives, or ecosystem-wide relationship semantics.
 
 ## Golden rules
 
@@ -251,10 +255,9 @@ rocksoul-superhero/
 ## Branch model
 
 ```text
-main  ← stable / release
-dev   ← all development
+main  ← stable, development, maintenance, and release
 ```
 
-Development lands in `dev`. Release promotion is only `dev → main`. Noncanonical remote branches are removed automatically by the branch-policy workflow.
+SUPERHERO is intentionally **main-only**. Do not maintain a persistent remote `dev` branch. Temporary review branches may exist only long enough to review a change and are deleted after merge; `docs/BRANCHING.md` is the canonical branching contract.
 
 [Read the branching contract →](docs/BRANCHING.md)
