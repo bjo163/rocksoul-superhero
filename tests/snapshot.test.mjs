@@ -61,3 +61,32 @@ test("every local source reference resolves through the shared domain resolver",
     if (id) assert.ok(sources.has(id), `missing local source ${ref}`)
   }
 })
+
+
+test("observatory section order and routing parameters are deterministic", () => {
+  const sectionIds = snapshot.ui.sections.map((section) => section.id)
+  assert.equal(new Set(sectionIds).size, sectionIds.length)
+  assert.deepEqual(
+    snapshot.ui.sections.map((section) => section.index),
+    snapshot.ui.sections.map((_, index) => String(index + 1).padStart(2, "0")),
+  )
+  assert.ok(sectionIds.includes("quality"))
+  const params = Object.values(snapshot.ui.routing)
+  assert.equal(new Set(params).size, params.length)
+})
+
+test("quality matrix mapping is schema-backed and intentionally leaves unresolved uncertainty outside stance columns", () => {
+  const evidenceRelations = snapshot.schemas.evidence.properties.relation.enum
+  const mapped = Object.keys(snapshot.ui.quality.matrix_relation_map)
+  for (const relation of mapped) assert.ok(evidenceRelations.includes(relation), `matrix relation missing from schema: ${relation}`)
+  assert.deepEqual(
+    evidenceRelations.filter((relation) => !mapped.includes(relation)),
+    ["unresolved_uncertainty"],
+  )
+})
+
+test("every current evidence edge is visualizable in the stance matrix", () => {
+  for (const edge of snapshot.evidence) {
+    assert.ok(snapshot.ui.quality.matrix_relation_map[edge.relation], `${edge.id} has no matrix stance`)
+  }
+})
