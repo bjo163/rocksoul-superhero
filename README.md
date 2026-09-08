@@ -12,12 +12,12 @@
 
 A provenance-first repository for reconstructing **human agency, authorship, witnessing, transmission, interpretation, and narrative chain of custody** across MoonWitness / Rocksoul Research.
 
-**MOONWITNESS · ROCKSOUL RESEARCH · STORY × EVENT × PERSON × TEXT × LAW**
+**MOONWITNESS · ROCKSOUL RESEARCH · STORY × EVENT × PERSON × RGBL × AWS**
 
 <br/>
 
 [![Validation](https://github.com/bjo163/rocksoul-superhero/actions/workflows/validate.yml/badge.svg?branch=main)](https://github.com/bjo163/rocksoul-superhero/actions/workflows/validate.yml)
-![Branch](https://img.shields.io/badge/branch-main-111111)
+![Branches](https://img.shields.io/badge/branches-main%20%2B%20dev-111111)
 ![Domain](https://img.shields.io/badge/domain-PERSON-6F6F6F)
 ![Method](https://img.shields.io/badge/method-provenance--first-B43A32)
 ![Design](https://img.shields.io/badge/design-rocksoul--assets-6C63FF)
@@ -226,3 +226,15 @@ rocksoul-superhero/
 `SUPERHERO / MoonWitness · Rocksoul Research`
 
 </div>
+
+
+## Branch model
+
+```text
+main  ← stable / release
+dev   ← all development
+```
+
+Development lands in `dev`. Release promotion is only `dev → main`. Noncanonical remote branches are removed automatically by the branch-policy workflow.
+
+[Read the branching contract →](docs/BRANCHING.md)
