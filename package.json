@@ -1,6 +1,6 @@
 {
   "name": "rocksoul-superhero",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "description": "Actor & Transmission Intelligence for the Rocksoul Research ecosystem.",
@@ -8,11 +8,22 @@
     "node": ">=22"
   },
   "scripts": {
+    "dev": "vite",
     "validate": "node scripts/validate.mjs",
     "index": "node scripts/build-index.mjs",
-    "build": "npm run validate && npm run index"
+    "build:data": "npm run validate && npm run index",
+    "build": "npm run build:data && vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
-    "ajv": "^8.17.1"
-  }
+    "@rocksoul/ui": "github:bjo163/rocksoul-ui#main",
+    "ajv": "^8.17.1",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.1.1",
+    "vite": "^8.2.2"
+  },
+  "packageManager": "npm@11.6.0"
 }
