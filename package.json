@@ -16,8 +16,9 @@
     "typecheck": "tsc --noEmit",
     "audit:ui": "node scripts/ui-audit.mjs",
     "build": "npm run build:data && npm run typecheck && vite build",
-    "ci": "npm run build && npm run audit:ui",
-    "preview": "vite preview"
+    "ci": "npm run build && npm run test && npm run audit:ui",
+    "preview": "vite preview",
+    "test": "node --test tests/*.test.mjs"
   },
   "dependencies": {
     "@rocksoul/ui": "github:bjo163/rocksoul-ui#main",
