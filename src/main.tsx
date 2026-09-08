@@ -44,6 +44,13 @@ function titleCase(value = "") {
   return value.replaceAll("_", " ").replace(/\b\w/g, (letter) => letter.toUpperCase())
 }
 
+function evidenceStatus(relation: string) {
+  if (relation === "supports") return "supported" as const
+  if (relation === "contradicts") return "disputed" as const
+  if (relation === "contextualizes") return "partial" as const
+  return "unresolved" as const
+}
+
 function sectionFor(config: ObservatoryConfig, id: string) {
   const section = config.sections.find((item) => item.id === id)
   if (!section) throw new Error(`Missing observatory section contract: ${id}`)
@@ -416,7 +423,7 @@ function EvidenceForClaim({
       />
       <div className="evidence-grid">
         {evidence.map((item) => {
-          const status = semanticStatusVariant(item.relation)
+          const status = evidenceStatus(item.relation)
           return (
             <div key={item.id} className="evidence-item">
               <EvidenceCard
@@ -428,7 +435,7 @@ function EvidenceForClaim({
                 verification={titleCase(item.evidence_type)}
                 status={status}
                 canonical
-                flagged={status === "disputed" || status === "contested"}
+                flagged={status === "disputed"}
                 sourceHref={referenceHref(item.source_refs[0] ?? "")}
               />
               <ConfidenceMeter value={item.confidence} label={snapshot.ui.labels.confidence} />
