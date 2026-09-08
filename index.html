@@ -1,13 +1,19 @@
 <!doctype html>
-<html lang="en">
+<html lang="__SITE_LANGUAGE__">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="application-name" content="__SITE_APPLICATION_NAME__" />
     <meta name="theme-color" content="__SITE_THEME_COLOR__" />
+    <meta name="color-scheme" content="dark light" />
     <meta name="description" content="__SITE_DESCRIPTION__" />
+    <meta name="robots" content="__SITE_ROBOTS__" />
+    <link rel="preconnect" href="__ASSET_ORIGIN__" crossorigin />
+    <link rel="dns-prefetch" href="__ASSET_ORIGIN__" />
     <link rel="icon" href="__SITE_FAVICON__" />
     <link rel="apple-touch-icon" href="__SITE_APPLE_TOUCH__" />
     <link rel="canonical" href="__SITE_URL__" />
+    <meta property="og:site_name" content="__SITE_APPLICATION_NAME__" />
     <meta property="og:title" content="__SITE_TITLE__" />
     <meta property="og:description" content="__SITE_DESCRIPTION__" />
     <meta property="og:type" content="website" />
@@ -17,10 +23,15 @@
     <meta name="twitter:title" content="__SITE_TITLE__" />
     <meta name="twitter:description" content="__SITE_DESCRIPTION__" />
     <meta name="twitter:image" content="__SITE_OG_IMAGE__" />
+    <script type="application/ld+json">__SITE_STRUCTURED_DATA__</script>
     <title>__SITE_TITLE__</title>
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      SUPERHERO is an interactive research observatory and requires JavaScript for navigation.
+      The deployment-pinned canonical dataset remains available at /data/superhero.snapshot.json.
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

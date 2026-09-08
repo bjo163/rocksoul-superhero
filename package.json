@@ -1,6 +1,6 @@
 {
   "name": "rocksoul-superhero",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": true,
   "type": "module",
   "description": "Actor & Transmission Intelligence for the Rocksoul Research ecosystem.",
