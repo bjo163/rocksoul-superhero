@@ -1,0 +1,163 @@
+{
+  "schema_version": "1.0",
+  "source": {
+    "repository": "bjo163/rocksoul-superhero",
+    "ref": "main"
+  },
+  "site": {
+    "url": "https://rocksoul-superhero.vercel.app/",
+    "title": "SUPERHERO · MoonWitness / Rocksoul Research",
+    "description": "SUPERHERO — provenance-first actor and transmission intelligence for MoonWitness / Rocksoul Research.",
+    "theme_color": "#0b0b0b",
+    "favicon_asset": "brand/favicon.svg",
+    "apple_touch_asset": "brand/generated/apple-touch-icon-180.png",
+    "og_asset": "brand/generated/og-card-1200x630.png",
+    "twitter_card": "summary_large_image"
+  },
+  "header": {
+    "brand_label": "SUPERHERO / PERSON INTELLIGENCE",
+    "live_label": "Canonical snapshot",
+    "search_href": "#search"
+  },
+  "hero": {
+    "eyebrow": "MOONWITNESS / ROCKSOUL RESEARCH / PERSON",
+    "headline": "TRACE THE PERSON.",
+    "accent": "KEEP THE CHAIN.",
+    "copy": "Actor & transmission intelligence for reconstructing identity, witnessing, authorship, recording, interpretation, and narrative chain of custody without turning attribution into verdict.",
+    "rules": [
+      "IDENTITY ≠ ROLE",
+      "WITNESS ≠ PERFECT WITNESS",
+      "UNCERTAINTY IS DATA"
+    ],
+    "asset": "ui/v2/24-resources.svg"
+  },
+  "metrics": [
+    {
+      "key": "canonical_people",
+      "label": "Canonical people"
+    },
+    {
+      "key": "candidates",
+      "label": "Candidates"
+    },
+    {
+      "key": "claims",
+      "label": "Claims"
+    },
+    {
+      "key": "evidence_edges",
+      "label": "Evidence edges"
+    },
+    {
+      "key": "sources",
+      "label": "Sources"
+    },
+    {
+      "key": "relationships",
+      "label": "Relationships"
+    },
+    {
+      "key": "relation_types",
+      "label": "Relation types"
+    }
+  ],
+  "filters": {
+    "search_label": "Search person / claim / source",
+    "search_placeholder": "Name, alias, claim, relationship, source…",
+    "identity_label": "Identity status",
+    "identity_all_label": "All identity states",
+    "relation_label": "Actor relation",
+    "relation_all_label": "All relations"
+  },
+  "sections": [
+    {
+      "id": "people",
+      "nav": true,
+      "index": "01",
+      "label": "People",
+      "eyebrow": "PEOPLE INDEX",
+      "headline": "FIND THE ACTOR. INSPECT THE ATTRIBUTION.",
+      "description": "Canonical and candidate PERSON records remain distinct, searchable, and fully inspectable."
+    },
+    {
+      "id": "transmission",
+      "nav": true,
+      "index": "02",
+      "label": "Transmission",
+      "eyebrow": "TRANSMISSION",
+      "headline": "FOLLOW THE HUMAN CHAIN.",
+      "description": "Every actor relationship exposes role, temporal proximity, confidence, supporting references, and uncertainty."
+    },
+    {
+      "id": "claims",
+      "nav": true,
+      "index": "03",
+      "label": "Evidence",
+      "eyebrow": "CLAIMS + EVIDENCE",
+      "headline": "ATTRIBUTION NEEDS SUPPORT.",
+      "description": "Claims and evidence remain separate records; stance, confidence, limitations and sources stay visible."
+    },
+    {
+      "id": "sources",
+      "nav": true,
+      "index": "04",
+      "label": "Sources",
+      "eyebrow": "SOURCE TRAIL",
+      "headline": "OPEN THE RECORD.",
+      "description": "Local source records expose complete provenance, creator, date, locator, quality, notes and citation context."
+    },
+    {
+      "id": "uncertainty",
+      "nav": true,
+      "index": "05",
+      "label": "Uncertainty",
+      "eyebrow": "UNCERTAINTY REGISTER",
+      "headline": "GAPS ARE DATA.",
+      "description": "Identity, witnessing, authorship and transmission can be strong in one dimension and unresolved in another."
+    },
+    {
+      "id": "taxonomy",
+      "nav": true,
+      "index": "06",
+      "label": "Taxonomy",
+      "eyebrow": "RELATIONSHIP VOCABULARY",
+      "headline": "NAME THE EDGE.",
+      "description": "Relation types and proximity states come from the canonical taxonomy rather than UI literals."
+    },
+    {
+      "id": "contract",
+      "nav": true,
+      "index": "07",
+      "label": "Contract",
+      "eyebrow": "DATA CONTRACT",
+      "headline": "SHOW THE SCHEMA.",
+      "description": "Every record type exposes its machine-readable schema and field contract alongside the records it governs."
+    }
+  ],
+  "person_index": {
+    "title": "CANONICAL PEOPLE",
+    "empty": "No person matches the current filters.",
+    "principle_title": "SUPERHERO is a brand, not a verdict.",
+    "principle_copy": "People are modeled as source-relative actors, not ranked heroes or villains."
+  },
+  "dossier": {
+    "eyebrow": "PERSON / ACTOR DOSSIER",
+    "actions": {
+      "transmission": "Trace transmission",
+      "evidence": "Inspect evidence"
+    },
+    "identity_eyebrow": "IDENTITY RECORD"
+  },
+  "states": {
+    "loading_eyebrow": "SUPERHERO / PERSON INTELLIGENCE",
+    "loading_headline": "LOADING THE HUMAN CHAIN.",
+    "loading_copy": "Opening the deployment-pinned canonical snapshot.",
+    "error_eyebrow": "DATA LOAD ERROR",
+    "error_headline": "THE CHAIN COULD NOT BE LOADED.",
+    "no_people": "No canonical person records."
+  },
+  "footer": {
+    "slogan": "PEOPLE LEAVE TRACES. TRACE THE CHAIN.",
+    "asset": "brand/rocksoul-lockup.svg"
+  }
+}
