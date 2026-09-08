@@ -3,7 +3,7 @@
   "source": {
     "repository": "bjo163/rocksoul-superhero",
     "ref": "main",
-    "dataset_sha256": "6cf7c83704a1df05208d990e98e7a51946f075ead61647331564e941a3f2f550"
+    "dataset_sha256": "f2ce57c7b81cbefab18a93574486c0165606484dc6c953267a6e640c73a5c448"
   },
   "counts": {
     "canonical_people": 3,
@@ -1280,7 +1280,8 @@
     "header": {
       "brand_label": "SUPERHERO / PERSON INTELLIGENCE",
       "live_label": "Canonical snapshot",
-      "search_href": "#search"
+      "search_href": "#search",
+      "nav_label": "Observatory sections"
     },
     "hero": {
       "eyebrow": "MOONWITNESS / ROCKSOUL RESEARCH / PERSON",
@@ -1292,7 +1293,9 @@
         "WITNESS ≠ PERFECT WITNESS",
         "UNCERTAINTY IS DATA"
       ],
-      "asset": "ui/v2/24-resources.svg"
+      "asset": "ui/v2/24-resources.svg",
+      "snapshot_label": "DEPLOYMENT SNAPSHOT",
+      "schema_label": "SCHEMA"
     },
     "metrics": [
       {
@@ -1330,7 +1333,8 @@
       "identity_label": "Identity status",
       "identity_all_label": "All identity states",
       "relation_label": "Actor relation",
-      "relation_all_label": "All relations"
+      "relation_all_label": "All relations",
+      "matching_suffix": "matching records"
     },
     "sections": [
       {
@@ -1401,7 +1405,9 @@
       "title": "CANONICAL PEOPLE",
       "empty": "No person matches the current filters.",
       "principle_title": "SUPERHERO is a brand, not a verdict.",
-      "principle_copy": "People are modeled as source-relative actors, not ranked heroes or villains."
+      "principle_copy": "People are modeled as source-relative actors, not ranked heroes or villains.",
+      "candidate_title": "CANDIDATE PEOPLE",
+      "candidate_empty": "No candidate PERSON records are currently published."
     },
     "dossier": {
       "eyebrow": "PERSON / ACTOR DOSSIER",
@@ -1409,7 +1415,16 @@
         "transmission": "Trace transmission",
         "evidence": "Inspect evidence"
       },
-      "identity_eyebrow": "IDENTITY RECORD"
+      "identity_eyebrow": "IDENTITY RECORD",
+      "metadata": {
+        "review": "Review",
+        "active_period": "Active period",
+        "claims": "Claims",
+        "relations": "Relations",
+        "record_class": "Record class"
+      },
+      "canonical_label": "canonical",
+      "candidate_label": "candidate"
     },
     "states": {
       "loading_eyebrow": "SUPERHERO / PERSON INTELLIGENCE",
@@ -1422,6 +1437,27 @@
     "footer": {
       "slogan": "PEOPLE LEAVE TRACES. TRACE THE CHAIN.",
       "asset": "brand/rocksoul-lockup.svg"
+    },
+    "labels": {
+      "confidence": "Confidence",
+      "known_uncertainty": "Known uncertainty",
+      "limitations": "Limitations",
+      "no_relationships": "No actor relationships recorded for this PERSON record.",
+      "no_claims": "No atomic claims recorded for this PERSON record.",
+      "no_evidence": "No evidence edge recorded for this claim.",
+      "no_sources": "No local source records are published.",
+      "no_uncertainty": "No explicit uncertainty statements are recorded.",
+      "source_open": "OPEN PRIMARY LOCATOR ↗",
+      "source_no_locator": "No locator recorded",
+      "record_fields": "COMPLETE RECORD",
+      "taxonomy_relations": "RELATION TYPES",
+      "taxonomy_proximity": "TEMPORAL / ROLE PROXIMITY",
+      "schemas": "MACHINE-READABLE SCHEMAS",
+      "record_ledger": "COMPLETE RECORD LEDGER",
+      "ledger_copy": "Every public JSON record is inspectable here. New array-backed record collections appear automatically without a consumer code change.",
+      "schema_copy": "Required fields, property definitions, enums, nested objects and additional-property policy stay visible beside the rendered data.",
+      "candidate_badge": "candidate",
+      "canonical_badge": "canonical"
     }
   }
 }
