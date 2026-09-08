@@ -850,7 +850,7 @@ button, a {
 
 .metric-strip {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
   border: 1px solid var(--mw-border-default);
   border-bottom: 0;
   background: color-mix(in srgb, var(--mw-surface-raised) 88%, transparent);
@@ -1353,4 +1353,170 @@ button, a {
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+}
+
+
+/* Contract-driven observatory completion */
+.observatory-nav {
+  margin: 14px 52px 0;
+}
+
+.person-index-group + .person-index-group {
+  border-top: 1px solid var(--mw-border-strong);
+}
+
+.person-label .inline-flex {
+  width: fit-content;
+  margin-top: 7px;
+}
+
+.record-ledger-panel {
+  display: grid;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.relationship-record-grid,
+.claim-record-grid,
+.evidence-record-grid {
+  margin-top: 16px;
+}
+
+.relationship-card .mw-link {
+  min-width: 0;
+}
+
+.relationship-card [role="meter"],
+.evidence-item [role="meter"] {
+  margin-top: 4px;
+}
+
+.evidence-item > div + div {
+  margin-top: 12px;
+}
+
+.taxonomy-section,
+.contract-section {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--mw-surface-raised) 76%, transparent), transparent 240px),
+    var(--mw-surface-page);
+}
+
+.taxonomy-block,
+.contract-block {
+  margin-top: 20px;
+  border: 1px solid var(--mw-border-default);
+  background: var(--mw-surface-raised);
+  padding: 18px;
+}
+
+.taxonomy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.proximity-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.contract-heading {
+  display: grid;
+  grid-template-columns: minmax(220px, .45fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--mw-border-default);
+}
+
+.contract-heading > p:last-child {
+  max-width: 820px;
+  margin: 0;
+  color: var(--mw-text-secondary);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.schema-stack,
+.ledger-stack,
+.ledger-records {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.schema-stack details,
+.ledger-stack > details,
+.ledger-records > details {
+  border: 1px solid var(--mw-border-default);
+  background: var(--mw-surface-panel);
+}
+
+.schema-stack summary,
+.ledger-stack > details > summary,
+.ledger-records > details > summary {
+  display: flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 11px 14px;
+  cursor: pointer;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+.schema-stack summary code,
+.ledger-records summary code {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: var(--mw-text-secondary);
+  font-size: 9px;
+}
+
+.schema-stack details > dl,
+.ledger-records details > dl {
+  border-width: 1px 0 0;
+}
+
+.ledger-stack > details > .ledger-records {
+  margin: 0;
+  padding: 10px;
+  border-top: 1px solid var(--mw-border-default);
+}
+
+@media (max-width: 1050px) {
+  .observatory-nav {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .contract-heading {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .observatory-nav {
+    margin: 10px 12px 0;
+  }
+
+  .taxonomy-block,
+  .contract-block {
+    padding: 12px;
+  }
+
+  .taxonomy-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .schema-stack summary,
+  .ledger-stack > details > summary,
+  .ledger-records > details > summary {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 }
