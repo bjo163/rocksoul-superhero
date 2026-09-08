@@ -2,7 +2,8 @@
   "schema_version": "1.0",
   "source": {
     "repository": "bjo163/rocksoul-superhero",
-    "ref": "main"
+    "ref": "main",
+    "snapshot_path": "/data/superhero.snapshot.json"
   },
   "site": {
     "url": "https://rocksoul-superhero.vercel.app/",
@@ -195,5 +196,8 @@
     "schema_copy": "Required fields, property definitions, enums, nested objects and additional-property policy stay visible beside the rendered data.",
     "candidate_badge": "candidate",
     "canonical_badge": "canonical"
+  },
+  "routing": {
+    "person_param": "person"
   }
 }
