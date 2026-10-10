@@ -15,7 +15,7 @@ const SIMILARITY_ONLY = new Set(["same_name", "same_spelling", "same_title", "sa
 
 export function metadata(body = "", key) {
   const matches = [...String(body).matchAll(new RegExp(`${key}:([^\\n]+)`, "g"))]
-  return matches.at(-1)?.[1]?.trim() ?? null
+  return matches.at(-1)?.[1]?.trim().replace(/`+$/u, "").trim() ?? null
 }
 
 export function issueState(issue = {}) {
