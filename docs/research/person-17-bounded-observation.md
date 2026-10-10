@@ -14,7 +14,7 @@ This is a review matrix, not a PERSON record, identity resolution, relationship 
 | P17-02 | Te Papa topic 10675 | Navigator, priest, intermediary described in institutional synthesis | Not proof of every individual act |
 | P17-03 | British Library Add MS 15508 f.12 | Drawing currently attributed to Tupaia | Preserve earlier attribution history; no blanket authorship |
 | P17-04 | British Library Add MS 15508 f.14 | Distinct drawing attribution history | Preserve conflicting historical attribution |
-| P17-05 | State Library NSW, Cook journal, 16–17 July 1769 | Cook's description of Tupaia at Huahine | Mediated European witness; manuscript collation remains open |
+| P17-05 | NSW Safe 1/71 catalogue (Orton copy); separately, South Seas transcription of NLA MS 1 p.94 (16 July 1769) | Catalogue establishes custody; transcription reports Tupaia at Huahine | **Distinct witnesses**: do not attribute NLA wording to NSW Safe 1/71; verify both manuscripts/folios before candidate staging |
 
 ## Review gates
 
