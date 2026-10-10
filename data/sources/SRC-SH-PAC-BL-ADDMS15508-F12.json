@@ -1,0 +1,16 @@
+{
+  "id": "SRC-SH-PAC-BL-ADDMS15508-F12",
+  "title": "British Library archival catalogue — Add MS 15508 f.12",
+  "source_type": "archival_record",
+  "creator": "British Library",
+  "date": null,
+  "language": "en",
+  "locator": "https://searcharchives.bl.uk/catalog/040-003395028",
+  "provenance": "Object-level institutional archival catalogue for a drawing currently attributed to Tupaia. Earlier attribution history is recorded in owner research issue #17.",
+  "quality": "high",
+  "notes": [
+    "Catalogue attribution is distinct from direct examination of the drawing.",
+    "Preserve earlier/competing attribution; no blanket authorship or identity merge.",
+    "Source metadata only; not a canonical PERSON record."
+  ]
+}
