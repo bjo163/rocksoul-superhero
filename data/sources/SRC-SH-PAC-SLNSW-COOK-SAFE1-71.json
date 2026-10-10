@@ -1,0 +1,17 @@
+{
+  "id": "SRC-SH-PAC-SLNSW-COOK-SAFE1-71",
+  "title": "State Library of New South Wales — Cook Endeavour journal, Safe 1/71 (Corner Journal)",
+  "source_type": "archival_record",
+  "creator": "State Library of New South Wales",
+  "date": null,
+  "language": "en",
+  "locator": "https://archival.sl.nsw.gov.au/Details/archive/110330179",
+  "provenance": "Institutional catalogue for manuscript Safe 1/71 (reference code 449197), the Corner Journal copied by Richard Orton. Catalogue identity is not a verified July 16–17 1769 folio or evidence that modern transcriptions use this witness.",
+  "quality": "high",
+  "notes": [
+    "Source identity only; July 16–17 1769 folios and manuscript wording remain to be collated before extracting act-level observations.",
+    "Distinguish SLNSW Safe 1/71 Orton copy from NLA MS 1 holograph and derived South Seas transcriptions.",
+    "Direct catalogue locator was temporarily unavailable for fresh fetch on 2026-10-10; prior source inspection recorded under owner issue #17.",
+    "No PERSON identity merge, canonical record, or relationship edge."
+  ]
+}
