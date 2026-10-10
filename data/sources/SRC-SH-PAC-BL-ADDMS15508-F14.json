@@ -1,0 +1,16 @@
+{
+  "id": "SRC-SH-PAC-BL-ADDMS15508-F14",
+  "title": "British Library archival catalogue — Add MS 15508 f.14",
+  "source_type": "archival_record",
+  "creator": "British Library",
+  "date": null,
+  "language": "en",
+  "locator": "https://searcharchives.bl.uk/catalog/040-003395030",
+  "provenance": "Object-level British Library catalogue record, previously inspected under PERSON owner issue #17. Current attribution to Tupaia is source-relative; earlier attribution to Joseph Banks remains separate.",
+  "quality": "high",
+  "notes": [
+    "Institutional catalogue attribution is not a direct examination of the drawing or proof of sole authorship.",
+    "Preserve the earlier Banks attribution; do not harmonize this record with distinct f.12 attribution history.",
+    "No PERSON identity merge, canonical record, or relationship edge is asserted."
+  ]
+}
