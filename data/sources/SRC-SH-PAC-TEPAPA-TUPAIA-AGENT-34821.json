@@ -1,0 +1,16 @@
+{
+  "id": "SRC-SH-PAC-TEPAPA-TUPAIA-AGENT-34821",
+  "title": "Te Papa collection authority record — Tupaia (agent 34821)",
+  "source_type": "museum",
+  "creator": "Museum of New Zealand Te Papa Tongarewa",
+  "date": null,
+  "language": "en",
+  "locator": "https://collections.tepapa.govt.nz/agent/34821",
+  "provenance": "Institutional person-authority catalogue; inspected under owner issue #17. Role and approximate date claims remain source-relative.",
+  "quality": "high",
+  "notes": [
+    "Institutional metadata, not Tupaia first-person testimony.",
+    "Do not convert approximate birth date to exact date.",
+    "Source record only; not a canonical PERSON record or identity merge."
+  ]
+}
