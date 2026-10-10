@@ -1,0 +1,17 @@
+{
+  "id": "SRC-SH-PAC-NLA-COOK-MS1-HOLOGRAPH",
+  "title": "National Library of Australia — Endeavour Journal MS 1 holograph institutional guide",
+  "source_type": "library",
+  "creator": "National Library of Australia",
+  "date": null,
+  "language": "en",
+  "locator": "https://www.library.gov.au/research/research-guides-0/captain-cooks-endeavour-journal",
+  "provenance": "NLA institutional guide explicitly identifies MS 1 as the digitised Cook holograph journal and distinguishes it from later copied journals. Its catalogue-level witness identity is separate from SLNSW Safe 1/71 (Corner Journal) and from Paul Turnbull's South Seas transcription of NLA MS 1 p.94.",
+  "quality": "high",
+  "notes": [
+    "Institutional source guide inspected on 2026-10-11; this record does not assert direct inspection of the July 1769 manuscript folio.",
+    "Digital manuscript viewer returned access denied on this pass; folio-level image collation remains outstanding.",
+    "South Seas 16 July 1769 is an editorial transcription explicitly keyed to NLA MS 1 p.94, not a transcription of SLNSW Safe 1/71.",
+    "Source-relative attribution only; no PERSON identity merge, candidate promotion, or relationship edge."
+  ]
+}
