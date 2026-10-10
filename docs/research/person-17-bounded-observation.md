@@ -15,6 +15,7 @@ This is a review matrix, not a PERSON record, identity resolution, relationship 
 | P17-03 | British Library Add MS 15508 f.12 | Drawing currently attributed to Tupaia | Preserve earlier attribution history; no blanket authorship |
 | P17-04 | British Library Add MS 15508 f.14 | Distinct drawing attribution history | Preserve conflicting historical attribution |
 | P17-05 | NSW Safe 1/71 catalogue (Orton copy); separately, South Seas transcription of NLA MS 1 p.94 (16 July 1769) | Catalogue establishes custody; transcription reports Tupaia at Huahine | **Distinct witnesses**: do not attribute NLA wording to NSW Safe 1/71; verify both manuscripts/folios before candidate staging |
+| P17-06 | NLA institutional guide, MS 1 holograph (`SRC-SH-PAC-NLA-COOK-MS1-HOLOGRAPH`) | Confirms separate Cook holograph witness identity; South Seas editorial transcription cites MS 1 p.94 | Catalogue/guide metadata inspected, **not** July 1769 manuscript folio; NLA digital viewer denied access this pass; keep original-image collation blocked |
 
 ## Review gates
 
