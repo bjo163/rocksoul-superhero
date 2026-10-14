@@ -109,3 +109,31 @@ test("living-person privacy boundary prevents identity promotion", () => {
   assert.equal(result.auto_merge, false)
   assert.ok(result.reason_codes.includes("PRIVACY_OR_ANONYMIZATION_BOUNDARY"))
 })
+
+test("duplicate qualified references do not satisfy the handoff gate", () => {
+  const result = relationshipHandoffEligibility({
+    qualified_refs: ["superhero:PER-A", "superhero:PER-A"],
+    supporting_evidence: ["one source repeated"],
+    alternatives: ["coincidental match"],
+    counterevidence: ["independence not established"],
+    confidence: 0.9,
+    basis: ["independent_domain_evidence"]
+  })
+  assert.equal(result.decision, "HOLD")
+  assert.equal(result.canonical_edge_created, false)
+  assert.ok(result.reason_codes.includes("INSUFFICIENT_QUALIFIED_REFS"))
+})
+
+test("same-owner distinct references cannot substitute for two owner domains", () => {
+  const result = relationshipHandoffEligibility({
+    qualified_refs: ["superhero:PER-A", "superhero:PER-B"],
+    supporting_evidence: ["two person records"],
+    alternatives: ["unrelated people"],
+    counterevidence: ["same-domain evidence only"],
+    confidence: 0.9,
+    basis: ["independent_domain_evidence"]
+  })
+  assert.equal(result.decision, "HOLD")
+  assert.equal(result.canonical_edge_created, false)
+  assert.ok(result.reason_codes.includes("NON_INDEPENDENT_OWNER_DOMAIN_REFS"))
+})
