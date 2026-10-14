@@ -106,6 +106,9 @@ export function assessIdentityEvidence(input = {}) {
 
 export function relationshipHandoffEligibility(input = {}) {
   const refs = Array.isArray(input.qualified_refs) ? input.qualified_refs.filter((ref) => /^[a-z][a-z0-9-]*:.+/.test(String(ref))) : []
+  const uniqueRefs = [...new Set(refs)]
+  const ownerDomains = new Set(uniqueRefs.map((ref) => ref.split(":")[0]))
+  const independentOwnerRefs = uniqueRefs.length >= 2 && ownerDomains.size >= 2
   const supports = Array.isArray(input.supporting_evidence) ? input.supporting_evidence.filter(Boolean) : []
   const alternatives = Array.isArray(input.alternatives) ? input.alternatives.filter(Boolean) : []
   const counterevidence = Array.isArray(input.counterevidence) ? input.counterevidence.filter(Boolean) : []
@@ -113,7 +116,7 @@ export function relationshipHandoffEligibility(input = {}) {
   const basis = new Set(input.basis ?? [])
   const similarityOnly = basis.size > 0 && [...basis].every((value) => SIMILARITY_ONLY.has(value))
   const privacyBlocked = Boolean(input.privacy_blocked)
-  const eligible = refs.length >= 2 && supports.length >= 1 && alternatives.length >= 1 && counterevidence.length >= 1 && confidence >= 0.65 && !similarityOnly && !privacyBlocked
+  const eligible = independentOwnerRefs && supports.length >= 1 && alternatives.length >= 1 && counterevidence.length >= 1 && confidence >= 0.65 && !similarityOnly && !privacyBlocked
 
   return {
     schema_version: "rocksoul.relationship-handoff.v1",
@@ -122,7 +125,8 @@ export function relationshipHandoffEligibility(input = {}) {
     reason_codes: eligible
       ? ["QUALIFIED_CROSS_DOMAIN_REFS", "EVIDENCE_AND_ALTERNATIVES_PRESENT", "CORRELATION_REVIEW_REQUIRED"]
       : [
-          ...(refs.length < 2 ? ["INSUFFICIENT_QUALIFIED_REFS"] : []),
+          ...(uniqueRefs.length < 2 ? ["INSUFFICIENT_QUALIFIED_REFS"] : []),
+          ...(uniqueRefs.length >= 2 && ownerDomains.size < 2 ? ["NON_INDEPENDENT_OWNER_DOMAIN_REFS"] : []),
           ...(supports.length < 1 ? ["MISSING_SUPPORTING_EVIDENCE"] : []),
           ...(alternatives.length < 1 ? ["MISSING_ALTERNATIVES"] : []),
           ...(counterevidence.length < 1 ? ["MISSING_COUNTEREVIDENCE"] : []),
