@@ -109,3 +109,17 @@ test("living-person privacy boundary prevents identity promotion", () => {
   assert.equal(result.auto_merge, false)
   assert.ok(result.reason_codes.includes("PRIVACY_OR_ANONYMIZATION_BOUNDARY"))
 })
+
+
+test("Markdown-wrapped lifecycle metadata does not hide mature PERSON WIP", async () => {
+  const { issueState, countLifecycle, wipPressure } = await import("../scripts/research-policy.mjs")
+  const ready = { number: 17, body: "`ROCKSOUL-RESEARCH-STATE:ready_for_observation`" }
+  const inspected = { number: 18, body: "`ROCKSOUL-RESEARCH-STATE:source_inspected`" }
+  assert.equal(issueState(ready), "ready_for_observation")
+  assert.equal(issueState(inspected), "source_inspected")
+  assert.deepEqual(countLifecycle([ready, inspected]), { ready_for_observation: 1, source_inspected: 1 })
+  const pressure = wipPressure({ issues: [ready, inspected] })
+  assert.equal(pressure.actionable, 2)
+  assert.equal(pressure.advanced, 2)
+  assert.equal(pressure.suppress_discovery, true)
+})
